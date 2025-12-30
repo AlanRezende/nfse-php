@@ -20,6 +20,18 @@ const sidebars: SidebarsConfig = {
         "dtos",
         "validations",
         "xml-serialization",
+        {
+            type: "category",
+            label: "Exemplos Práticos",
+            items: [
+                "examples/tomador-pf",
+                "examples/tomador-pj",
+                "examples/tomador-exterior",
+                "examples/construcao-civil",
+                "examples/retencoes",
+                "examples/exportacao",
+            ],
+        },
         "advanced-scenarios",
         "typescript",
         "schema-rules",
