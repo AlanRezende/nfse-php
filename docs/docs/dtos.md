@@ -39,6 +39,42 @@ Identifica quem está contratando o serviço.
 -   CPF/CNPJ, Nome/Razão Social.
 -   Endereço (Nacional ou Exterior).
 
+## Como Instanciar DTOs
+
+Existem duas formas principais de criar instâncias dos DTOs:
+
+### 1. Usando o método `from()`
+
+Ideal quando você já confia na origem dos dados ou quer apenas mapear um array.
+
+```php
+$dps = DpsData::from([
+    'infDps' => [
+        'tpAmb' => 2,
+        // ...
+    ]
+]);
+```
+
+### 2. Usando `validateAndCreate()`
+
+Recomendado para dados vindos de requisições externas, pois dispara uma exceção se as regras de validação não forem atendidas.
+
+```php
+try {
+    $dps = DpsData::validateAndCreate($requestData);
+} catch (\Illuminate\Validation\ValidationException $e) {
+    // Tratar erros
+}
+```
+
+## Mapeamento Automático
+
+Graças ao `spatie/laravel-data`, todos os DTOs suportam mapeamento automático de nomes.
+
+> [!TIP]
+> Utilizamos o atributo `#[MapInputName]` para vincular o nome técnico do layout nacional (ex: `dhEmi`) à propriedade PHP legível. Isso permite que você trabalhe com nomes amigáveis no seu código enquanto mantém a compatibilidade com o padrão oficial.
+
 ## Componentes Reutilizáveis
 
 A biblioteca utiliza diversos componentes menores para organizar os dados:
@@ -48,7 +84,3 @@ A biblioteca utiliza diversos componentes menores para organizar os dados:
 -   **ValoresData**: Consolida os valores financeiros da operação.
 -   **TributacaoData**: Detalha a retenção de impostos (ISSQN, PIS, COFINS).
 -   **DeducaoReducaoData**: Gerencia deduções e reduções da base de cálculo.
-
-## Mapeamento Automático
-
-Graças ao `spatie/laravel-data`, todos os DTOs suportam mapeamento automático de nomes (ex: `dhEmi` no XML vira `dataEmissao` no PHP), facilitando o trabalho com diferentes formatos de entrada e saída.

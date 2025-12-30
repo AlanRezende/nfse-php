@@ -30,8 +30,24 @@ function HomepageHeader() {
     );
 }
 
+import React, { useState, useEffect } from "react";
+
 export default function Home(): ReactNode {
     const { siteConfig } = useDocusaurusContext();
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const bannerDismissed = localStorage.getItem("dev-banner-dismissed");
+        if (bannerDismissed === "true") {
+            setIsVisible(false);
+        }
+    }, []);
+
+    const handleClose = () => {
+        setIsVisible(false);
+        localStorage.setItem("dev-banner-dismissed", "true");
+    };
+
     return (
         <Layout
             title={`Hello from ${siteConfig.title}`}
@@ -41,11 +57,23 @@ export default function Home(): ReactNode {
             <main>
                 <HomepageFeatures />
             </main>
-            <div className={styles.devBanner}>
-                🚧 Este projeto está em <strong>desenvolvimento ativo</strong>.
-                Algumas funcionalidades podem estar incompletas ou sujeitas a
-                alterações.
-            </div>
+            {isVisible && (
+                <div className="devBanner">
+                    <span className="devBanner__text">
+                        🚧 Este projeto está em{" "}
+                        <strong>desenvolvimento ativo</strong>. Algumas
+                        funcionalidades podem estar incompletas ou sujeitas a
+                        alterações.
+                    </span>
+                    <button
+                        className="devBanner__close"
+                        onClick={handleClose}
+                        aria-label="Fechar"
+                    >
+                        &times;
+                    </button>
+                </div>
+            )}
         </Layout>
     );
 }
