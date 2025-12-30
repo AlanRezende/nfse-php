@@ -47,7 +47,6 @@ Este projeto está em desenvolvimento ativo. Abaixo estão as fases planejadas:
 ### Fase 2: Serialização ✅
 
 -   [x] Implementar Serializer para XML (padrão ABRASF/Nacional).
--   [ ] Implementar Serializer para JSON.
 -   [x] Garantir que a serialização respeite os XSDs oficiais.
 
 ### Fase 3: Assinatura Digital 📅

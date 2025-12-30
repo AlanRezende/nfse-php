@@ -15,10 +15,13 @@ use Nfse\Dto\LocalPrestacaoData;
 use Nfse\Dto\CodigoServicoData;
 use Nfse\Dto\ValorServicoPrestadoData;
 use Nfse\Dto\DescontoData;
+use Nfse\Support\IdGenerator;
 
 it('can instantiate dps data with full structure', function () {
+    $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
+
     $infDps = new InfDpsData(
-        id: 'DPS123',
+        id: $id,
         tipoAmbiente: 2,
         dataEmissao: '2023-10-27T10:00:00',
         versaoAplicativo: '1.0',
@@ -126,6 +129,6 @@ it('can instantiate dps data with full structure', function () {
     );
 
     expect($dpsData)->toBeInstanceOf(DpsData::class)
-        ->and($dpsData->infDps->id)->toBe('DPS123')
+        ->and($dpsData->infDps->id)->toBe($id)
         ->and($dpsData->infDps->prestador->cnpj)->toBe('12345678000199');
 });

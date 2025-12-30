@@ -20,8 +20,11 @@ use Nfse\Dto\ValorServicoPrestadoData;
 use Nfse\Dto\LocalPrestacaoData;
 use Nfse\Dto\CodigoServicoData;
 use Nfse\Xml\NfseXmlBuilder;
+use Nfse\Support\IdGenerator;
 
 it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamentoPreenchido', function () {
+    $dpsId = IdGenerator::generateDpsId('11905971000105', '3304557', '333', '6');
+
     // Construct the DTO based on the XML example
     $nfse = new NfseData(
         versao: '1.01',
@@ -47,7 +50,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
             dps: new DpsData(
                 versao: '1.01',
                 infDps: new InfDpsData(
-                    id: 'DPS330455721190597100010500333000000000000006',
+                    id: $dpsId,
                     tipoAmbiente: 2,
                     dataEmissao: '2025-12-30T19:00:06-03:00',
                     versaoAplicativo: 'MXM.RTC-1.00',
@@ -221,7 +224,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
         ->and($xml)->toContain('<vLiq>9385.00</vLiq>');
 
     // Assertions for DPS fields
-    expect($xml)->toContain('Id="DPS330455721190597100010500333000000000000006"')
+    expect($xml)->toContain('Id="' . $dpsId . '"')
         ->and($xml)->toContain('<tpAmb>2</tpAmb>')
         ->and($xml)->toContain('<dhEmi>2025-12-30T19:00:06-03:00</dhEmi>')
         ->and($xml)->toContain('<verAplic>MXM.RTC-1.00</verAplic>')

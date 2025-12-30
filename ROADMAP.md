@@ -15,16 +15,15 @@ Este pacote é a fundação do ecossistema. O foco é garantir contratos sólido
 ### Fase 2: Serialização
 
 -   [x] Implementar Serializer para XML (padrão ABRASF/Nacional).
--   [ ] Implementar Serializer para JSON.
 -   [x] Garantir que a serialização respeite os XSDs oficiais.
 
 ### Fase 3: Assinatura Digital
 
--   [ ] Criar `SignerInterface`.
--   [ ] Implementar adaptador para assinatura XML (DSig).
--   [ ] Suporte a certificado A1 (PKCS#12).
+-   [x] Criar `SignerInterface`.
+-   [x] Implementar adaptador para assinatura XML (DSig).
+-   [x] Suporte a certificado A1 (PKCS#12).
 
 ### Fase 4: Utilitários
 
--   [ ] Helpers para cálculo de impostos (simples).
--   [ ] Formatadores de documentos (CPF/CNPJ).
+-   [x] Helpers para cálculo de impostos (simples).
+-   [x] Formatadores de documentos (CPF/CNPJ).

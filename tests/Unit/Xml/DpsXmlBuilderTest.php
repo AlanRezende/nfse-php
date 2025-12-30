@@ -13,10 +13,13 @@ use Nfse\Dto\CodigoServicoData;
 use Nfse\Dto\ValorServicoPrestadoData;
 use Nfse\Dto\TributacaoData;
 use Nfse\Xml\DpsXmlBuilder;
+use Nfse\Support\IdGenerator;
 
 it('can build xml from dps data', function () {
+    $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
+
     $infDps = new InfDpsData(
-        id: 'DPS123',
+        id: $id,
         tipoAmbiente: 2,
         dataEmissao: '2023-10-27T10:00:00',
         versaoAplicativo: '1.0',
@@ -107,7 +110,7 @@ it('can build xml from dps data', function () {
     $xml = $builder->build($dpsData);
 
     expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse">')
-        ->and($xml)->toContain('<infDPS Id="DPS123" versao="1.0">')
+        ->and($xml)->toContain('<infDPS Id="' . $id . '" versao="1.0">')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>')
         ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')

@@ -34,6 +34,8 @@ const sidebars: SidebarsConfig = {
         "dtos",
         "validations",
         "xml-serialization",
+        "digital-signature",
+        "utilities",
         "typescript",
         "schema-rules",
     ],

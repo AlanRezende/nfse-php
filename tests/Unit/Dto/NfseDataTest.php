@@ -8,8 +8,11 @@ use Nfse\Dto\InfNfseData;
 use Nfse\Dto\NfseData;
 
 use Nfse\Dto\ValoresNfseData;
+use Nfse\Support\IdGenerator;
 
 it('can instantiate nfse data with full structure', function () {
+    $dpsId = IdGenerator::generateDpsId('12345678000199', '1234567', '1', '100');
+
     $nfse = new NfseData(
         versao: '1.00',
         infNfse: new InfNfseData(
@@ -34,7 +37,7 @@ it('can instantiate nfse data with full structure', function () {
             dps: new DpsData(
                 versao: '1.00',
                 infDps: new InfDpsData(
-                    id: 'DPS123',
+                    id: $dpsId,
                     tipoAmbiente: 2,
                     dataEmissao: '2023-01-01',
                     versaoAplicativo: '1.0',
@@ -97,10 +100,12 @@ it('can instantiate nfse data with full structure', function () {
 });
 
 it('verifies DpsData is a DFe', function () {
+    $dpsId = IdGenerator::generateDpsId('12345678000199', '1234567', '1', '100');
+
     $dps = new DpsData(
         versao: '1.00',
         infDps: new InfDpsData(
-            id: 'DPS123',
+            id: $dpsId,
             tipoAmbiente: 2,
             dataEmissao: '2023-01-01',
             versaoAplicativo: '1.0',
