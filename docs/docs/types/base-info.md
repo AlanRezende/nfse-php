@@ -43,7 +43,7 @@ Contém os dados detalhados da Nota Fiscal de Serviço Eletrônica gerada.
 | :----------------------------- | :------- | :-------------- | :------------------------------------------- |
 | `id`                           | `string` | `id`            | Identificador único da NFS-e.                |
 | `numeroNfse`                   | `string` | `nNFSe`         | Número sequencial da NFS-e.                  |
-| `numeroDfse`                   | `string` | `nDFSe`         | Número do DFe nacional.                      |
+| `numeroDfse`                   | `string` | `nDFe`          | Número do DFe nacional.                      |
 | `codigoVerificacao`            | `string` | `cVerif`        | Código para verificação de autenticidade.    |
 | `dataProcessamento`            | `string` | `dhProc`        | Data e hora de geração da nota.              |
 | `ambienteGerador`              | `int`    | `ambGer`        | Ambiente que gerou a nota.                   |
@@ -55,7 +55,10 @@ Contém os dados detalhados da Nota Fiscal de Serviço Eletrônica gerada.
 | `nomeLocalIncidencia`          | `string` | `xLocIncid`     | Nome do local de incidência.                 |
 | `descricaoTributacaoNacional`  | `string` | `xTribNac`      | Descrição da tributação nacional.            |
 | `descricaoTributacaoMunicipal` | `string` | `xTribMun`      | Descrição da tributação municipal.           |
+| `descricaoNbs`                 | `string` | `xNBS`          | Descrição da NBS.                            |
+| `tipoEmissao`                  | `int`    | `tpEmis`        | Tipo de Emissão.                             |
 | `codigoStatus`                 | `int`    | `cStat`         | Status atual da nota (ex: 100 - Autorizado). |
+| `outrasInformacoes`            | `string` | `xOutInf`       | Outras Informações.                          |
 
 ### Relacionamentos
 

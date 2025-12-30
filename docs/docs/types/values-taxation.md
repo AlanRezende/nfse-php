@@ -4,7 +4,7 @@ Estes DTOs gerenciam os aspectos financeiros da prestação, incluindo valores b
 
 ## ValoresData
 
-Consolida todos os valores financeiros da operação.
+Consolida todos os valores financeiros da operação (usado na DPS).
 
 ### Propriedades
 
@@ -14,6 +14,25 @@ Consolida todos os valores financeiros da operação.
 | `desconto`             | `DescontoData`             | `vDescCondIncond` | Descontos aplicados.                         |
 | `deducaoReducao`       | `DeducaoReducaoData`       | `vDedRed`         | Deduções da base de cálculo.                 |
 | `tributacao`           | `TributacaoData`           | `trib`            | Detalhes da tributação (ISSQN, PIS, COFINS). |
+
+---
+
+## ValoresNfseData
+
+Consolida os valores financeiros calculados e finais da NFS-e.
+
+### Propriedades
+
+| Propriedade                        | Tipo    | Mapeamento XML | Descrição                               |
+| :--------------------------------- | :------ | :------------- | :-------------------------------------- |
+| `baseCalculo`                      | `float` | `vBC`          | Valor da Base de Cálculo.               |
+| `aliquotaAplicada`                 | `float` | `pAliqAplic`   | Alíquota Aplicada.                      |
+| `valorIssqn`                       | `float` | `vISSQN`       | Valor do ISSQN.                         |
+| `valorLiquido`                     | `float` | `vLiq`         | Valor Líquido da NFS-e.                 |
+| `valorCalculadoDeducaoReducao`     | `float` | `vCalcDR`      | Valor calculado de Dedução/Redução.     |
+| `tipoBeneficioMunicipal`           | `int`   | `tpBM`         | Tipo de Benefício Municipal.            |
+| `valorCalculadoBeneficioMunicipal` | `float` | `vCalcBM`      | Valor calculado de Benefício Municipal. |
+| `valorTotalRetido`                 | `float` | `vTotalRet`    | Valor Total Retido.                     |
 
 ---
 

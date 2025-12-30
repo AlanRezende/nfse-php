@@ -15,6 +15,24 @@ class ValoresNfseData extends Data
 {
     public function __construct(
         /**
+         * Valor calculado de Dedução/Redução.
+         */
+        #[MapInputName('vCalcDR')]
+        public ?float $valorCalculadoDeducaoReducao,
+
+        /**
+         * Tipo de Benefício Municipal.
+         */
+        #[MapInputName('tpBM')]
+        public ?int $tipoBeneficioMunicipal,
+
+        /**
+         * Valor calculado de Benefício Municipal.
+         */
+        #[MapInputName('vCalcBM')]
+        public ?float $valorCalculadoBeneficioMunicipal,
+
+        /**
          * Valor da Base de Cálculo.
          */
         #[MapInputName('vBC')]
@@ -31,6 +49,12 @@ class ValoresNfseData extends Data
          */
         #[MapInputName('vISSQN')]
         public ?float $valorIssqn,
+
+        /**
+         * Valor Total Retido.
+         */
+        #[MapInputName('vTotalRet')]
+        public ?float $valorTotalRetido,
 
         /**
          * Valor Líquido da NFS-e.

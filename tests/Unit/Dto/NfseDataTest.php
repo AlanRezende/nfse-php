@@ -27,7 +27,10 @@ it('can instantiate nfse data with full structure', function () {
             nomeLocalIncidencia: 'VARZEA ALEGRE',
             descricaoTributacaoNacional: 'Enfermagem...',
             descricaoTributacaoMunicipal: '04.06 - Enfermagem...',
+            descricaoNbs: '123456789',
+            tipoEmissao: 1,
             codigoStatus: 100,
+            outrasInformacoes: 'Informações adicionais',
             dps: new DpsData(
                 versao: '1.00',
                 infDps: new InfDpsData(
@@ -69,9 +72,13 @@ it('can instantiate nfse data with full structure', function () {
                 email: 'contato@prefeitura.sp.gov.br'
             ),
             valores: new ValoresNfseData(
+                valorCalculadoDeducaoReducao: 0.0,
+                tipoBeneficioMunicipal: 0,
+                valorCalculadoBeneficioMunicipal: 0.0,
                 baseCalculo: 1850.00,
                 aliquotaAplicada: 5.00,
                 valorIssqn: 92.50,
+                valorTotalRetido: 0.0,
                 valorLiquido: 1757.50
             )
         )

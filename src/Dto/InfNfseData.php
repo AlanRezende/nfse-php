@@ -29,7 +29,7 @@ class InfNfseData extends Data
         /**
          * Número do DFe.
          */
-        #[MapInputName('nDFSe')]
+        #[MapInputName('nDFe')]
         public ?string $numeroDfse,
 
         /**
@@ -99,10 +99,28 @@ class InfNfseData extends Data
         public ?string $descricaoTributacaoMunicipal,
 
         /**
+         * Descrição da NBS.
+         */
+        #[MapInputName('xNBS')]
+        public ?string $descricaoNbs,
+
+        /**
+         * Tipo de Emissão.
+         */
+        #[MapInputName('tpEmis')]
+        public ?int $tipoEmissao,
+
+        /**
          * Código de status.
          */
         #[MapInputName('cStat')]
         public ?int $codigoStatus,
+
+        /**
+         * Outras Informações.
+         */
+        #[MapInputName('xOutInf')]
+        public ?string $outrasInformacoes,
 
         /**
          * Dados da DPS.
