@@ -20,6 +20,7 @@ const sidebars: SidebarsConfig = {
         "dtos",
         "validations",
         "xml-serialization",
+        "advanced-scenarios",
         "typescript",
         "schema-rules",
     ],

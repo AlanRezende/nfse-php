@@ -27,7 +27,7 @@ it('can instantiate nfse data with full structure', function () {
             nomeLocalIncidencia: 'VARZEA ALEGRE',
             descricaoTributacaoNacional: 'Enfermagem...',
             descricaoTributacaoMunicipal: '04.06 - Enfermagem...',
-            descricaoNbs: '123456789',
+                                                                                descricaoNbs: '123456789',
             tipoEmissao: 1,
             codigoStatus: 100,
             outrasInformacoes: 'Informações adicionais',
