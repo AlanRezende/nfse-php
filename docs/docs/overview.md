@@ -90,3 +90,23 @@ $dps = DpsData::from([
 // Validando os dados
 DpsData::validate($dps->toArray());
 ```
+
+---
+
+## 📚 Próximos Passos
+
+-   **[DTOs e Validações](./dtos)** - Aprenda as 3 formas de construir DTOs
+-   **[Serialização XML](./xml-serialization)** - Como gerar XMLs válidos
+-   **[Assinatura Digital](./digital-signature)** - Assine seus documentos
+-   **[Utilitários](./utilities/id-generator)** - Helpers úteis para o dia a dia
+-   **[Exemplos Práticos](./full-example)** - Exemplos completos de uso
+
+---
+
+## 🔗 Referências
+
+-   **[Spatie Laravel Data](https://spatie.be/docs/laravel-data)** - Biblioteca base dos DTOs
+-   **[Manual NFSe Nacional](https://www.gov.br/nfse/)** - Documentação oficial do governo
+-   **[Schemas XSD](https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas)** - Schemas oficiais da NFSe
+-   **[GitHub do Projeto](https://github.com/nfse-nacional/nfse-php)** - Código-fonte e issues
+-   **[Packagist](https://packagist.org/packages/nfse-nacional/nfse-php)** - Pacote Composer

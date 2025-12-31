@@ -321,7 +321,7 @@ $iss = TaxCalculator::calculate($valor, 0.05); // ❌ Isso é 0,05%, não 5%
 
 ---
 
-## Veja Também
+## 🔗 Veja Também
 
 -   [DocumentFormatter](/utilities/document-formatter) - Formatação de documentos
 -   [IdGenerator](/utilities/id-generator) - Geração de IDs únicos

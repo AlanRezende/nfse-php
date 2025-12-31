@@ -2,42 +2,455 @@
 
 A biblioteca `nfse-php` utiliza DTOs (Data Transfer Objects) para representar a estrutura complexa da NFS-e Nacional. Esses objetos facilitam a manipulação de dados, garantem a integridade através de validações e permitem a geração automática de tipos para o frontend.
 
-## Referência de Tipos
+## 🎯 Três Maneiras de Construir DTOs
 
-Para uma documentação detalhada de cada DTO, incluindo suas propriedades e relacionamentos, consulte a seção **[Tipos (DTOs)](./types/main-documents)**.
+O pacote oferece **flexibilidade total** na forma como você constrói seus dados. Você pode escolher a abordagem que melhor se adequa ao seu caso de uso:
 
-## Como Instanciar DTOs
+1. **Array (Padrão Nacional)** - Usando os nomes exatos das tags XML
+2. **Array (Semântico)** - Usando nomes amigáveis em português
+3. **Objeto (Semântico)** - Usando classes e argumentos nomeados (PHP 8+)
 
-Existem duas formas principais de criar instâncias dos DTOs:
+---
 
-### 1. Usando o método `from()`
+## 1️⃣ Array (Padrão Nacional)
 
-Ideal quando você já confia na origem dos dados ou quer apenas mapear um array.
+Use esta abordagem quando você já tem os dados no formato do padrão nacional ou quando está migrando de outra biblioteca.
 
-```php
-$dps = DpsData::from([
-    'infDps' => [
-        'tpAmb' => 2,
-        // ...
-    ]
-]);
-```
+### Características
 
-### 2. Usando `validateAndCreate()`
+-   ✅ Usa os **nomes exatos** das tags XML (`tpAmb`, `dhEmi`, `nDPS`, etc.)
+-   ✅ **Compatível** com XMLs existentes
+-   ✅ Ideal para **migração** de sistemas legados
+-   ✅ Menos verboso para quem já conhece o padrão
 
-Recomendado para dados vindos de requisições externas, pois dispara uma exceção se as regras de validação não forem atendidas.
+### Exemplo Completo
 
 ```php
+use Nfse\Dto\DpsData;
+use Nfse\Xml\DpsXmlBuilder;
+use Illuminate\Validation\ValidationException;
+
+// Dados vindos da sua aplicação (ex: $request->all())
+$dadosDoFormulario = [
+    'versao' => '1.00',
+    'infDPS' => [
+        '@Id' => 'DPS330455721190597100010500333000000000000006',
+        'tpAmb' => 2, // 1=Produção, 2=Homologação
+        'dhEmi' => '2023-10-27T10:00:00-03:00',
+        'verAplic' => '1.0.0',
+        'serie' => '00001',
+        'nDPS' => '000000000000006',
+        'dCompet' => '2023-10-27',
+        'tpEmit' => 1, // 1=Prestador, 2=Tomador, 3=Intermediário
+        'cLocEmi' => '3304557', // Código IBGE do município
+
+        // Prestador
+        'prest' => [
+            'CNPJ' => '21190597000105',
+            'IM' => '00333',
+            'xNome' => 'EMPRESA EXEMPLO LTDA',
+            'xFant' => 'Empresa Exemplo',
+            'enderNac' => [
+                'end' => 'RUA EXEMPLO',
+                'nro' => '123',
+                'xCpl' => 'SALA 456',
+                'xBairro' => 'CENTRO',
+                'cMun' => '3304557',
+                'UF' => 'RJ',
+                'CEP' => '20000000',
+            ],
+            'fone' => '2112345678',
+            'email' => 'contato@exemplo.com.br',
+        ],
+
+        // Tomador
+        'toma' => [
+            'CPF' => '12345678901',
+            'xNome' => 'CLIENTE EXEMPLO',
+            'enderNac' => [
+                'end' => 'AVENIDA CLIENTE',
+                'nro' => '456',
+                'xBairro' => 'BAIRRO CLIENTE',
+                'cMun' => '3304557',
+                'UF' => 'RJ',
+                'CEP' => '21000000',
+            ],
+            'fone' => '2198765432',
+            'email' => 'cliente@exemplo.com',
+        ],
+
+        // Serviço
+        'serv' => [
+            'cServ' => [
+                'cTribNac' => '01.07', // Código de tributação nacional
+                'xDescServ' => 'Desenvolvimento de software sob encomenda',
+            ],
+        ],
+
+        // Valores
+        'valores' => [
+            'vServPrest' => [
+                'vServ' => 5000.00,
+                'vDescIncond' => 0.00,
+                'vDescCond' => 0.00,
+            ],
+            'trib' => [
+                'tribMun' => [
+                    'tribISSQN' => 1, // 1=Tributável
+                    'tpRetISSQN' => 1, // 1=Não retido
+                    'exigSusp' => null,
+                ],
+            ],
+        ],
+    ],
+];
+
 try {
-    $dps = DpsData::validateAndCreate($requestData);
-} catch (\Illuminate\Validation\ValidationException $e) {
-    // Tratar erros
+    // Validar e criar o DTO
+    $dps = DpsData::validateAndCreate($dadosDoFormulario);
+
+    // Gerar o XML
+    $builder = new DpsXmlBuilder();
+    $xml = $builder->build($dps);
+
+    // Usar o XML
+    echo $xml;
+
+} catch (ValidationException $e) {
+    // Tratar erros de validação
+    foreach ($e->errors() as $field => $messages) {
+        echo "$field: " . implode(', ', $messages) . "\n";
+    }
 }
 ```
 
-## Mapeamento Automático
+---
 
-Graças ao `spatie/laravel-data`, todos os DTOs suportam mapeamento automático de nomes.
+## 2️⃣ Array (Semântico)
 
-> [!TIP]
-> Utilizamos o atributo `#[MapInputName]` para vincular o nome técnico do layout nacional (ex: `dhEmi`) à propriedade PHP legível. Isso permite que você trabalhe com nomes amigáveis no seu código enquanto mantém a compatibilidade com o padrão oficial.
+Use esta abordagem quando você quer **código mais legível** mas ainda prefere trabalhar com arrays.
+
+### Características
+
+-   ✅ Usa **nomes amigáveis** em português (`tipoAmbiente`, `dataEmissao`, `numeroDps`, etc.)
+-   ✅ **Mais legível** e autodocumentado
+-   ✅ Ideal para **novos projetos**
+-   ✅ Facilita **manutenção** do código
+-   ✅ O pacote **mapeia automaticamente** para o padrão nacional
+
+### Exemplo Completo
+
+```php
+use Nfse\Dto\DpsData;
+use Nfse\Xml\DpsXmlBuilder;
+
+// Você também pode usar arrays com chaves legíveis
+// O pacote entende tanto o padrão nacional quanto nomes amigáveis
+$dados = [
+    'versao' => '1.00',
+    'infDps' => [
+        'id' => 'DPS330455721190597100010500333000000000000006',
+        'tipoAmbiente' => 2, // Homologação
+        'dataEmissao' => '2023-10-27T10:00:00-03:00',
+        'versaoAplicativo' => '1.0.0',
+        'serie' => '00001',
+        'numeroDps' => '000000000000006',
+        'dataCompetencia' => '2023-10-27',
+        'tipoEmitente' => 1, // Prestador
+        'codigoLocalEmissao' => '3304557',
+
+        // Prestador (nomes amigáveis)
+        'prestador' => [
+            'cnpj' => '21190597000105',
+            'inscricaoMunicipal' => '00333',
+            'nome' => 'EMPRESA EXEMPLO LTDA',
+            'nomeFantasia' => 'Empresa Exemplo',
+            'enderecoNacional' => [
+                'endereco' => 'RUA EXEMPLO',
+                'numero' => '123',
+                'complemento' => 'SALA 456',
+                'bairro' => 'CENTRO',
+                'codigoMunicipio' => '3304557',
+                'uf' => 'RJ',
+                'cep' => '20000000',
+            ],
+            'telefone' => '2112345678',
+            'email' => 'contato@exemplo.com.br',
+        ],
+
+        // Tomador (nomes amigáveis)
+        'tomador' => [
+            'cpf' => '12345678901',
+            'nome' => 'CLIENTE EXEMPLO',
+            'enderecoNacional' => [
+                'endereco' => 'AVENIDA CLIENTE',
+                'numero' => '456',
+                'bairro' => 'BAIRRO CLIENTE',
+                'codigoMunicipio' => '3304557',
+                'uf' => 'RJ',
+                'cep' => '21000000',
+            ],
+            'telefone' => '2198765432',
+            'email' => 'cliente@exemplo.com',
+        ],
+
+        // Serviço (nomes amigáveis)
+        'servico' => [
+            'codigoServico' => [
+                'codigoTributacaoNacional' => '01.07',
+                'descricaoServico' => 'Desenvolvimento de software sob encomenda',
+            ],
+        ],
+
+        // Valores (nomes amigáveis)
+        'valores' => [
+            'valorServicoPrestado' => [
+                'valorServico' => 5000.00,
+                'valorDescontoIncondicionado' => 0.00,
+                'valorDescontoCondicionado' => 0.00,
+            ],
+            'tributacao' => [
+                'tributacaoMunicipal' => [
+                    'tributacaoISSQN' => 1,
+                    'tipoRetencaoISSQN' => 1,
+                ],
+            ],
+        ],
+    ],
+];
+
+// Criar o DTO (com validação automática)
+$dps = DpsData::from($dados);
+
+// Gerar o XML
+$xml = (new DpsXmlBuilder())->build($dps);
+
+echo $xml;
+```
+
+---
+
+## 3️⃣ Objeto (Semântico)
+
+Use esta abordagem para **máxima type safety** e **autocomplete** da IDE.
+
+### Características
+
+-   ✅ Usa **classes tipadas** com argumentos nomeados (PHP 8+)
+-   ✅ **Autocomplete completo** na IDE
+-   ✅ **Type hints** garantem tipos corretos
+-   ✅ **Mais seguro** em tempo de desenvolvimento
+-   ✅ **Refatoração facilitada**
+-   ✅ Ideal para **projetos grandes** e **equipes**
+
+### Exemplo Completo
+
+```php
+use Nfse\Dto\DpsData;
+use Nfse\Dto\InfDpsData;
+use Nfse\Dto\PrestadorData;
+use Nfse\Dto\TomadorData;
+use Nfse\Dto\EnderecoNacionalData;
+use Nfse\Dto\ServicoData;
+use Nfse\Dto\CodigoServicoData;
+use Nfse\Dto\ValoresData;
+use Nfse\Dto\ValorServicoPrestadoData;
+use Nfse\Dto\TributacaoData;
+use Nfse\Dto\TributacaoMunicipalData;
+use Nfse\Xml\DpsXmlBuilder;
+
+// Construção Semântica com Argumentos Nomeados (PHP 8+)
+// Você sabe exatamente o que cada campo significa
+// A IDE oferece autocomplete e validação de tipos
+$dps = new DpsData(
+    versao: '1.00',
+    infDps: new InfDpsData(
+        id: 'DPS330455721190597100010500333000000000000006',
+        tipoAmbiente: 2, // Homologação
+        dataEmissao: '2023-10-27T10:00:00-03:00',
+        versaoAplicativo: '1.0.0',
+        serie: '00001',
+        numeroDps: '000000000000006',
+        dataCompetencia: '2023-10-27',
+        tipoEmitente: 1, // Prestador
+        codigoLocalEmissao: '3304557',
+
+        // Prestador - Objeto tipado
+        prestador: new PrestadorData(
+            cnpj: '21190597000105',
+            inscricaoMunicipal: '00333',
+            nome: 'EMPRESA EXEMPLO LTDA',
+            nomeFantasia: 'Empresa Exemplo',
+            enderecoNacional: new EnderecoNacionalData(
+                endereco: 'RUA EXEMPLO',
+                numero: '123',
+                complemento: 'SALA 456',
+                bairro: 'CENTRO',
+                codigoMunicipio: '3304557',
+                uf: 'RJ',
+                cep: '20000000',
+            ),
+            telefone: '2112345678',
+            email: 'contato@exemplo.com.br',
+        ),
+
+        // Tomador - Objeto tipado
+        tomador: new TomadorData(
+            cpf: '12345678901',
+            nome: 'CLIENTE EXEMPLO',
+            enderecoNacional: new EnderecoNacionalData(
+                endereco: 'AVENIDA CLIENTE',
+                numero: '456',
+                bairro: 'BAIRRO CLIENTE',
+                codigoMunicipio: '3304557',
+                uf: 'RJ',
+                cep: '21000000',
+            ),
+            telefone: '2198765432',
+            email: 'cliente@exemplo.com',
+        ),
+
+        // Serviço - Objeto tipado
+        servico: new ServicoData(
+            codigoServico: new CodigoServicoData(
+                codigoTributacaoNacional: '01.07',
+                descricaoServico: 'Desenvolvimento de software sob encomenda',
+            ),
+        ),
+
+        // Valores - Objeto tipado
+        valores: new ValoresData(
+            valorServicoPrestado: new ValorServicoPrestadoData(
+                valorServico: 5000.00,
+                valorDescontoIncondicionado: 0.00,
+                valorDescontoCondicionado: 0.00,
+            ),
+            tributacao: new TributacaoData(
+                tributacaoMunicipal: new TributacaoMunicipalData(
+                    tributacaoISSQN: 1,
+                    tipoRetencaoISSQN: 1,
+                ),
+            ),
+        ),
+
+        // Campos opcionais podem ser omitidos ou passados como null
+        motivoEmissaoTomadorIntermediario: null,
+        chaveNfseRejeitada: null,
+        substituicao: null,
+        intermediario: null,
+    )
+);
+
+// Gerar o XML
+$builder = new DpsXmlBuilder();
+$xml = $builder->build($dps);
+
+echo $xml;
+```
+
+---
+
+## 📊 Comparação das Abordagens
+
+| Característica           | Array Nacional | Array Semântico      | Objeto Semântico      |
+| ------------------------ | -------------- | -------------------- | --------------------- |
+| **Legibilidade**         | ⭐⭐           | ⭐⭐⭐⭐             | ⭐⭐⭐⭐⭐            |
+| **Type Safety**          | ❌             | ❌                   | ✅                    |
+| **Autocomplete**         | ⚠️ Limitado    | ⚠️ Limitado          | ✅ Completo           |
+| **Migração**             | ✅ Fácil       | ⚠️ Requer mapeamento | ⚠️ Requer refatoração |
+| **Manutenção**           | ⭐⭐           | ⭐⭐⭐⭐             | ⭐⭐⭐⭐⭐            |
+| **Curva de Aprendizado** | ⭐⭐⭐⭐       | ⭐⭐⭐               | ⭐⭐                  |
+| **Ideal Para**           | Migração       | Novos projetos       | Projetos grandes      |
+
+---
+
+## 🎯 Qual Abordagem Usar?
+
+### Use **Array (Padrão Nacional)** quando:
+
+-   ✅ Está migrando de outra biblioteca
+-   ✅ Já tem XMLs ou dados no formato nacional
+-   ✅ A equipe já conhece bem o padrão NFSe
+-   ✅ Quer código mais compacto
+
+### Use **Array (Semântico)** quando:
+
+-   ✅ Está começando um novo projeto
+-   ✅ Quer código mais legível
+-   ✅ Prefere trabalhar com arrays
+-   ✅ A equipe não conhece o padrão NFSe
+
+### Use **Objeto (Semântico)** quando:
+
+-   ✅ Quer máxima segurança de tipos
+-   ✅ Trabalha em equipe
+-   ✅ Projeto de médio/grande porte
+-   ✅ Usa IDE moderna (PHPStorm, VS Code)
+-   ✅ Quer refatoração facilitada
+
+---
+
+## 💡 Dicas Importantes
+
+### Validação Automática
+
+Todos os DTOs suportam validação automática:
+
+```php
+// Lança exceção se houver erros
+$dps = DpsData::validateAndCreate($dados);
+
+// Não lança exceção, retorna null se inválido
+$dps = DpsData::from($dados);
+```
+
+### Mapeamento Automático
+
+O pacote mapeia automaticamente entre os formatos:
+
+```php
+// Estes são equivalentes:
+['tpAmb' => 2]
+['tipoAmbiente' => 2]
+
+// Estes também:
+['dhEmi' => '2023-10-27T10:00:00']
+['dataEmissao' => '2023-10-27T10:00:00']
+```
+
+### Campos Opcionais
+
+Campos opcionais podem ser omitidos:
+
+```php
+// Objeto
+new TomadorData(
+    cpf: '12345678901',
+    nome: 'Cliente',
+    // enderecoNacional: null, // Opcional, pode omitir
+);
+
+// Array
+[
+    'cpf' => '12345678901',
+    'nome' => 'Cliente',
+    // 'enderecoNacional' não precisa estar presente
+]
+```
+
+---
+
+## 📚 Próximos Passos
+
+-   **[Validações](./validations)** - Entenda as regras de validação
+-   **[Serialização XML](./xml-serialization)** - Como gerar XMLs
+-   **[Assinatura Digital](./digital-signature)** - Como assinar os XMLs
+-   **[Utilitários](./utilities/id-generator)** - Helpers úteis
+
+---
+
+## 🔗 Referências
+
+-   [Spatie Laravel Data](https://spatie.be/docs/laravel-data) - Biblioteca base dos DTOs
+-   [Manual NFSe Nacional](https://www.gov.br/nfse/) - Documentação oficial
+-   [Schemas XSD](https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas) - Schemas oficiais

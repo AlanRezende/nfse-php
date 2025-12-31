@@ -62,3 +62,23 @@ try {
 ## Validação
 
 A classe `Certificate` realiza validações básicas ao carregar o arquivo PFX, verificando se a senha está correta e se o arquivo é válido. Validações adicionais de expiração podem ser implementadas conforme a necessidade do negócio.
+
+---
+
+## 📚 Próximos Passos
+
+-   **[Assinando DPS](./signing-dps)** - Guia completo de assinatura de DPS
+-   **[XmlSigner Parametrizado](../XML_SIGNER.md)** - Configurações avançadas de assinatura
+-   **[Serialização XML](./xml-serialization)** - Como gerar XMLs para assinar
+-   **[Utilitários](./utilities/id-generator)** - Geração de IDs para documentos
+-   **[Exemplos Práticos](./full-example)** - Exemplos completos end-to-end
+
+---
+
+## 🔗 Referências
+
+-   **[XML-DSig Specification](https://www.w3.org/TR/xmldsig-core/)** - Padrão W3C de assinatura XML
+-   **[OpenSSL PHP](https://www.php.net/manual/en/book.openssl.php)** - Documentação OpenSSL
+-   **[Schemas XSD](https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas)** - Schemas oficiais NFSe
+-   **[Exemplos de Assinatura](https://github.com/nfse-nacional/nfse-php/tree/main/examples)** - Código de exemplo
+-   **[Manual NFSe](https://www.gov.br/nfse/)** - Documentação oficial do governo

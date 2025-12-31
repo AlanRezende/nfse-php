@@ -105,8 +105,37 @@ const config: Config = {
                             to: "/docs/overview",
                         },
                         {
-                            label: "DTOs",
+                            label: "DTOs e Validações",
                             to: "/docs/dtos",
+                        },
+                        {
+                            label: "Assinatura Digital",
+                            to: "/docs/digital-signature",
+                        },
+                        {
+                            label: "Utilitários",
+                            to: "/docs/utilities/id-generator",
+                        },
+                    ],
+                },
+                {
+                    title: "Recursos",
+                    items: [
+                        {
+                            label: "Exemplos de Código",
+                            href: "https://github.com/nfse-nacional/nfse-php/tree/main/examples",
+                        },
+                        {
+                            label: "Schemas XSD",
+                            href: "https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas",
+                        },
+                        {
+                            label: "Changelog",
+                            href: "https://github.com/nfse-nacional/nfse-php/releases",
+                        },
+                        {
+                            label: "Roadmap",
+                            to: "/#roadmap",
                         },
                     ],
                 },
@@ -114,13 +143,53 @@ const config: Config = {
                     title: "Comunidade",
                     items: [
                         {
-                            label: "GitHub Issues",
+                            label: "GitHub",
+                            href: "https://github.com/nfse-nacional/nfse-php",
+                        },
+                        {
+                            label: "Issues",
                             href: "https://github.com/nfse-nacional/nfse-php/issues",
+                        },
+                        {
+                            label: "Discussões",
+                            href: "https://github.com/nfse-nacional/nfse-php/discussions",
+                        },
+                        {
+                            label: "Contribuir",
+                            href: "https://github.com/nfse-nacional/nfse-php/blob/main/CONTRIBUTING.md",
+                        },
+                    ],
+                },
+                {
+                    title: "Mais",
+                    items: [
+                        {
+                            label: "Packagist",
+                            href: "https://packagist.org/packages/nfse-nacional/nfse-php",
+                        },
+                        {
+                            label: "NFSe Nacional",
+                            href: "https://www.gov.br/nfse/",
+                        },
+                        {
+                            label: "Spatie Laravel Data",
+                            href: "https://spatie.be/docs/laravel-data",
+                        },
+                        {
+                            label: "Licença MIT",
+                            href: "https://github.com/nfse-nacional/nfse-php/blob/main/LICENSE",
                         },
                     ],
                 },
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} NFSe PHP. Built with Docusaurus.`,
+            copyright: `
+                <div style="margin-top: 1rem;">
+                    <p>Copyright © ${new Date().getFullYear()} NFSe PHP. Construído com ❤️ usando Docusaurus.</p>
+                    <p style="font-size: 0.875rem; opacity: 0.8; margin-top: 0.5rem;">
+                        Projeto open-source sob licença MIT. Não afiliado ao governo brasileiro.
+                    </p>
+                </div>
+            `,
         },
         prism: {
             theme: prismThemes.github,

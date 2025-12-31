@@ -298,7 +298,7 @@ public function rules()
 
 ---
 
-## Veja Também
+## 🔗 Veja Também
 
 -   [TaxCalculator](/utilities/tax-calculator) - Cálculos tributários
 -   [IdGenerator](/utilities/id-generator) - Geração de IDs únicos

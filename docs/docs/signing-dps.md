@@ -522,7 +522,7 @@ Log::info('Assinando DPS', [
 
 ---
 
-## Veja Também
+## 🔗 Veja Também
 
 -   [Certificate](/digital-signature#carregando-o-certificado) - Carregar certificado A1
 -   [XmlSigner](/digital-signature#assinando-um-xml) - Assinatura digital
