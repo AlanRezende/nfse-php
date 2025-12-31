@@ -36,6 +36,7 @@ const sidebars: SidebarsConfig = {
         "xml-serialization",
         "digital-signature",
         "signing-dps",
+        "xml-signer",
         {
             type: "category",
             label: "Utilitários",

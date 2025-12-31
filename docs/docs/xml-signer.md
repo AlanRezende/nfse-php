@@ -254,16 +254,16 @@ foreach ($documents as $docPath) {
 }
 ```
 
-## Boas Práticas
+## 💡 Boas Práticas
 
-1. **Sempre valide o certificado** antes de assinar em produção
-2. **Use SHA-256** quando possível para maior segurança
-3. **Especifique o `rootname`** para validação adicional
-4. **Mantenha as chaves privadas seguras** e nunca as versione no Git
-5. **Use certificados de teste** em ambiente de desenvolvimento
-6. **Verifique a validade do certificado** antes de assinar
+1. ✅ **Sempre valide o certificado** antes de assinar em produção
+2. 🔒 **Use SHA-256** quando possível para maior segurança
+3. 🎯 **Especifique o `rootname`** para validação adicional
+4. 🛡️ **Mantenha as chaves privadas seguras** e nunca as versione no Git
+5. 🧪 **Use certificados de teste** em ambiente de desenvolvimento
+6. 📅 **Verifique a validade do certificado** antes de assinar
 
-## Referências
+## 🔗 Referências
 
 -   [XML Signature Syntax and Processing](https://www.w3.org/TR/xmldsig-core/)
 -   [Canonical XML Version 1.0](https://www.w3.org/TR/xml-c14n)

@@ -230,7 +230,7 @@ if (strlen($documentoLimpo) === 11) {
 
 ---
 
-## Boas Práticas
+## 💡 Boas Práticas
 
 ### ✅ Recomendado
 

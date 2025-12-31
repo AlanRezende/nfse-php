@@ -68,7 +68,7 @@ A classe `Certificate` realiza validações básicas ao carregar o arquivo PFX, 
 ## 📚 Próximos Passos
 
 -   **[Assinando DPS](./signing-dps)** - Guia completo de assinatura de DPS
--   **[XmlSigner Parametrizado](../XML_SIGNER.md)** - Configurações avançadas de assinatura
+-   **[XmlSigner Parametrizado](./xml-signer)** - Configurações avançadas de assinatura
 -   **[Serialização XML](./xml-serialization)** - Como gerar XMLs para assinar
 -   **[Utilitários](./utilities/id-generator)** - Geração de IDs para documentos
 -   **[Exemplos Práticos](./full-example)** - Exemplos completos end-to-end

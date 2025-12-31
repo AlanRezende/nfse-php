@@ -442,7 +442,7 @@ if ($resultado['sucesso']) {
 
 ---
 
-## Boas Práticas
+## 💡 Boas Práticas
 
 ### ✅ Recomendado
 

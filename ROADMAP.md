@@ -27,3 +27,23 @@ Este pacote é a fundação do ecossistema. O foco é garantir contratos sólido
 
 -   [x] Helpers para cálculo de impostos (simples).
 -   [x] Formatadores de documentos (CPF/CNPJ).
+-   [x] Gerador de IDs (DPS/NFSe).
+
+### Fase 5: Documentação & Busca 🚀
+
+-   [x] Docusaurus com busca local.
+-   [x] Documentação de DTOs e Assinatura.
+-   [ ] Tutoriais avançados.
+
+### Fase 6: Web Services (Próximo) 📅
+
+-   [ ] Integração com Web Services da SEFIN Nacional.
+-   [ ] Envio de DPS.
+-   [ ] Consulta de NFSe.
+-   [ ] Eventos e Cancelamentos.
+
+### Fase 7: Testes E2E & CI/CD 📅
+
+-   [ ] Testes end-to-end com ambiente de homologação.
+-   [ ] GitHub Actions para CI/CD.
+-   [ ] Releases automáticas.

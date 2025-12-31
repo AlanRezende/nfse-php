@@ -403,7 +403,7 @@ while (Cliente::where('cpf', $cpf)->exists()) {
 
 ---
 
-## Boas Práticas
+## 💡 Boas Práticas
 
 ### ✅ Recomendado
 

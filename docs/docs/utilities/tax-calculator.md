@@ -265,7 +265,7 @@ echo $valor; // 3.34 (arredondado)
 
 ---
 
-## Boas Práticas
+## 💡 Boas Práticas
 
 ### ✅ Recomendado
 
