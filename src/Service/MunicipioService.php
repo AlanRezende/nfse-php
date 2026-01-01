@@ -21,7 +21,7 @@ class MunicipioService
     /**
      * ADN Município - Baixa arrecadação e notas do município via NSU
      */
-    public function baixarDfe(int $nsu): array
+    public function baixarDfe(int $nsu): \Nfse\Dto\Http\DistribuicaoDfeResponse
     {
         return $this->adnClient->baixarDfeMunicipio($nsu);
     }
@@ -32,6 +32,39 @@ class MunicipioService
     public function enviarLote(string $xmlZipB64): array
     {
         return $this->adnClient->enviarLote($xmlZipB64);
+    }
+
+    /**
+     * ADN Parâmetros Municipais
+     */
+    public function consultarParametrosConvenio(string $codigoMunicipio): array
+    {
+        return $this->adnClient->consultarParametrosConvenio($codigoMunicipio);
+    }
+
+    public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): array
+    {
+        return $this->adnClient->consultarAliquota($codigoMunicipio, $codigoServico, $competencia);
+    }
+
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): array
+    {
+        return $this->adnClient->consultarHistoricoAliquotas($codigoMunicipio, $codigoServico);
+    }
+
+    public function consultarBeneficio(string $codigoMunicipio, string $numeroBeneficio, string $competencia): array
+    {
+        return $this->adnClient->consultarBeneficio($codigoMunicipio, $numeroBeneficio, $competencia);
+    }
+
+    public function consultarRegimesEspeciais(string $codigoMunicipio, string $codigoServico, string $competencia): array
+    {
+        return $this->adnClient->consultarRegimesEspeciais($codigoMunicipio, $codigoServico, $competencia);
+    }
+
+    public function consultarRetencoes(string $codigoMunicipio, string $competencia): array
+    {
+        return $this->adnClient->consultarRetencoes($codigoMunicipio, $competencia);
     }
 
     /**

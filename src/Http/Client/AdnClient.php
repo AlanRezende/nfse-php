@@ -9,6 +9,9 @@ use Nfse\Http\NfseContext;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\Contracts\AdnDanfseInterface;
+use Nfse\Dto\Http\DistribuicaoDfeResponse;
+use Nfse\Dto\Http\DistribuicaoNsuDto;
+use Nfse\Dto\Http\MensagemProcessamentoDto;
 
 class AdnClient implements AdnDanfseInterface
 {
@@ -68,9 +71,10 @@ class AdnClient implements AdnDanfseInterface
     /**
      * ADN Contribuinte
      */
-    public function baixarDfeContribuinte(int $nsu): array
+    public function baixarDfeContribuinte(int $nsu): DistribuicaoDfeResponse
     {
-        return $this->get("/contribuintes/dfe/{$nsu}");
+        $response = $this->get("/contribuintes/dfe/{$nsu}");
+        return $this->mapDistribuicaoResponse($response);
     }
 
     public function consultarEventosContribuinte(string $chaveAcesso): array
@@ -81,9 +85,10 @@ class AdnClient implements AdnDanfseInterface
     /**
      * ADN Município
      */
-    public function baixarDfeMunicipio(int $nsu): array
+    public function baixarDfeMunicipio(int $nsu): DistribuicaoDfeResponse
     {
-        return $this->get("/municipios/dfe/{$nsu}");
+        $response = $this->get("/municipios/dfe/{$nsu}");
+        return $this->mapDistribuicaoResponse($response);
     }
 
     /**
@@ -152,5 +157,33 @@ class AdnClient implements AdnDanfseInterface
         } catch (GuzzleException $e) {
             throw NfseApiException::requestError($e->getMessage(), $e->getCode());
         }
+    }
+
+    private function mapDistribuicaoResponse(array $response): DistribuicaoDfeResponse
+    {
+        return new DistribuicaoDfeResponse(
+            tipoAmbiente: $response['tipoAmbiente'] ?? null,
+            versaoAplicativo: $response['versaoAplicativo'] ?? null,
+            dataHoraProcessamento: $response['dataHoraProcessamento'] ?? null,
+            ultimoNsu: $response['ultimoNSU'] ?? null,
+            maiorNsu: $response['maiorNSU'] ?? null,
+            alertas: $this->mapMensagens($response['alertas'] ?? []),
+            erros: $this->mapMensagens($response['erros'] ?? []),
+            listaNsu: array_map(fn($item) => new DistribuicaoNsuDto(
+                nsu: $item['nsu'] ?? null,
+                dfeXmlGZipB64: $item['xmlGZipB64'] ?? null
+            ), $response['listaNSU'] ?? [])
+        );
+    }
+
+    private function mapMensagens(array $mensagens): array
+    {
+        return array_map(fn($m) => new MensagemProcessamentoDto(
+            mensagem: $m['mensagem'] ?? null,
+            parametros: $m['parametros'] ?? null,
+            codigo: $m['codigo'] ?? null,
+            descricao: $m['descricao'] ?? null,
+            complemento: $m['complemento'] ?? null
+        ), $mensagens);
     }
 }

@@ -77,6 +77,11 @@ class ContribuinteService
         throw new \Exception("Parser de XML ainda não implementado. XML Recebido: " . substr($nfseXml, 0, 100) . "...");
     }
 
+    public function consultarDps(string $idDps): \Nfse\Dto\Http\ConsultaDpsResponse
+    {
+        return $this->sefinClient->consultarDps($idDps);
+    }
+
     public function downloadDanfse(string $chaveAcesso): string
     {
         return $this->adnClient->obterDanfse($chaveAcesso);
@@ -85,6 +90,16 @@ class ContribuinteService
     public function verificarDps(string $idDps): bool
     {
         return $this->sefinClient->verificarDps($idDps);
+    }
+
+    public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): \Nfse\Dto\Http\RegistroEventoResponse
+    {
+        return $this->sefinClient->registrarEvento($chaveAcesso, $eventoXmlGZipB64);
+    }
+
+    public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): \Nfse\Dto\Http\RegistroEventoResponse
+    {
+        return $this->sefinClient->consultarEvento($chaveAcesso, $tipoEvento, $numSeqEvento);
     }
 
     public function listarEventos(string $chaveAcesso, ?int $tipoEvento = null): array
@@ -98,7 +113,7 @@ class ContribuinteService
     /**
      * ADN Contribuinte - Baixa documentos via NSU
      */
-    public function baixarDfe(int $nsu): array
+    public function baixarDfe(int $nsu): \Nfse\Dto\Http\DistribuicaoDfeResponse
     {
         return $this->adnClient->baixarDfeContribuinte($nsu);
     }
@@ -119,5 +134,25 @@ class ContribuinteService
     public function consultarAliquota(string $codigoMunicipio, string $codigoServico, string $competencia): array
     {
         return $this->adnClient->consultarAliquota($codigoMunicipio, $codigoServico, $competencia);
+    }
+
+    public function consultarHistoricoAliquotas(string $codigoMunicipio, string $codigoServico): array
+    {
+        return $this->adnClient->consultarHistoricoAliquotas($codigoMunicipio, $codigoServico);
+    }
+
+    public function consultarBeneficio(string $codigoMunicipio, string $numeroBeneficio, string $competencia): array
+    {
+        return $this->adnClient->consultarBeneficio($codigoMunicipio, $numeroBeneficio, $competencia);
+    }
+
+    public function consultarRegimesEspeciais(string $codigoMunicipio, string $codigoServico, string $competencia): array
+    {
+        return $this->adnClient->consultarRegimesEspeciais($codigoMunicipio, $codigoServico, $competencia);
+    }
+
+    public function consultarRetencoes(string $codigoMunicipio, string $competencia): array
+    {
+        return $this->adnClient->consultarRetencoes($codigoMunicipio, $competencia);
     }
 }

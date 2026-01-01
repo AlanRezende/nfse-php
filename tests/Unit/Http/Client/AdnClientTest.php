@@ -49,6 +49,26 @@ class AdnClientTest extends TestCase
         $this->assertEquals($responseData, $response);
     }
 
+    public function testBaixarDfeContribuinte()
+    {
+        $responseData = [
+            'tipoAmbiente' => 2,
+            'ultimoNSU' => 100,
+            'listaNSU' => [
+                ['nsu' => 100, 'xmlGZipB64' => 'base64']
+            ]
+        ];
+
+        $client = $this->createClientWithMock([
+            new Response(200, [], json_encode($responseData))
+        ]);
+
+        $response = $client->baixarDfeContribuinte(100);
+
+        $this->assertInstanceOf(\Nfse\Dto\Http\DistribuicaoDfeResponse::class, $response);
+        $this->assertEquals(100, $response->ultimoNsu);
+    }
+
     public function testObterDanfse()
     {
         $pdfContent = '%PDF-1.4';
