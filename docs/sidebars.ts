@@ -3,7 +3,13 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars: SidebarsConfig = {
     docsSidebar: [
         "overview",
+        "quickstart",
         "como-se-integrar",
+        {
+            type: "category",
+            label: "Guias Práticos",
+            items: ["guides/emitir", "guides/consultar", "guides/eventos"],
+        },
         {
             type: "category",
             label: "Exemplos Práticos",
