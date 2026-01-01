@@ -11,7 +11,7 @@ try {
     $response = $nfse->municipio()->baixarDfe($nsu);
     
     echo "NSU Final: " . $response->ultimoNsu . "\n";
-    echo "Quantidade de documentos: " . count($response->documentos) . "\n";
+    echo "Quantidade de documentos: " . count($response->listaNsu) . "\n";
     // print_r($response);
 } catch (\Exception $e) {
     echo "Erro: " . $e->getMessage() . "\n";

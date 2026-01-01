@@ -51,19 +51,25 @@ try {
             ),
             servico: new ServicoData(
                 localPrestacao: new LocalPrestacaoData(
-                    codigoMunicipio: $codigoMunicipio
+                    codigoLocalPrestacao: $codigoMunicipio,
+                    codigoPaisPrestacao: 'BR'
                 ),
                 codigoServico: new CodigoServicoData(
-                    codigoServicoNacional: '01.01'
+                    codigoTributacaoNacional: '01.01'
                 )
             ),
             valores: new ValoresData(
                 valorServicoPrestado: new ValorServicoPrestadoData(
-                    valorBruto: 100.00
+                    valorServico: 100.00
                 ),
                 tributacao: new TributacaoData(
-                    regimeEspecialTributacao: 1,
-                    exigibilidadeIss: 1
+                    tributacaoIssqn: 1,
+                    tipoImunidade: null,
+                    tipoRetencaoIssqn: 1,
+                    tipoSuspensao: null,
+                    numeroProcessoSuspensao: null,
+                    beneficioMunicipal: null,
+                    cstPisCofins: '01'
                 )
             )
         )
@@ -74,7 +80,7 @@ try {
     $nfseData = $nfse->contribuinte()->emitir($dps);
     
     echo "NFS-e emitida com sucesso!\n";
-    echo "Chave de Acesso: " . $nfseData->chaveAcesso . "\n";
+    echo "Chave de Acesso: " . $nfseData->infNfse->id . "\n";
     
 } catch (\Exception $e) {
     echo "Erro: " . $e->getMessage() . "\n";

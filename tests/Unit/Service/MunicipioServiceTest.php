@@ -82,4 +82,53 @@ class MunicipioServiceTest extends TestCase
 
         $this->assertEquals(['nome' => 'Empresa Teste'], $result);
     }
+
+    public function test_baixar_alteracoes_cadastro()
+    {
+        $this->cncClientMock->expects($this->once())
+            ->method('baixarAlteracoesCadastro')
+            ->with(100)
+            ->willReturn(['alteracoes' => []]);
+
+        $result = $this->service->baixarAlteracoesCadastro(100);
+
+        $this->assertEquals(['alteracoes' => []], $result);
+    }
+
+    public function test_atualizar_contribuinte()
+    {
+        $dados = ['cnpj' => '12345678000199'];
+        $this->cncClientMock->expects($this->once())
+            ->method('atualizarContribuinte')
+            ->with($dados)
+            ->willReturn(['status' => 'sucesso']);
+
+        $result = $this->service->atualizarContribuinte($dados);
+
+        $this->assertEquals(['status' => 'sucesso'], $result);
+    }
+
+    public function test_consultar_parametros_convenio()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarParametrosConvenio')
+            ->with('3550308')
+            ->willReturn(['param' => 'value']);
+
+        $result = $this->service->consultarParametrosConvenio('3550308');
+
+        $this->assertEquals(['param' => 'value'], $result);
+    }
+
+    public function test_consultar_aliquota()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarAliquota')
+            ->with('3550308', '01.01', '2023-10-01')
+            ->willReturn(['aliquota' => 5.0]);
+
+        $result = $this->service->consultarAliquota('3550308', '01.01', '2023-10-01');
+
+        $this->assertEquals(['aliquota' => 5.0], $result);
+    }
 }

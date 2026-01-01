@@ -31,8 +31,8 @@ class ContribuinteServiceTest extends TestCase
 
         $this->context = new NfseContext(
             TipoAmbiente::Homologacao,
-            '/tmp/cert.pfx',
-            'password'
+            __DIR__.'/../../fixtures/certs/test.pfx',
+            '1234'
         );
 
         $this->sefinClientMock = $this->createMock(SefinNacionalInterface::class);
@@ -128,5 +128,76 @@ class ContribuinteServiceTest extends TestCase
         $result = $this->service->downloadDanfse($chave);
 
         $this->assertEquals($pdfContent, $result);
+    }
+
+    public function test_consultar_dps_success()
+    {
+        $idDps = 'DPS123';
+        $responseDto = new \Nfse\Dto\Http\ConsultaDpsResponse(
+            tipoAmbiente: 2,
+            versaoAplicativo: '1.0',
+            dataHoraProcessamento: '2023-10-27T10:00:00',
+            idDps: $idDps,
+            chaveAcesso: 'CHAVE123'
+        );
+
+        $this->sefinClientMock->expects($this->once())
+            ->method('consultarDps')
+            ->with($idDps)
+            ->willReturn($responseDto);
+
+        $result = $this->service->consultarDps($idDps);
+
+        $this->assertEquals($responseDto, $result);
+    }
+
+    public function test_verificar_dps_success()
+    {
+        $idDps = 'DPS123';
+        $this->sefinClientMock->expects($this->once())
+            ->method('verificarDps')
+            ->with($idDps)
+            ->willReturn(true);
+
+        $result = $this->service->verificarDps($idDps);
+
+        $this->assertTrue($result);
+    }
+
+    public function test_baixar_dfe_contribuinte()
+    {
+        $responseDto = new \Nfse\Dto\Http\DistribuicaoDfeResponse(ultimoNsu: 100, listaNsu: []);
+        $this->adnClientMock->expects($this->once())
+            ->method('baixarDfeContribuinte')
+            ->with(100)
+            ->willReturn($responseDto);
+
+        $result = $this->service->baixarDfe(100);
+
+        $this->assertEquals($responseDto, $result);
+    }
+
+    public function test_consultar_parametros_convenio()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarParametrosConvenio')
+            ->with('3550308')
+            ->willReturn(['param' => 'value']);
+
+        $result = $this->service->consultarParametrosConvenio('3550308');
+
+        $this->assertEquals(['param' => 'value'], $result);
+    }
+
+    public function test_consultar_aliquota()
+    {
+        $this->adnClientMock->expects($this->once())
+            ->method('consultarAliquota')
+            ->with('3550308', '01.01', '2023-10-01')
+            ->willReturn(['aliquota' => 5.0]);
+
+        $result = $this->service->consultarAliquota('3550308', '01.01', '2023-10-01');
+
+        $this->assertEquals(['aliquota' => 5.0], $result);
     }
 }

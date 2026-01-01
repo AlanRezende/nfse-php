@@ -39,8 +39,7 @@ it('throws when mark attribute is present but empty', function () {
     <infDPS Id=""></infDPS>
 </DPS>';
 
-expect(fn () => $signer->sign($xml, 'infDPS'))->toThrow(\Exception::class, 'Tag a ser assinada deve possuir um
-atributo');
+expect(fn () => $signer->sign($xml, 'infDPS'))->toThrow(\Exception::class, "Tag a ser assinada deve possuir um atributo 'Id'.");
 });
 
 it('can sign when using a custom mark attribute', function () {
@@ -50,13 +49,14 @@ $password = '1234';
 $certificate = new Certificate($pfxPath, $password);
 $signer = new XmlSigner($certificate);
 
-$xml = <<<'XML' <?xml version="1.0" encoding="UTF-8" ?>
-    <Root>
-        <Element MyId="ABC123">
-            <Child>v</Child>
-        </Element>
-    </Root>
-    XML;
+$xml = <<<'XML'
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <Element MyId="ABC123">
+        <Child>v</Child>
+    </Element>
+</Root>
+XML;
 
     $signed = $signer->sign($xml, 'Element', 'MyId');
     expect($signed)->toContain('Reference URI="#ABC123"');
