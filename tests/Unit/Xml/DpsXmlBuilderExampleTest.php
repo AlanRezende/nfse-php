@@ -2,18 +2,18 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\PrestadorData;
-use Nfse\Dto\TomadorData;
-use Nfse\Dto\ServicoData;
-use Nfse\Dto\ValoresData;
-use Nfse\Dto\EnderecoData;
-use Nfse\Dto\RegimeTributarioData;
-use Nfse\Dto\LocalPrestacaoData;
-use Nfse\Dto\CodigoServicoData;
-use Nfse\Dto\ValorServicoPrestadoData;
-use Nfse\Dto\TributacaoData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\TomadorData;
+use Nfse\Dto\Nfse\ServicoData;
+use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Dto\Nfse\EnderecoData;
+use Nfse\Dto\Nfse\RegimeTributarioData;
+use Nfse\Dto\Nfse\LocalPrestacaoData;
+use Nfse\Dto\Nfse\CodigoServicoData;
+use Nfse\Dto\Nfse\ValorServicoPrestadoData;
+use Nfse\Dto\Nfse\TributacaoData;
 use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml matching ExemploPrestadorPessoaFisica', function () {

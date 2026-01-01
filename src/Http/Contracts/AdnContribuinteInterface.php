@@ -2,7 +2,7 @@
 
 namespace Nfse\Http\Contracts;
 
-use Nfse\Http\Dto\DistribuicaoDfeResponse;
+use Nfse\Dto\Http\DistribuicaoDfeResponse;
 
 interface AdnContribuinteInterface
 {

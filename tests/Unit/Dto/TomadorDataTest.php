@@ -1,8 +1,8 @@
 <?php
 
-use Nfse\Dto\EnderecoData;
-use Nfse\Dto\EnderecoExteriorData;
-use Nfse\Dto\TomadorData;
+use Nfse\Dto\Nfse\EnderecoData;
+use Nfse\Dto\Nfse\EnderecoExteriorData;
+use Nfse\Dto\Nfse\TomadorData;
 
 use Nfse\Support\DocumentGenerator;
 

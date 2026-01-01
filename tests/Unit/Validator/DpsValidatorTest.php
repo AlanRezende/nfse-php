@@ -1,11 +1,11 @@
 <?php
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\EnderecoData;
-use Nfse\Dto\EnderecoExteriorData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\PrestadorData;
-use Nfse\Dto\TomadorData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\EnderecoData;
+use Nfse\Dto\Nfse\EnderecoExteriorData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\TomadorData;
 use Nfse\Validator\DpsValidator;
 
 it('validates a valid DPS', function () {

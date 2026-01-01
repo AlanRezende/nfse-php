@@ -2,8 +2,8 @@
 
 namespace Nfse\Validator;
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\InfDpsData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\InfDpsData;
 
 class DpsValidator
 {

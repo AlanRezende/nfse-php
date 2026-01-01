@@ -2,16 +2,16 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\PrestadorData;
-use Nfse\Dto\TomadorData;
-use Nfse\Dto\ServicoData;
-use Nfse\Dto\ValoresData;
-use Nfse\Dto\LocalPrestacaoData;
-use Nfse\Dto\CodigoServicoData;
-use Nfse\Dto\ValorServicoPrestadoData;
-use Nfse\Dto\TributacaoData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\TomadorData;
+use Nfse\Dto\Nfse\ServicoData;
+use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Dto\Nfse\LocalPrestacaoData;
+use Nfse\Dto\Nfse\CodigoServicoData;
+use Nfse\Dto\Nfse\ValorServicoPrestadoData;
+use Nfse\Dto\Nfse\TributacaoData;
 use Nfse\Xml\DpsXmlBuilder;
 use Nfse\Support\IdGenerator;
 
@@ -90,7 +90,7 @@ it('can build xml from dps data', function () {
                 tipoRetencaoIssqn: 1,
                 tipoSuspensao: 1,
                 numeroProcessoSuspensao: '123456',
-                beneficioMunicipal: new \Nfse\Dto\BeneficioMunicipalData(
+                beneficioMunicipal: new \Nfse\Dto\Nfse\BeneficioMunicipalData(
                     percentualReducaoBcBm: 10.0,
                     valorReducaoBcBm: 100.0
                 ),

@@ -2,7 +2,7 @@
 
 namespace Nfse\Tests\Unit\Dto;
 
-use Nfse\Dto\InfDpsData;
+use Nfse\Dto\Nfse\InfDpsData;
 
 it('can instantiate inf dps data', function () {
     $infDps = new InfDpsData(

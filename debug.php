@@ -2,24 +2,24 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Nfse\Nfse\Dto\InfDpsData;
-use Nfse\Nfse\Dto\PrestadorData;
-use Nfse\Nfse\Dto\TomadorData;
-use Nfse\Nfse\Dto\ServicoData;
-use Nfse\Nfse\Dto\ValoresData;
-use Nfse\Nfse\Dto\EnderecoData;
-use Nfse\Nfse\Dto\RegimeTributarioData;
-use Nfse\Nfse\Dto\TributacaoData;
-use Nfse\Nfse\Dto\LocalPrestacaoData;
-use Nfse\Nfse\Dto\CodigoServicoData;
-use Nfse\Nfse\Dto\ComercioExteriorData;
-use Nfse\Nfse\Dto\ObraData;
-use Nfse\Nfse\Dto\AtividadeEventoData;
-use Nfse\Nfse\Dto\ValorServicoPrestadoData;
-use Nfse\Nfse\Dto\DescontoData;
-use Nfse\Nfse\Dto\DeducaoReducaoData;
-use Nfse\Nfse\Dto\SubstituicaoData;
-use Nfse\Nfse\Dto\IntermediarioData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\TomadorData;
+use Nfse\Dto\Nfse\ServicoData;
+use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Dto\Nfse\EnderecoData;
+use Nfse\Dto\Nfse\RegimeTributarioData;
+use Nfse\Dto\Nfse\TributacaoData;
+use Nfse\Dto\Nfse\LocalPrestacaoData;
+use Nfse\Dto\Nfse\CodigoServicoData;
+use Nfse\Dto\Nfse\ComercioExteriorData;
+use Nfse\Dto\Nfse\ObraData;
+use Nfse\Dto\Nfse\AtividadeEventoData;
+use Nfse\Dto\Nfse\ValorServicoPrestadoData;
+use Nfse\Dto\Nfse\DescontoData;
+use Nfse\Dto\Nfse\DeducaoReducaoData;
+use Nfse\Dto\Nfse\SubstituicaoData;
+use Nfse\Dto\Nfse\IntermediarioData;
 
 try {
     $infDps = new InfDpsData(

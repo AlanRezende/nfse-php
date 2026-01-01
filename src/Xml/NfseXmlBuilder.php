@@ -4,11 +4,11 @@ namespace Nfse\Xml;
 
 use DOMDocument;
 use DOMElement;
-use Nfse\Dto\NfseData;
-use Nfse\Dto\InfNfseData;
-use Nfse\Dto\EmitenteData;
-use Nfse\Dto\ValoresNfseData;
-use Nfse\Dto\EnderecoEmitenteData;
+use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\Nfse\InfNfseData;
+use Nfse\Dto\Nfse\EmitenteData;
+use Nfse\Dto\Nfse\ValoresNfseData;
+use Nfse\Dto\Nfse\EnderecoEmitenteData;
 
 class NfseXmlBuilder
 {

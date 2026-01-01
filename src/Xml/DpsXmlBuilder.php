@@ -4,13 +4,13 @@ namespace Nfse\Xml;
 
 use DOMDocument;
 use DOMElement;
-use Nfse\Dto\DpsData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\PrestadorData;
-use Nfse\Dto\TomadorData;
-use Nfse\Dto\ServicoData;
-use Nfse\Dto\ValoresData;
-use Nfse\Dto\EnderecoData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\PrestadorData;
+use Nfse\Dto\Nfse\TomadorData;
+use Nfse\Dto\Nfse\ServicoData;
+use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Dto\Nfse\EnderecoData;
 
 class DpsXmlBuilder
 {

@@ -1,15 +1,15 @@
 <?php
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\ObraData;
-use Nfse\Dto\ServicoData;
-use Nfse\Dto\TributacaoData;
-use Nfse\Dto\ValoresData;
-use Nfse\Dto\ValorServicoPrestadoData;
-use Nfse\Dto\EnderecoData;
-use Nfse\Dto\CodigoServicoData;
-use Nfse\Dto\LocalPrestacaoData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\ObraData;
+use Nfse\Dto\Nfse\ServicoData;
+use Nfse\Dto\Nfse\TributacaoData;
+use Nfse\Dto\Nfse\ValoresData;
+use Nfse\Dto\Nfse\ValorServicoPrestadoData;
+use Nfse\Dto\Nfse\EnderecoData;
+use Nfse\Dto\Nfse\CodigoServicoData;
+use Nfse\Dto\Nfse\LocalPrestacaoData;
 
 it('can instantiate DPS with Civil Construction (Obra)', function () {
     $servico = new ServicoData(

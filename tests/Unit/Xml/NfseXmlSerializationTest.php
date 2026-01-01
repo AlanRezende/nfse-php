@@ -2,13 +2,13 @@
 
 namespace Nfse\Tests\Unit\Xml;
 
-use Nfse\Dto\DpsData;
-use Nfse\Dto\EmitenteData;
-use Nfse\Dto\EnderecoEmitenteData;
-use Nfse\Dto\InfDpsData;
-use Nfse\Dto\InfNfseData;
-use Nfse\Dto\NfseData;
-use Nfse\Dto\ValoresNfseData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Dto\Nfse\EmitenteData;
+use Nfse\Dto\Nfse\EnderecoEmitenteData;
+use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\InfNfseData;
+use Nfse\Dto\Nfse\NfseData;
+use Nfse\Dto\Nfse\ValoresNfseData;
 use Nfse\Xml\NfseXmlBuilder;
 
 it('serializes nfse data to xml correctly', function () {
