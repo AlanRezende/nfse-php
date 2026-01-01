@@ -16,15 +16,19 @@ composer require nfse-nacional/nfse-php
 1. Configure o contexto (caminho para o PFX e senha):
 
 ```php
-use Nfse\Contribuinte\Configuration\NfseContext;
-use Nfse\Contribuinte\Service\NfseService;
+use Nfse\Http\NfseContext;
+use Nfse\Nfse;
+use Nfse\Enums\TipoAmbiente;
 
 $context = new NfseContext(
-    Environment::Homologation,
+    TipoAmbiente::Homologacao,
     '/path/to/certificate.pfx',
     'password'
 );
-$service = new NfseService($context);
+
+// Use the main entry point to obtain services
+$nfse = new Nfse($context);
+$service = $nfse->contribuinte();
 ```
 
 2. Monte um DPS mínimo e emita:
@@ -45,7 +49,11 @@ $dps = new DpsData(
 );
 
 $nfse = $service->emitir($dps);
-echo "Nota emitida! Número: {$nfse->infNfse->numeroNfse}";
+// Note: atualmente o parser de retorno ainda está em desenvolvimento —
+// a API retorna o XML da NFS-e compactado; o serviço deve retornar
+// um objeto NfseData quando o parser estiver disponível.
+// Exemplo de mensagem de sucesso (simulada):
+// echo "Nota emitida! Número: {$nfse->infNfse->numeroNfse}";
 ```
 
 Pronto — você emitiu sua primeira nota. Próximos passos recomendados: configurar corretamente o certificado, aprender a consultar notas e a tratar eventos (cancelamento).

@@ -10,15 +10,19 @@ Este guia detalha como montar um DPS e emitir uma NFS-e usando o Service do paco
 ### 1) Instanciar o Service
 
 ```php
-use Nfse\Contribuinte\Configuration\NfseContext;
-use Nfse\Contribuinte\Service\NfseService;
+use Nfse\Http\NfseContext;
+use Nfse\Nfse;
+use Nfse\Enums\TipoAmbiente;
 
 $context = new NfseContext(
-    Environment::Homologation,
+    TipoAmbiente::Homologacao,
     '/path/to/certificate.pfx',
     'password'
 );
-$service = new NfseService($context);
+
+// Helper entry point
+$nfse = new Nfse($context);
+$service = $nfse->contribuinte();
 ```
 
 ### 2) Exemplo mínimo (array)
@@ -39,7 +43,8 @@ $dps = new DpsData(
 );
 
 $nfse = $service->emitir($dps);
-echo "Nota emitida! Número: {$nfse->infNfse->numeroNfse}";
+// O método atualmente retorna o XML compacto da resposta; quando o
+// parser estiver implementado, será retornado um objeto NfseData.
 ```
 
 ### 3) Exemplo semântico (objetos DTO)
