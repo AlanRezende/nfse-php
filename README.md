@@ -1,6 +1,9 @@
 # 🚀 NFS-e Nacional PHP SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php) [![Tests](https://img.shields.io/github/actions/workflow/status/nfse-nacional/nfse-php/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/nfse-nacional/nfse-php/actions/workflows/run-tests.yml) [![Coverage](https://img.shields.io/codecov/c/github/nfse-nacional/nfse-php/main?style=flat-square)](https://codecov.io/gh/nfse-nacional/nfse-php) [![Coverage Status](https://img.shields.io/github/actions/workflow/status/nfse-nacional/nfse-php/coverage.yml?branch=main&label=coverage%20status&style=flat-square)](https://github.com/nfse-nacional/nfse-php/actions/workflows/coverage.yml) [![Total Downloads](https://img.shields.io/packagist/dt/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
+[![Coverage](https://img.shields.io/codecov/c/github/nfse-nacional/nfse-php/main?style=flat-square)](https://codecov.io/gh/nfse-nacional/nfse-php)
+[![Coverage Status](https://github.com/nfse-nacional/nfse-php/actions/workflows/coverage.yml/badge.svg)](https://github.com/nfse-nacional/nfse-php/actions/workflows/coverage.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/nfse-nacional/nfse-php.svg?style=flat-square)](https://packagist.org/packages/nfse-nacional/nfse-php)
 
 A maneira mais moderna e eficiente de integrar PHP com a NFS-e Nacional.
 
