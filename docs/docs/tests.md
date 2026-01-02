@@ -92,3 +92,19 @@ if ($condicaoRara) {
 }
 // @codeCoverageIgnoreEnd
 ```
+
+---
+
+## 🔍 Análise Estática (PHPStan)
+
+Além dos testes unitários, o projeto utiliza o **PHPStan** para análise estática de código, ajudando a encontrar bugs antes mesmo da execução.
+
+### Executando a Análise
+
+Para rodar o PHPStan:
+
+```bash
+composer phpstan
+```
+
+O projeto está configurado no **nível 5** de rigor. Você pode ajustar esse nível no arquivo `phpstan.neon`.

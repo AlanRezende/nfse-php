@@ -9,14 +9,9 @@ use Exception;
 
 class XmlSigner implements SignerInterface
 {
-    private Certificate $certificate;
-
     private const CANONICAL = [true, false, null, null];
 
-    public function __construct(Certificate $certificate)
-    {
-        $this->certificate = $certificate;
-    }
+    public function __construct(private Certificate $certificate) {}
 
     /**
      * Sign XML content

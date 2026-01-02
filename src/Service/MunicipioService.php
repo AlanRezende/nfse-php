@@ -12,7 +12,7 @@ class MunicipioService
 
     private CncClient $cncClient;
 
-    public function __construct(private NfseContext $context)
+    public function __construct(NfseContext $context)
     {
         $this->adnClient = new AdnClient($context);
         $this->cncClient = new CncClient($context);

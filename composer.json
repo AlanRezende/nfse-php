@@ -4,7 +4,7 @@
     "keywords": [
         "Nfse",
         "nfse"
-    ],  
+    ],
     "homepage": "https://github.com/nfse-nacional/nfse-php",
     "license": "MIT",
     "authors": [
@@ -25,7 +25,9 @@
         "illuminate/validation": "^11.47",
         "laravel/pint": "^1.0",
         "pestphp/pest": "^4.0",
-        "phpstan/phpstan": "*",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
         "spatie/ray": "^1.28",
         "spatie/typescript-transformer": "dev-main"
     },
@@ -42,7 +44,8 @@
     "scripts": {
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit 2G"
     },
     "config": {
         "sort-packages": true,

@@ -315,7 +315,7 @@ class DpsXmlBuilder
 
             if ($data->tributacao->percentualTotalTributosSN) {
                 $totTrib = $this->dom->createElement('totTrib');
-                $this->appendElement($totTrib, 'pTotTribSN', $data->tributacao->percentualTotalTributosSN !== null ? number_format($data->tributacao->percentualTotalTributosSN, 2, '.', '') : null);
+                $this->appendElement($totTrib, 'pTotTribSN', number_format($data->tributacao->percentualTotalTributosSN, 2, '.', ''));
                 $trib->appendChild($totTrib);
             } elseif ($data->tributacao->indicadorTotalTributos !== null) {
                 $totTrib = $this->dom->createElement('totTrib');
