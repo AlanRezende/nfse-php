@@ -25,7 +25,7 @@ $codigoMunicipio = $municipios[$municipioSelecionado];
 
 // Configurações básicas para os exemplos
 $certificatePath = __DIR__.'/certs/contribuinte.pfx';
-$certificatePassword = 'Maia2040!';
+$certificatePassword = '1234';
 
 // Se o arquivo de certificado não existir, vamos avisar (apenas para o exemplo)
 if (! file_exists($certificatePath)) {
