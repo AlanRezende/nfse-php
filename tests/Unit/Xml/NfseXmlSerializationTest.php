@@ -89,7 +89,9 @@ it('serializes nfse data to xml correctly', function () {
     expect($xml)->toContain('<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse">')
         ->and($xml)->toContain('<infNFSe Id="NFS123456" versao="1.00">')
         ->and($xml)->toContain('<nNFSe>100</nNFSe>')
-        ->and($xml)->toContain('<infDPS Id="DPS123" versao="1.00">')
+        ->and($xml)->toContain('<DPS')
+        ->and($xml)->toContain('versao="1.00">')
+        ->and($xml)->toContain('<infDPS Id="DPS123">')
         ->and($xml)->toContain('<CNPJ>12345678000199</CNPJ>')
         ->and($xml)->toContain('<vLiq>1757.50</vLiq>');
 });

@@ -59,13 +59,13 @@ class NfseXmlBuilder
         $this->appendElement($parent, 'cStat', (string) $data->codigoStatus);
 
         if ($data->dps) {
-            // The DpsXmlBuilder creates a full XML, we need to extract the 'infDPS' element
+            // The DpsXmlBuilder creates a full XML, we need to import the 'DPS' element
             $dpsXml = $this->dpsBuilder->build($data->dps);
             $tempDom = new DOMDocument;
             $tempDom->loadXML($dpsXml);
-            $infDpsNode = $tempDom->getElementsByTagName('infDPS')->item(0);
-            if ($infDpsNode) {
-                $importedNode = $this->dom->importNode($infDpsNode, true);
+            $dpsNode = $tempDom->documentElement;
+            if ($dpsNode) {
+                $importedNode = $this->dom->importNode($dpsNode, true);
                 $parent->appendChild($importedNode);
             }
         }

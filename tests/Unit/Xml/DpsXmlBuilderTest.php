@@ -109,8 +109,8 @@ it('can build xml from dps data', function () {
     $builder = new DpsXmlBuilder;
     $xml = $builder->build($dpsData);
 
-    expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse">')
-        ->and($xml)->toContain('<infDPS Id="'.$id.'" versao="1.0">')
+    expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.0">')
+        ->and($xml)->toContain('<infDPS Id="'.$id.'">')
         ->and($xml)->toContain('<nDPS>1001</nDPS>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>')
         ->and($xml)->toContain('<cMotivoEmisTI>4</cMotivoEmisTI>')

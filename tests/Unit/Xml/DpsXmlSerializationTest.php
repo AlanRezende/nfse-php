@@ -129,8 +129,8 @@ it('serializes dps data to xml correctly', function () {
     $builder = new DpsXmlBuilder;
     $xml = $builder->build($dpsData);
 
-    expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse">')
-        ->and($xml)->toContain('<infDPS Id="DPS123" versao="1.0">')
+    expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.0">')
+        ->and($xml)->toContain('<infDPS Id="DPS123">')
         ->and($xml)->toContain('<tpAmb>2</tpAmb>')
         ->and($xml)->toContain('<CNPJ>12345678000199</CNPJ>')
         ->and($xml)->toContain('<vServ>1000.00</vServ>');

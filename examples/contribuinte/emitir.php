@@ -45,7 +45,7 @@ try {
     );
 
     $dps = new DpsData(
-        versao: '1.00',
+        versao: '1.01',
         infDps: new InfDpsData(
             id: $idDps,
             tipoAmbiente: 2, // Homologação

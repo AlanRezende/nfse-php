@@ -121,7 +121,8 @@ it('can build xml matching ExemploPrestadorPessoaFisica', function () {
     $xml = $builder->build($dpsData);
 
     // Assertions based on the example XML structure
-    expect($xml)->toContain('<infDPS Id="DPS231400310000667299238300001000000000000046" versao="1.00">')
+    expect($xml)->toContain('<DPS xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">')
+        ->and($xml)->toContain('<infDPS Id="DPS231400310000667299238300001000000000000046">')
         ->and($xml)->toContain('<tpAmb>1</tpAmb>')
         ->and($xml)->toContain('<dhEmi>2025-12-15T11:11:09-03:00</dhEmi>')
         ->and($xml)->toContain('<verAplic>Sistema NFS-e</verAplic>')

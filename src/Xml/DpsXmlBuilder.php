@@ -23,11 +23,11 @@ class DpsXmlBuilder
         $this->dom->encoding = 'UTF-8';
 
         $root = $this->dom->createElementNS('http://www.sped.fazenda.gov.br/nfse', 'DPS');
+        $root->setAttribute('versao', $dps->versao);
         $this->dom->appendChild($root);
 
         $infDps = $this->dom->createElement('infDPS');
         $infDps->setAttribute('Id', $dps->infDps->id);
-        $infDps->setAttribute('versao', $dps->versao);
         $root->appendChild($infDps);
 
         $this->buildInfDps($infDps, $dps->infDps);
