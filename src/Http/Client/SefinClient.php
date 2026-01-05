@@ -19,7 +19,7 @@ class SefinClient implements SefinNacionalInterface
 {
     private const URL_PRODUCTION = 'https://sefin.nfse.gov.br/SefinNacional';
 
-    private const URL_HOMOLOGATION = 'https://sefin.producaorestrita.nfse.gov.br/API/SefinNacional';
+    private const URL_HOMOLOGATION = 'https://sefin.producaorestrita.nfse.gov.br/SefinNacional';
 
     private Client $httpClient;
 
@@ -35,7 +35,7 @@ class SefinClient implements SefinNacionalInterface
             : self::URL_HOMOLOGATION;
 
         return new Client([
-            'base_uri' => $baseUrl,
+            'base_uri' => rtrim($baseUrl, '/') . '/',
             'curl' => [
                 CURLOPT_SSLCERTTYPE => 'P12',
                 CURLOPT_SSLCERT => $this->context->certificatePath,
@@ -70,7 +70,13 @@ class SefinClient implements SefinNacionalInterface
 
             return $decoded;
         } catch (GuzzleException $e) {
-            throw NfseApiException::requestError($e->getMessage(), $e->getCode());
+            // Try to extract error response body
+            $errorBody = '';
+            if ($e instanceof \GuzzleHttp\Exception\RequestException && $e->getResponse()) {
+                $errorBody = $e->getResponse()->getBody()->getContents();
+            }
+            
+            throw NfseApiException::requestError($e->getMessage() . ($errorBody ? "\nResposta: " . $errorBody : ''), $e->getCode());
         }
     }
 
@@ -87,7 +93,7 @@ class SefinClient implements SefinNacionalInterface
 
     public function emitirNfse(string $dpsXmlGZipB64): EmissaoNfseResponse
     {
-        $response = $this->post('/nfse', ['dpsXmlGZipB64' => $dpsXmlGZipB64]);
+        $response = $this->post('nfse', ['dpsXmlGZipB64' => $dpsXmlGZipB64]);
 
         return new EmissaoNfseResponse(
             tipoAmbiente: $response['tipoAmbiente'] ?? null,
@@ -103,7 +109,7 @@ class SefinClient implements SefinNacionalInterface
 
     public function consultarNfse(string $chaveAcesso): ConsultaNfseResponse
     {
-        $response = $this->get("/nfse/{$chaveAcesso}");
+        $response = $this->get("nfse/{$chaveAcesso}");
 
         return new ConsultaNfseResponse(
             tipoAmbiente: $response['tipoAmbiente'] ?? null,
@@ -116,7 +122,7 @@ class SefinClient implements SefinNacionalInterface
 
     public function consultarDps(string $idDps): ConsultaDpsResponse
     {
-        $response = $this->get("/dps/{$idDps}");
+        $response = $this->get("dps/{$idDps}");
 
         return new ConsultaDpsResponse(
             tipoAmbiente: $response['tipoAmbiente'] ?? null,
@@ -129,7 +135,7 @@ class SefinClient implements SefinNacionalInterface
 
     public function registrarEvento(string $chaveAcesso, string $eventoXmlGZipB64): RegistroEventoResponse
     {
-        $response = $this->post("/nfse/{$chaveAcesso}/eventos", [
+        $response = $this->post("nfse/{$chaveAcesso}/eventos", [
             'pedidoRegistroEventoXmlGZipB64' => $eventoXmlGZipB64,
         ]);
 
@@ -143,7 +149,7 @@ class SefinClient implements SefinNacionalInterface
 
     public function consultarEvento(string $chaveAcesso, int $tipoEvento, int $numSeqEvento): RegistroEventoResponse
     {
-        $response = $this->get("/nfse/{$chaveAcesso}/eventos/{$tipoEvento}/{$numSeqEvento}");
+        $response = $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}/{$numSeqEvento}");
 
         return new RegistroEventoResponse(
             tipoAmbiente: $response['tipoAmbiente'] ?? null,
@@ -156,7 +162,7 @@ class SefinClient implements SefinNacionalInterface
     public function verificarDps(string $idDps): bool
     {
         try {
-            $this->httpClient->head("/dps/{$idDps}");
+            $this->httpClient->head("dps/{$idDps}");
 
             return true;
         } catch (GuzzleException $e) {
@@ -169,12 +175,12 @@ class SefinClient implements SefinNacionalInterface
 
     public function listarEventos(string $chaveAcesso): array
     {
-        return $this->get("/nfse/{$chaveAcesso}/eventos");
+        return $this->get("nfse/{$chaveAcesso}/eventos");
     }
 
     public function listarEventosPorTipo(string $chaveAcesso, int $tipoEvento): array
     {
-        return $this->get("/nfse/{$chaveAcesso}/eventos/{$tipoEvento}");
+        return $this->get("nfse/{$chaveAcesso}/eventos/{$tipoEvento}");
     }
 
     private function mapMensagens(array $mensagens): array

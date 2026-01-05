@@ -19,19 +19,20 @@ class DpsXmlBuilder
     public function build(DpsData $dps): string
     {
         $this->dom = new DOMDocument('1.0', 'UTF-8');
-        $this->dom->formatOutput = true;
+        $this->dom->formatOutput = false;
+        $this->dom->encoding = 'UTF-8';
 
         $root = $this->dom->createElementNS('http://www.sped.fazenda.gov.br/nfse', 'DPS');
+        $root->setAttribute('versao', $dps->versao);
         $this->dom->appendChild($root);
 
         $infDps = $this->dom->createElement('infDPS');
         $infDps->setAttribute('Id', $dps->infDps->id);
-        $infDps->setAttribute('versao', $dps->versao);
         $root->appendChild($infDps);
 
         $this->buildInfDps($infDps, $dps->infDps);
 
-        return $this->dom->saveXML();
+        return $this->dom->saveXML($root);
     }
 
     private function buildInfDps(DOMElement $parent, InfDpsData $data): void
@@ -112,7 +113,7 @@ class DpsXmlBuilder
         if ($data->regimeTributario) {
             $regTrib = $this->dom->createElement('regTrib');
             $this->appendElement($regTrib, 'opSimpNac', (string) $data->regimeTributario->opcaoSimplesNacional);
-            $this->appendElement($regTrib, 'regApTribSN', (string) $data->regimeTributario->regimeApuracaoTributosSn);
+            $this->appendElement($regTrib, 'regApTribSN', $data->regimeTributario->regimeApuracaoTributosSn !== null ? (string) $data->regimeTributario->regimeApuracaoTributosSn : null);
             $this->appendElement($regTrib, 'regEspTrib', (string) $data->regimeTributario->regimeEspecialTributacao);
             $prest->appendChild($regTrib);
         }
@@ -143,15 +144,16 @@ class DpsXmlBuilder
     private function buildEndereco(DOMElement $parent, EnderecoData $data): void
     {
         $end = $this->dom->createElement('end');
-        $this->appendElement($end, 'xLgr', $data->logradouro);
-        $this->appendElement($end, 'nro', $data->numero);
-        $this->appendElement($end, 'xCpl', $data->complemento);
-        $this->appendElement($end, 'xBairro', $data->bairro);
 
         $endNac = $this->dom->createElement('endNac');
         $this->appendElement($endNac, 'cMun', $data->codigoMunicipio);
         $this->appendElement($endNac, 'CEP', $data->cep);
         $end->appendChild($endNac);
+
+        $this->appendElement($end, 'xLgr', $data->logradouro);
+        $this->appendElement($end, 'nro', $data->numero);
+        $this->appendElement($end, 'xCpl', $data->complemento);
+        $this->appendElement($end, 'xBairro', $data->bairro);
 
         $parent->appendChild($end);
     }
@@ -162,8 +164,11 @@ class DpsXmlBuilder
 
         if ($data->localPrestacao) {
             $locPrest = $this->dom->createElement('locPrest');
-            $this->appendElement($locPrest, 'cLocPrestacao', $data->localPrestacao->codigoLocalPrestacao);
-            $this->appendElement($locPrest, 'cPaisPrestacao', $data->localPrestacao->codigoPaisPrestacao);
+            if ($data->localPrestacao->codigoLocalPrestacao) {
+                $this->appendElement($locPrest, 'cLocPrestacao', $data->localPrestacao->codigoLocalPrestacao);
+            } elseif ($data->localPrestacao->codigoPaisPrestacao) {
+                $this->appendElement($locPrest, 'cPaisPrestacao', $data->localPrestacao->codigoPaisPrestacao);
+            }
             $serv->appendChild($locPrest);
         }
 
@@ -269,7 +274,7 @@ class DpsXmlBuilder
 
             $tribMun = $this->dom->createElement('tribMun');
             $this->appendElement($tribMun, 'tribISSQN', (string) $data->tributacao->tributacaoIssqn);
-            $this->appendElement($tribMun, 'tpImunidade', (string) $data->tributacao->tipoImunidade);
+            $this->appendElement($tribMun, 'tpImunidade', $data->tributacao->tipoImunidade !== null ? (string) $data->tributacao->tipoImunidade : null);
             $this->appendElement($tribMun, 'tpRetISSQN', (string) $data->tributacao->tipoRetencaoIssqn);
 
             if ($data->tributacao->tipoSuspensao) {
@@ -302,7 +307,7 @@ class DpsXmlBuilder
                     $this->appendElement($piscofins, 'pAliqCofins', $data->tributacao->aliquotaCofins !== null ? number_format($data->tributacao->aliquotaCofins, 2, '.', '') : null);
                     $this->appendElement($piscofins, 'vPis', $data->tributacao->valorPis !== null ? number_format($data->tributacao->valorPis, 2, '.', '') : null);
                     $this->appendElement($piscofins, 'vCofins', $data->tributacao->valorCofins !== null ? number_format($data->tributacao->valorCofins, 2, '.', '') : null);
-                    $this->appendElement($piscofins, 'tpRetPisCofins', (string) $data->tributacao->tipoRetencaoPisCofins);
+                    $this->appendElement($piscofins, 'tpRetPisCofins', $data->tributacao->tipoRetencaoPisCofins !== null ? (string) $data->tributacao->tipoRetencaoPisCofins : null);
                     $tribFed->appendChild($piscofins);
                 }
 

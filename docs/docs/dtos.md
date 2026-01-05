@@ -164,14 +164,13 @@ $dados = [
             'cnpj' => '21190597000105',
             'inscricaoMunicipal' => '00333',
             'nome' => 'EMPRESA EXEMPLO LTDA',
-            'nomeFantasia' => 'Empresa Exemplo',
-            'enderecoNacional' => [
-                'endereco' => 'RUA EXEMPLO',
+            'nome' => 'Empresa Exemplo',
+            'endereco' => [
+                'logradouro' => 'RUA EXEMPLO',
                 'numero' => '123',
                 'complemento' => 'SALA 456',
                 'bairro' => 'CENTRO',
                 'codigoMunicipio' => '3304557',
-                'uf' => 'RJ',
                 'cep' => '20000000',
             ],
             'telefone' => '2112345678',
@@ -182,12 +181,11 @@ $dados = [
         'tomador' => [
             'cpf' => '12345678901',
             'nome' => 'CLIENTE EXEMPLO',
-            'enderecoNacional' => [
-                'endereco' => 'AVENIDA CLIENTE',
+            'endereco' => [
+                'logradouro' => 'AVENIDA CLIENTE',
                 'numero' => '456',
                 'bairro' => 'BAIRRO CLIENTE',
                 'codigoMunicipio' => '3304557',
-                'uf' => 'RJ',
                 'cep' => '21000000',
             ],
             'telefone' => '2198765432',
@@ -206,14 +204,10 @@ $dados = [
         'valores' => [
             'valorServicoPrestado' => [
                 'valorServico' => 5000.00,
-                'valorDescontoIncondicionado' => 0.00,
-                'valorDescontoCondicionado' => 0.00,
             ],
             'tributacao' => [
-                'tributacaoMunicipal' => [
-                    'tributacaoISSQN' => 1,
-                    'tipoRetencaoISSQN' => 1,
-                ],
+                'tributacaoIssqn' => 1,
+                'tipoRetencaoIssqn' => 1,
             ],
         ],
     ],
@@ -250,13 +244,12 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
 use Nfse\Dto\Nfse\PrestadorData;
 use Nfse\Dto\Nfse\TomadorData;
-use Nfse\Dto\Nfse\EnderecoNacionalData;
+use Nfse\Dto\Nfse\EnderecoData;
 use Nfse\Dto\Nfse\ServicoData;
 use Nfse\Dto\Nfse\CodigoServicoData;
 use Nfse\Dto\Nfse\ValoresData;
 use Nfse\Dto\Nfse\ValorServicoPrestadoData;
 use Nfse\Dto\Nfse\TributacaoData;
-use Nfse\Dto\Nfse\TributacaoMunicipalData;
 use Nfse\Xml\DpsXmlBuilder;
 
 // Construção Semântica com Argumentos Nomeados (PHP 8+)
@@ -280,14 +273,13 @@ $dps = new DpsData(
             cnpj: '21190597000105',
             inscricaoMunicipal: '00333',
             nome: 'EMPRESA EXEMPLO LTDA',
-            nomeFantasia: 'Empresa Exemplo',
-            enderecoNacional: new EnderecoNacionalData(
-                endereco: 'RUA EXEMPLO',
+            nome: 'Empresa Exemplo',
+            endereco: new EnderecoData(
+                logradouro: 'RUA EXEMPLO',
                 numero: '123',
                 complemento: 'SALA 456',
                 bairro: 'CENTRO',
                 codigoMunicipio: '3304557',
-                uf: 'RJ',
                 cep: '20000000',
             ),
             telefone: '2112345678',
@@ -298,12 +290,11 @@ $dps = new DpsData(
         tomador: new TomadorData(
             cpf: '12345678901',
             nome: 'CLIENTE EXEMPLO',
-            enderecoNacional: new EnderecoNacionalData(
-                endereco: 'AVENIDA CLIENTE',
+            endereco: new EnderecoData(
+                logradouro: 'AVENIDA CLIENTE',
                 numero: '456',
                 bairro: 'BAIRRO CLIENTE',
                 codigoMunicipio: '3304557',
-                uf: 'RJ',
                 cep: '21000000',
             ),
             telefone: '2198765432',
@@ -322,14 +313,10 @@ $dps = new DpsData(
         valores: new ValoresData(
             valorServicoPrestado: new ValorServicoPrestadoData(
                 valorServico: 5000.00,
-                valorDescontoIncondicionado: 0.00,
-                valorDescontoCondicionado: 0.00,
             ),
             tributacao: new TributacaoData(
-                tributacaoMunicipal: new TributacaoMunicipalData(
-                    tributacaoISSQN: 1,
-                    tipoRetencaoISSQN: 1,
-                ),
+                tributacaoIssqn: 1,
+                tipoRetencaoIssqn: 1,
             ),
         ),
 
@@ -427,14 +414,14 @@ Campos opcionais podem ser omitidos:
 new TomadorData(
     cpf: '12345678901',
     nome: 'Cliente',
-    // enderecoNacional: null, // Opcional, pode omitir
+    // endereco: null, // Opcional, pode omitir
 );
 
 // Array
 [
     'cpf' => '12345678901',
     'nome' => 'Cliente',
-    // 'enderecoNacional' não precisa estar presente
+    // 'endereco' não precisa estar presente
 ]
 ```
 

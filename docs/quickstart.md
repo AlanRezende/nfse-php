@@ -43,7 +43,7 @@ $dps = new DpsData(
         'tipoAmbiente' => 2,
         'prestador' => ['cnpj' => '12345678000199'],
         'tomador' => ['cpf' => '11122233344'],
-        'servico' => ['codigoTributacaoNacional' => '01.01'],
+        'servico' => ['codigoServico' => ['codigoTributacaoNacional' => '01.01']],
         'valores' => ['valorServicoPrestado' => ['valorServico' => 100.00]]
     ]
 );

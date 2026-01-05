@@ -25,7 +25,7 @@ $codigoMunicipio = $municipios[$municipioSelecionado];
 
 // Configurações básicas para os exemplos
 $certificatePath = __DIR__.'/certs/contribuinte.pfx';
-$certificatePassword = '123456';
+$certificatePassword = 'Maia2040!';
 
 // Se o arquivo de certificado não existir, vamos avisar (apenas para o exemplo)
 if (! file_exists($certificatePath)) {
@@ -34,7 +34,7 @@ if (! file_exists($certificatePath)) {
 }
 
 $context = new NfseContext(
-    ambiente: \Nfse\Enums\TipoAmbiente::Producao,
+    ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
     certificatePath: $certificatePath,
     certificatePassword: $certificatePassword
 );

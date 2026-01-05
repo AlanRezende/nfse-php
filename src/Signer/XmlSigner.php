@@ -42,6 +42,7 @@ class XmlSigner implements SignerInterface
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = false;
         $dom->loadXML($content);
+        $dom->encoding = 'UTF-8';
 
         $root = $dom->documentElement;
 
@@ -65,7 +66,7 @@ class XmlSigner implements SignerInterface
             $canonical
         );
 
-        return $dom->saveXML($dom->documentElement, LIBXML_NOXMLDECL);
+        return $dom->saveXML();
     }
 
     private function createSignature(
