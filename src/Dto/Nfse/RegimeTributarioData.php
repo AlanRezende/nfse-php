@@ -2,6 +2,11 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\OpcaoSimplesNacional;
+use Nfse\Enums\RegimeApuracaoSN;
+use Nfse\Enums\RegimeEspecialTributacao;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -13,8 +18,8 @@ class RegimeTributarioData extends DataTransferObject
      * 2 - Optante - Microempreendedor Individual (MEI)
      * 3 - Optante - Microempresa ou Empresa de Pequeno Porte (ME/EPP)
      */
-    #[MapFrom('opSimpNac')]
-    public ?int $opcaoSimplesNacional = null;
+    #[MapFrom('opSimpNac'), CastWith(EnumCaster::class, enumType: OpcaoSimplesNacional::class)]
+    public ?OpcaoSimplesNacional $opcaoSimplesNacional = null;
 
     /**
      * Regime de apuração dos tributos (SN).
@@ -22,8 +27,8 @@ class RegimeTributarioData extends DataTransferObject
      * 1 - Regime de apuração dos tributos federais e municipal pelo SN
      * 2 - Regime de apuração dos tributos federais pelo SN e municipal pelo regime normal (ISSQN)
      */
-    #[MapFrom('regApTribSN')]
-    public ?int $regimeApuracaoTributosSn = null;
+    #[MapFrom('regApTribSN'), CastWith(EnumCaster::class, enumType: RegimeApuracaoSN::class)]
+    public ?RegimeApuracaoSN $regimeApuracaoTributosSn = null;
 
     /**
      * Regime Especial de Tributação.
@@ -35,6 +40,6 @@ class RegimeTributarioData extends DataTransferObject
      * 5 - Profissional Autônomo
      * 6 - Sociedade de Profissionais
      */
-    #[MapFrom('regEspTrib')]
-    public ?int $regimeEspecialTributacao = null;
+    #[MapFrom('regEspTrib'), CastWith(EnumCaster::class, enumType: RegimeEspecialTributacao::class)]
+    public ?RegimeEspecialTributacao $regimeEspecialTributacao = null;
 }

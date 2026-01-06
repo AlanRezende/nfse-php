@@ -24,7 +24,7 @@ it('can instantiate InfDpsData with valid data', function () {
 
     expect($infDps)->toBeInstanceOf(InfDpsData::class)
         ->and($infDps->id)->toBe('DPS123')
-        ->and($infDps->tipoAmbiente)->toBe(1);
+        ->and($infDps->tipoAmbiente)->toBe(\Nfse\Enums\TipoAmbiente::Producao);
 });
 
 it('can instantiate InfDpsData with partial data', function () {

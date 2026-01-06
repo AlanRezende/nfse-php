@@ -44,10 +44,10 @@ Define como o serviço será tributado.
 
 | Propriedade                    | Tipo                     | Mapeamento XML                     | Descrição                                                  |
 | :----------------------------- | :----------------------- | :--------------------------------- | :--------------------------------------------------------- |
-| `tributacaoIssqn`              | `int`                    | `tribMun.tribISSQN`                | 1-Tributável, 2-Imunidade, 3-Exportação, 4-Não Incidência. |
-| `tipoImunidade`                | `int`                    | `tribMun.tpImunidade`              | Tipo de imunidade (se tribISSQN = 2).                      |
-| `tipoRetencaoIssqn`            | `int`                    | `tribMun.tpRetISSQN`               | 1-Não Retido, 2-Retido Tomador, 3-Retido Intermediário.    |
-| `tipoSuspensao`                | `int`                    | `tribMun.exigSusp.tpSusp`          | 1-Judicial, 2-Administrativa.                              |
+| `tributacaoIssqn`              | `TributacaoIssqn`        | `tribMun.tribISSQN`                | 1-Tributável, 2-Imunidade, 3-Exportação, 4-Não Incidência. |
+| `tipoImunidade`                | `TipoImunidade`          | `tribMun.tpImunidade`              | Tipo de imunidade (se tribISSQN = 2).                      |
+| `tipoRetencaoIssqn`            | `TipoRetencaoIssqn`      | `tribMun.tpRetISSQN`               | 1-Não Retido, 2-Retido Tomador, 3-Retido Intermediário.    |
+| `tipoSuspensao`                | `TipoSuspensao`          | `tribMun.exigSusp.tpSusp`          | 1-Judicial, 2-Administrativa.                              |
 | `numeroProcessoSuspensao`      | `string`                 | `tribMun.exigSusp.nProcesso`       | Número do processo de suspensão.                           |
 | `beneficioMunicipal`           | `BeneficioMunicipalData` | `tribMun.BM`                       | Informações de benefício municipal.                        |
 | `cstPisCofins`                 | `string`                 | `tribFed.piscofins.CST`            | Código da Situação Tributária do PIS/COFINS.               |
@@ -56,14 +56,14 @@ Define como o serviço será tributado.
 | `aliquotaCofins`               | `float`                  | `tribFed.piscofins.pAliqCofins`    | Alíquota COFINS (em %).                                    |
 | `valorPis`                     | `float`                  | `tribFed.piscofins.vPis`           | Valor PIS.                                                 |
 | `valorCofins`                  | `float`                  | `tribFed.piscofins.vCofins`        | Valor COFINS.                                              |
-| `tipoRetencaoPisCofins`        | `int`                    | `tribFed.piscofins.tpRetPisCofins` | 1-Não Retido, 2-Retido.                                    |
+| `tipoRetencaoPisCofins`        | `TipoRetencaoPisCofins`  | `tribFed.piscofins.tpRetPisCofins` | 1-Não Retido, 2-Retido.                                    |
 | `valorRetidoIrrf`              | `float`                  | `tribFed.vRetIRRF`                 | Valor retido de IRRF.                                      |
 | `valorRetidoCsll`              | `float`                  | `tribFed.vRetCSLL`                 | Valor retido de CSLL.                                      |
 | `valorTotalTributosFederais`   | `float`                  | `totTrib.vTotTrib.vTotTribFed`     | Valor total de tributos federais.                          |
 | `valorTotalTributosEstaduais`  | `float`                  | `totTrib.vTotTrib.vTotTribEst`     | Valor total de tributos estaduais.                         |
 | `valorTotalTributosMunicipais` | `float`                  | `totTrib.vTotTrib.vTotTribMun`     | Valor total de tributos municipais.                        |
 | `percentualTotalTributosSN`    | `float`                  | `totTrib.pTotTribSN`               | Percentual total aproximado dos tributos.                  |
-| `indicadorTotalTributos`       | `int`                    | `totTrib.indTotTrib`               | Indicador de informação de valor total de tributos.        |
+| `indicadorTotalTributos`       | `IndicadorTotalTributos` | `totTrib.indTotTrib`               | Indicador de informação de valor total de tributos.        |
 
 ---
 
@@ -87,12 +87,13 @@ Detalha benefícios fiscais concedidos pelo município.
 
 ### Propriedades
 
-| Propriedade         | Tipo     | Mapeamento XML | Descrição                                 |
-| :------------------ | :------- | :------------- | :---------------------------------------- |
-| `tipoBeneficio`     | `int`    | `tpBM`         | Tipo do benefício.                        |
-| `numeroProcesso`    | `string` | `nProcesso`    | Número do processo.                       |
-| `valorReducao`      | `float`  | `vRedBCBM`     | Valor da redução da base de cálculo.      |
-| `percentualReducao` | `float`  | `pRedBCBM`     | Percentual de redução da base de cálculo. |
+| Propriedade         | Tipo     | Mapeamento XML | Descrição                                       |
+| :------------------ | :------- | :------------- | :---------------------------------------------- |
+| `codigoBeneficio`   | `string` | `nBM`          | Código de identificação do Benefício Municipal. |
+| `tipoBeneficio`     | `int`    | `tpBM`         | Tipo do benefício.                              |
+| `numeroProcesso`    | `string` | `nProcesso`    | Número do processo.                             |
+| `valorReducao`      | `float`  | `vRedBCBM`     | Valor da redução da base de cálculo.            |
+| `percentualReducao` | `float`  | `pRedBCBM`     | Percentual de redução da base de cálculo.       |
 
 ---
 

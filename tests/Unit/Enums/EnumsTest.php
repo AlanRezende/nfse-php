@@ -104,3 +104,59 @@ describe('ProcessoEmissao', function () {
             ->toBe('Emissão com aplicativo do contribuinte (via Web Service)');
     });
 });
+
+describe('TipoNsu', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TipoNsu::Recepcao->value)->toBe('RECEPCAO')
+            ->and(\Nfse\Enums\TipoNsu::Distribuicao->value)->toBe('DISTRIBUICAO')
+            ->and(\Nfse\Enums\TipoNsu::Geral->value)->toBe('GERAL')
+            ->and(\Nfse\Enums\TipoNsu::Mei->value)->toBe('MEI');
+    });
+
+    it('returns correct descriptions', function () {
+        expect(\Nfse\Enums\TipoNsu::Recepcao->getDescription())->toBe('Recepção')
+            ->and(\Nfse\Enums\TipoNsu::Geral->label())->toBe('Geral');
+    });
+});
+
+describe('TributacaoIssqn', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TributacaoIssqn::OperacaoTributavel->value)->toBe(1)
+            ->and(\Nfse\Enums\TributacaoIssqn::Imunidade->value)->toBe(2);
+    });
+});
+
+describe('TipoRetencaoIssqn', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TipoRetencaoIssqn::NaoRetido->value)->toBe(1)
+            ->and(\Nfse\Enums\TipoRetencaoIssqn::RetidoTomador->value)->toBe(2);
+    });
+});
+
+describe('TipoImunidade', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TipoImunidade::NaoInformado->value)->toBe(0)
+            ->and(\Nfse\Enums\TipoImunidade::PatrimonioRendaServicos->value)->toBe(1);
+    });
+});
+
+describe('TipoSuspensao', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TipoSuspensao::DecisaoJudicial->value)->toBe(1)
+            ->and(\Nfse\Enums\TipoSuspensao::DecisaoAdministrativa->value)->toBe(2);
+    });
+});
+
+describe('TipoRetencaoPisCofins', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\TipoRetencaoPisCofins::NaoRetido->value)->toBe(1)
+            ->and(\Nfse\Enums\TipoRetencaoPisCofins::Retido->value)->toBe(2);
+    });
+});
+
+describe('IndicadorTotalTributos', function () {
+    it('has correct values', function () {
+        expect(\Nfse\Enums\IndicadorTotalTributos::Nenhum->value)->toBe(0)
+            ->and(\Nfse\Enums\IndicadorTotalTributos::Lei12741->value)->toBe(1);
+    });
+});

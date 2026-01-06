@@ -40,20 +40,10 @@ class NfseXmlParser
         }
 
         // Cast integers for InfNfseData
-        $intFieldsNfse = ['ambGer', 'procEmi', 'tpEmis', 'cStat'];
+        $intFieldsNfse = ['tpEmis', 'cStat'];
         foreach ($intFieldsNfse as $field) {
             if (isset($data['infNFSe'][$field])) {
                 $data['infNFSe'][$field] = (int) $data['infNFSe'][$field];
-            }
-        }
-
-        // Cast integers for InfDpsData
-        $intFieldsDps = ['tpAmb', 'tpEmit'];
-        if (isset($data['infNFSe']['DPS']['infDPS'])) {
-            foreach ($intFieldsDps as $field) {
-                if (isset($data['infNFSe']['DPS']['infDPS'][$field])) {
-                    $data['infNFSe']['DPS']['infDPS'][$field] = (int) $data['infNFSe']['DPS']['infDPS'][$field];
-                }
             }
         }
 

@@ -44,7 +44,7 @@ it('can instantiate dps data with full structure', function () {
                 'email' => 'prestador@example.com',
                 'regTrib' => [
                     'opSimpNac' => 1,
-                    'regApTribSN' => 0,
+                    'regApTribSN' => null,
                     'regEspTrib' => 0,
                 ],
             ],
@@ -116,5 +116,7 @@ it('can instantiate dps data with full structure', function () {
 
     expect($dpsData)->toBeInstanceOf(DpsData::class)
         ->and($dpsData->infDps->id)->toBe($id)
+        ->and($dpsData->infDps->tipoAmbiente)->toBe(\Nfse\Enums\TipoAmbiente::Homologacao)
+        ->and($dpsData->infDps->tipoEmitente)->toBe(\Nfse\Enums\EmitenteDPS::Prestador)
         ->and($dpsData->infDps->prestador->cnpj)->toBe('12345678000199');
 });

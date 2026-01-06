@@ -46,9 +46,9 @@ class NfseXmlBuilder
         $this->appendElement($parent, 'cVerif', $data->codigoVerificacao);
         $this->appendElement($parent, 'dhProc', $data->dataProcessamento);
         $this->appendElement($parent, 'verAplic', $data->versaoAplicativo);
-        $this->appendElement($parent, 'ambGer', (string) $data->ambienteGerador);
-        $this->appendElement($parent, 'tpEmis', (string) $data->tipoEmissao);
-        $this->appendElement($parent, 'procEmi', (string) $data->processoEmissao);
+        $this->appendElement($parent, 'ambGer', $data->ambienteGerador);
+        $this->appendElement($parent, 'tpEmis', $data->tipoEmissao);
+        $this->appendElement($parent, 'procEmi', $data->processoEmissao);
         $this->appendElement($parent, 'xLocEmi', $data->localEmissao);
         $this->appendElement($parent, 'xLocPrestacao', $data->localPrestacao);
         $this->appendElement($parent, 'cLocIncid', $data->codigoLocalIncidencia);
@@ -56,7 +56,7 @@ class NfseXmlBuilder
         $this->appendElement($parent, 'xTribNac', $data->descricaoTributacaoNacional);
         $this->appendElement($parent, 'xTribMun', $data->descricaoTributacaoMunicipal);
         $this->appendElement($parent, 'xNBS', $data->descricaoNbs);
-        $this->appendElement($parent, 'cStat', (string) $data->codigoStatus);
+        $this->appendElement($parent, 'cStat', $data->codigoStatus);
 
         if ($data->dps) {
             // The DpsXmlBuilder creates a full XML, we need to import the 'DPS' element
@@ -121,11 +121,15 @@ class NfseXmlBuilder
         $parent->appendChild($valores);
     }
 
-    private function appendElement(DOMElement $parent, string $name, ?string $value): void
+    private function appendElement(DOMElement $parent, string $name, mixed $value): void
     {
-        if ($value !== null) {
+        if ($value instanceof \BackedEnum) {
+            $value = $value->value;
+        }
+
+        if ($value !== null && $value !== '') {
             $element = $this->dom->createElement($name);
-            $element->appendChild($this->dom->createTextNode($value));
+            $element->appendChild($this->dom->createTextNode((string) $value));
             $parent->appendChild($element);
         }
     }

@@ -20,7 +20,7 @@ it('can build xml with complex structures', function () {
             'cLocEmi' => '3550308',
             'subst' => [
                 'chSubstda' => '12345678901234567890123456789012345678901234',
-                'cMotivo' => '1',
+                'cMotivo' => '01',
                 'xMotivo' => 'Erro no valor',
             ],
             'prest' => [

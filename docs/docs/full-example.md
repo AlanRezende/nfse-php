@@ -14,7 +14,10 @@ use Nfse\Signer\XmlSigner;
 use Nfse\Http\NfseContext;
 use Nfse\Http\Client\SefinClient;
 use Nfse\Enums\TipoAmbiente;
-use Illuminate\Validation\ValidationException;
+use Nfse\Enums\EmitenteDPS;
+use Nfse\Enums\TributacaoIssqn;
+use Nfse\Enums\TipoRetencaoIssqn;
+use Nfse\Validator\DpsValidator;
 
 // 1. Gerar o ID da DPS
 $idDps = IdGenerator::generateDpsId(
@@ -29,13 +32,13 @@ $dadosDoFormulario = [
     'versao' => '1.00',
     'infDPS' => [
         '@Id' => $idDps,
-        'tpAmb' => 2, // Homologação
+        'tpAmb' => TipoAmbiente::Homologacao,
         'dhEmi' => '2023-10-27T10:00:00',
         'verAplic' => '1.0',
         'serie' => '1',
         'nDPS' => '100',
         'dCompet' => '2023-10-27',
-        'tpEmit' => 1,
+        'tpEmit' => EmitenteDPS::Prestador,
         'cLocEmi' => '3550308',
         'prest' => [
             'CNPJ' => '12345678000199',
@@ -58,8 +61,8 @@ $dadosDoFormulario = [
             ],
             'trib' => [
                 'tribMun' => [
-                    'tribISSQN' => 1,
-                    'tpRetISSQN' => 1
+                    'tribISSQN' => TributacaoIssqn::OperacaoTributavel,
+                    'tpRetISSQN' => TipoRetencaoIssqn::NaoRetido
                 ]
             ]
         ]
@@ -67,14 +70,23 @@ $dadosDoFormulario = [
 ];
 
 try {
-    // 3. Validar e criar o DTO
-    $dps = DpsData::validateAndCreate($dadosDoFormulario);
+    // 3. Criar o DTO
+    $dps = new DpsData($dadosDoFormulario);
 
-    // 4. Gerar o XML
+    // 4. Validar
+    $validator = new DpsValidator();
+    $result = $validator->validate($dps);
+
+    if ($result->fails()) {
+        print_r($result->getErrors());
+        exit;
+    }
+
+    // 5. Gerar o XML
     $builder = new DpsXmlBuilder();
     $xml = $builder->build($dps);
 
-    // 5. Assinar o XML
+    // 6. Assinar o XML
     $certificado = new \Nfse\Signer\Certificate(
         '/caminho/para/certificado.p12',
         'sua-senha'
@@ -82,11 +94,11 @@ try {
     $signer = new XmlSigner($certificado);
     $xmlAssinado = $signer->sign($xml, 'infDPS');
 
-    // 6. Transmitir para a SEFIN Nacional
+    // 7. Transmitir para a SEFIN Nacional
     $context = new NfseContext(
+        ambiente: TipoAmbiente::Homologacao,
         certificatePath: '/caminho/para/certificado.p12',
-        certificatePassword: 'sua-senha',
-        ambiente: TipoAmbiente::Homologacao
+        certificatePassword: 'sua-senha'
     );
 
     $sefin = new SefinClient($context);
@@ -101,8 +113,6 @@ try {
         echo "NFS-e emitida: " . $response->chaveAcesso;
     }
 
-} catch (ValidationException $e) {
-    print_r($e->errors());
 } catch (\Exception $e) {
     echo "Erro: " . $e->getMessage();
 }

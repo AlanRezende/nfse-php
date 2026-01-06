@@ -31,6 +31,7 @@ Identifica o documento que comprova a dedução ou redução.
 | `dataEmissaoDocumento`    | `string` | `dEmiDoc`             | Data de emissão do documento.            |
 | `valorDedutivelRedutivel` | `float`  | `vDedutivelRedutivel` | Valor dedutível/redutível.               |
 | `valorDeducaoReducao`     | `float`  | `vDeducaoReducao`     | Valor da dedução comprovada.             |
+| `fornecedor`              | `object` | `fornec`              | Informações do fornecedor do documento.  |
 
 ---
 

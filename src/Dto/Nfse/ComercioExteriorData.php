@@ -2,6 +2,11 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\ModoPrestacao;
+use Nfse\Enums\MovimentacaoTemporariaBens;
+use Nfse\Enums\TipoPessoa;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -14,8 +19,8 @@ class ComercioExteriorData extends DataTransferObject
      * 3 - Presença Comercial no Exterior
      * 4 - Movimento Temporário de Pessoas Físicas
      */
-    #[MapFrom('mdPrestacao')]
-    public ?int $modoPrestacao = null;
+    #[MapFrom('mdPrestacao'), CastWith(EnumCaster::class, enumType: ModoPrestacao::class)]
+    public ?ModoPrestacao $modoPrestacao = null;
 
     /**
      * Vínculo entre as partes no negócio.
@@ -30,8 +35,8 @@ class ComercioExteriorData extends DataTransferObject
      * 1 - Pessoa Jurídica
      * 2 - Pessoa Física
      */
-    #[MapFrom('tpPessoaExport')]
-    public ?int $tipoPessoaExportador = null;
+    #[MapFrom('tpPessoaExport'), CastWith(EnumCaster::class, enumType: TipoPessoa::class)]
+    public ?TipoPessoa $tipoPessoaExportador = null;
 
     /**
      * NIF do exportador.
@@ -104,8 +109,8 @@ class ComercioExteriorData extends DataTransferObject
     /**
      * Movimentação temporária de bens.
      */
-    #[MapFrom('movTempBens')]
-    public ?string $movimentacaoTemporariaBens = null;
+    #[MapFrom('movTempBens'), CastWith(EnumCaster::class, enumType: MovimentacaoTemporariaBens::class)]
+    public ?MovimentacaoTemporariaBens $movimentacaoTemporariaBens = null;
 
     /**
      * Número da Declaração de Importação (DI/DSI/DA/DRI-E) averbada.

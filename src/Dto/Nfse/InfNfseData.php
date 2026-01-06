@@ -2,6 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\AmbienteGerador;
+use Nfse\Enums\ProcessoEmissao;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -40,8 +44,8 @@ class InfNfseData extends DataTransferObject
     /**
      * Ambiente gerador.
      */
-    #[MapFrom('ambGer')]
-    public ?int $ambienteGerador = null;
+    #[MapFrom('ambGer'), CastWith(EnumCaster::class, enumType: AmbienteGerador::class)]
+    public ?AmbienteGerador $ambienteGerador = null;
 
     /**
      * Versão do aplicativo.
@@ -52,8 +56,8 @@ class InfNfseData extends DataTransferObject
     /**
      * Processo de emissão.
      */
-    #[MapFrom('procEmi')]
-    public ?int $processoEmissao = null;
+    #[MapFrom('procEmi'), CastWith(EnumCaster::class, enumType: ProcessoEmissao::class)]
+    public ?ProcessoEmissao $processoEmissao = null;
 
     /**
      * Local de emissão (Nome).

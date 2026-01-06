@@ -34,7 +34,7 @@ if (! file_exists($certificatePath)) {
 }
 
 $context = new NfseContext(
-    ambiente: \Nfse\Enums\TipoAmbiente::Producao,
+    ambiente: \Nfse\Enums\TipoAmbiente::Homologacao,
     certificatePath: $certificatePath,
     certificatePassword: $certificatePassword
 );

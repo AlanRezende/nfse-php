@@ -8,7 +8,7 @@ try {
 
     echo "Baixando DF-e para o município (NSU: $nsu)...\n";
 
-    $response = $nfse->municipio()->baixarDfe($nsu);
+    $response = $nfse->municipio()->baixarDfe($nsu, \Nfse\Enums\TipoNsu::Geral);
 
     echo 'NSU Final: '.$response->ultimoNsu."\n";
     echo 'Quantidade de documentos: '.count($response->listaNsu)."\n";

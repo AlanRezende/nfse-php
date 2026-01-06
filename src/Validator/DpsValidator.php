@@ -18,6 +18,8 @@ class DpsValidator
 
         $this->validatePrestador($infDps, $errors);
         $this->validateTomador($infDps, $errors);
+        $this->validateValores($infDps, $errors);
+        $this->validateServico($infDps, $errors);
 
         if (count($errors) > 0) {
             return ValidationResult::failure($errors);
@@ -68,25 +70,70 @@ class DpsValidator
                 return;
             }
 
-            // User Rule: "se ele for estrangeiro o endereco extrag é obg"
-            // We assume "estrangeiro" means NIF is present or specific flag.
-            // Schema Rule E0242: "O grupo de informações de endereço no exterior deve ser informado obrigatoriamente quando o tomador for identificado pelo NIF e o emitente por CNPJ."
-            // Also if address is foreign, we expect `enderecoExterior` to be filled.
-
-            // Let's use NIF as the indicator for foreign entity as per schema hint.
             if ($tomador->nif !== null) {
                 if ($tomador->endereco->enderecoExterior === null) {
                     $errors[] = 'Endereço no exterior do tomador é obrigatório quando identificado por NIF.';
                 }
-                // And national address fields should probably be empty or ignored?
-                // Schema doesn't explicitly forbid national fields if foreign is present, but usually it's one or the other.
             } else {
-                // If not NIF (so CPF or CNPJ), we expect national address fields.
-                // We can check if `codigoMunicipio` is present in `endereco`.
                 if ($tomador->endereco->codigoMunicipio === null) {
                     $errors[] = 'Código do município do tomador é obrigatório para endereço nacional.';
                 }
             }
+        }
+    }
+
+    private function validateValores(InfDpsData $infDps, array &$errors): void
+    {
+        $valores = $infDps->valores;
+        if ($valores === null) {
+            return;
+        }
+
+        $vServ = $valores->valorServicoPrestado?->valorServico ?? 0;
+        $vDescIncond = $valores->desconto?->valorDescontoIncondicionado ?? 0;
+        $vDescCond = $valores->desconto?->valorDescontoCondicionado ?? 0;
+
+        // Rule 307: vDescIncond < vServ
+        if ($vDescIncond > 0 && $vDescIncond >= $vServ) {
+            $errors[] = 'O valor do desconto incondicionado deve ser menor que o valor do serviço.';
+        }
+
+        // Rule 309: vDescCond < vServ
+        if ($vDescCond > 0 && $vDescCond >= $vServ) {
+            $errors[] = 'O valor do desconto condicionado deve ser menor que o valor do serviço.';
+        }
+
+        // Rule 303: vServ >= descIncond + vDR + vRedBCBM
+        $vDR = $valores->deducaoReducao?->valorDeducaoReducao ?? 0;
+        $vRedBCBM = $valores->tributacao?->beneficioMunicipal?->valorReducaoBcBm ?? 0;
+
+        if ($vServ < ($vDescIncond + $vDR + $vRedBCBM)) {
+            $errors[] = 'O valor do serviço deve ser maior ou igual ao somatório dos valores informados para Desconto Incondicionado, Deduções/Reduções e Benefício Municipal.';
+        }
+    }
+
+    private function validateServico(InfDpsData $infDps, array &$errors): void
+    {
+        $servico = $infDps->servico;
+        if ($servico === null) {
+            return;
+        }
+
+        $cTribNac = $servico->codigoServico?->codigoTributacaoNacional;
+
+        // Rule 260: obra is required for construction services
+        $constructionCodes = [
+            '070201', '070202', '070401', '070501', '070502',
+            '070601', '070602', '070701', '070801', '071701', '071901',
+        ];
+
+        if (in_array($cTribNac, $constructionCodes) && $servico->obra === null) {
+            $errors[] = 'O grupo de informações de obra é obrigatório para o serviço informado.';
+        }
+
+        // Rule 276: atvEvento is required for item 12
+        if (str_starts_with($cTribNac ?? '', '12') && $servico->atividadeEvento === null) {
+            $errors[] = 'O grupo de informações de Atividade/Evento é obrigatório para o serviço informado.';
         }
     }
 }

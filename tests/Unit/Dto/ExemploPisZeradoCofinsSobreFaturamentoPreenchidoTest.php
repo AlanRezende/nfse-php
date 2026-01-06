@@ -47,7 +47,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
                         'email' => 'sau@mxm.com.br',
                         'regTrib' => [
                             'opSimpNac' => 3,
-                            'regApTribSN' => 3,
+                            'regApTribSN' => 2,
                             'regEspTrib' => 0,
                         ],
                     ],
@@ -178,7 +178,7 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
         ->and($xml)->toContain('<fone>3132332300</fone>')
         ->and($xml)->toContain('<email>sau@mxm.com.br</email>')
         ->and($xml)->toContain('<opSimpNac>3</opSimpNac>')
-        ->and($xml)->toContain('<regApTribSN>3</regApTribSN>')
+        ->and($xml)->toContain('<regApTribSN>2</regApTribSN>')
         ->and($xml)->toContain('<regEspTrib>0</regEspTrib>');
 
     // Assertions for Tomador

@@ -2,13 +2,18 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\EmitenteDPS;
+use Nfse\Enums\MotivoEmissaoTomadorIntermediario;
+use Nfse\Enums\TipoAmbiente;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class InfDpsData extends DataTransferObject
 {
     /**
-     * Identificador da DPS.
+     * Identificador da tag a ser assinada.
      * Formado por: "DPS" + Cód.Mun.Emi. + Tipo Inscrição + Inscrição + Série + Número.
      */
     #[MapFrom('@Id')]
@@ -19,8 +24,8 @@ class InfDpsData extends DataTransferObject
      * 1 - Produção
      * 2 - Homologação
      */
-    #[MapFrom('tpAmb')]
-    public ?int $tipoAmbiente = null;
+    #[MapFrom('tpAmb'), CastWith(EnumCaster::class, enumType: TipoAmbiente::class)]
+    public ?TipoAmbiente $tipoAmbiente = null;
 
     /**
      * Data e hora de emissão da DPS.
@@ -60,8 +65,8 @@ class InfDpsData extends DataTransferObject
      * 2 - Tomador
      * 3 - Intermediário
      */
-    #[MapFrom('tpEmit')]
-    public ?int $tipoEmitente = null;
+    #[MapFrom('tpEmit'), CastWith(EnumCaster::class, enumType: EmitenteDPS::class)]
+    public ?EmitenteDPS $tipoEmitente = null;
 
     /**
      * Código do município emissor da DPS (IBGE).
@@ -73,8 +78,8 @@ class InfDpsData extends DataTransferObject
      * Motivo da emissão da DPS pelo Tomador ou Intermediário.
      * Obrigatório se tpEmit = 2 ou 3.
      */
-    #[MapFrom('cMotivoEmisTI')]
-    public ?string $motivoEmissaoTomadorIntermediario = null;
+    #[MapFrom('cMotivoEmisTI'), CastWith(EnumCaster::class, enumType: MotivoEmissaoTomadorIntermediario::class)]
+    public ?MotivoEmissaoTomadorIntermediario $motivoEmissaoTomadorIntermediario = null;
 
     /**
      * Chave de acesso da NFS-e rejeitada.

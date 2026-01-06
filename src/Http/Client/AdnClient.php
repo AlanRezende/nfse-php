@@ -13,6 +13,7 @@ use Nfse\Dto\Http\ParametrosConfiguracaoConvenioDto;
 use Nfse\Dto\Http\ResultadoConsultaAliquotasResponse;
 use Nfse\Dto\Http\ResultadoConsultaConfiguracoesConvenioResponse;
 use Nfse\Enums\TipoAmbiente;
+use Nfse\Enums\TipoNsu;
 use Nfse\Http\Contracts\AdnDanfseInterface;
 use Nfse\Http\Exceptions\NfseApiException;
 use Nfse\Http\NfseContext;
@@ -111,11 +112,11 @@ class AdnClient implements AdnDanfseInterface
     /**
      * ADN Município
      */
-    public function baixarDfeMunicipio(int $nsu, ?string $tipoNSU = null, bool $lote = true): DistribuicaoDfeResponse
+    public function baixarDfeMunicipio(int $nsu, ?TipoNsu $tipoNSU = null, bool $lote = true): DistribuicaoDfeResponse
     {
         $queryParams = [];
         if ($tipoNSU) {
-            $queryParams['tipoNSU'] = $tipoNSU;
+            $queryParams['tipoNSU'] = $tipoNSU->value;
         }
         if (! $lote) {
             $queryParams['lote'] = 'false';

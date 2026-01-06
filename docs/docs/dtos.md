@@ -28,20 +28,19 @@ Use esta abordagem quando você já tem os dados no formato do padrão nacional 
 ```php
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Xml\DpsXmlBuilder;
-use Illuminate\Validation\ValidationException;
 
 // Dados vindos da sua aplicação (ex: $request->all())
 $dadosDoFormulario = [
     'versao' => '1.00',
     'infDPS' => [
         '@Id' => 'DPS330455721190597100010500333000000000000006',
-        'tpAmb' => 2, // 1=Produção, 2=Homologação
+        'tpAmb' => \Nfse\Enums\TipoAmbiente::Homologacao,
         'dhEmi' => '2023-10-27T10:00:00-03:00',
         'verAplic' => '1.0.0',
         'serie' => '00001',
         'nDPS' => '000000000000006',
         'dCompet' => '2023-10-27',
-        'tpEmit' => 1, // 1=Prestador, 2=Tomador, 3=Intermediário
+        'tpEmit' => \Nfse\Enums\EmitenteDPS::Prestador,
         'cLocEmi' => '3304557', // Código IBGE do município
 
         // Prestador
@@ -96,8 +95,8 @@ $dadosDoFormulario = [
             ],
             'trib' => [
                 'tribMun' => [
-                    'tribISSQN' => 1, // 1=Tributável
-                    'tpRetISSQN' => 1, // 1=Não retido
+                    'tribISSQN' => \Nfse\Enums\TributacaoIssqn::OperacaoTributavel,
+                    'tpRetISSQN' => \Nfse\Enums\TipoRetencaoIssqn::NaoRetido,
                     'exigSusp' => null,
                 ],
             ],
@@ -106,8 +105,19 @@ $dadosDoFormulario = [
 ];
 
 try {
-    // Validar e criar o DTO
-    $dps = DpsData::validateAndCreate($dadosDoFormulario);
+    // Criar o DTO
+    $dps = new DpsData($dadosDoFormulario);
+
+    // Validar
+    $validator = new \Nfse\Validator\DpsValidator();
+    $result = $validator->validate($dps);
+
+    if ($result->fails()) {
+        foreach ($result->getErrors() as $message) {
+            echo "Erro: $message\n";
+        }
+        exit;
+    }
 
     // Gerar o XML
     $builder = new DpsXmlBuilder();
@@ -116,11 +126,8 @@ try {
     // Usar o XML
     echo $xml;
 
-} catch (ValidationException $e) {
-    // Tratar erros de validação
-    foreach ($e->errors() as $field => $messages) {
-        echo "$field: " . implode(', ', $messages) . "\n";
-    }
+} catch (\Exception $e) {
+    echo "Erro inesperado: " . $e->getMessage();
 }
 ```
 
@@ -150,13 +157,13 @@ $dados = [
     'versao' => '1.00',
     'infDps' => [
         'id' => 'DPS330455721190597100010500333000000000000006',
-        'tipoAmbiente' => 2, // Homologação
+        'tipoAmbiente' => \Nfse\Enums\TipoAmbiente::Homologacao,
         'dataEmissao' => '2023-10-27T10:00:00-03:00',
         'versaoAplicativo' => '1.0.0',
         'serie' => '00001',
         'numeroDps' => '000000000000006',
         'dataCompetencia' => '2023-10-27',
-        'tipoEmitente' => 1, // Prestador
+        'tipoEmitente' => \Nfse\Enums\EmitenteDPS::Prestador,
         'codigoLocalEmissao' => '3304557',
 
         // Prestador (nomes amigáveis)
@@ -206,8 +213,8 @@ $dados = [
                 'valorServico' => 5000.00,
             ],
             'tributacao' => [
-                'tributacaoIssqn' => 1,
-                'tipoRetencaoIssqn' => 1,
+                'tributacaoIssqn' => \Nfse\Enums\TributacaoIssqn::OperacaoTributavel,
+                'tipoRetencaoIssqn' => \Nfse\Enums\TipoRetencaoIssqn::NaoRetido,
             ],
         ],
     ],
@@ -259,13 +266,13 @@ $dps = new DpsData(
     versao: '1.00',
     infDps: new InfDpsData(
         id: 'DPS330455721190597100010500333000000000000006',
-        tipoAmbiente: 2, // Homologação
+        tipoAmbiente: \Nfse\Enums\TipoAmbiente::Homologacao,
         dataEmissao: '2023-10-27T10:00:00-03:00',
         versaoAplicativo: '1.0.0',
         serie: '00001',
         numeroDps: '000000000000006',
         dataCompetencia: '2023-10-27',
-        tipoEmitente: 1, // Prestador
+        tipoEmitente: \Nfse\Enums\EmitenteDPS::Prestador,
         codigoLocalEmissao: '3304557',
 
         // Prestador - Objeto tipado
@@ -315,8 +322,8 @@ $dps = new DpsData(
                 valorServico: 5000.00,
             ),
             tributacao: new TributacaoData(
-                tributacaoIssqn: 1,
-                tipoRetencaoIssqn: 1,
+                tributacaoIssqn: \Nfse\Enums\TributacaoIssqn::OperacaoTributavel,
+                tipoRetencaoIssqn: \Nfse\Enums\TipoRetencaoIssqn::NaoRetido,
             ),
         ),
 
@@ -379,16 +386,19 @@ echo $xml;
 
 ## 💡 Dicas Importantes
 
-### Validação Automática
+### Validação
 
-Todos os DTOs suportam validação automática:
+Para validar os dados de uma DPS, utilize a classe `DpsValidator`:
 
 ```php
-// Lança exceção se houver erros
-$dps = DpsData::validateAndCreate($dados);
+use Nfse\Validator\DpsValidator;
 
-// Não lança exceção, retorna null se inválido
-$dps = DpsData::from($dados);
+$validator = new DpsValidator();
+$result = $validator->validate($dps);
+
+if ($result->fails()) {
+    print_r($result->getErrors());
+}
 ```
 
 ### Mapeamento Automático
@@ -438,6 +448,6 @@ new TomadorData(
 
 ## 🔗 Referências
 
--   [Spatie Laravel Data](https://spatie.be/docs/laravel-data) - Biblioteca base dos DTOs
+-   [Spatie Data Transfer Object](https://github.com/spatie/data-transfer-object) - Biblioteca base dos DTOs
 -   [Manual NFSe Nacional](https://www.gov.br/nfse/) - Documentação oficial
 -   [Schemas XSD](https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas) - Schemas oficiais

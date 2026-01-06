@@ -42,7 +42,7 @@ it('serializes dps data to xml correctly', function () {
                 'email' => 'prestador@example.com',
                 'regTrib' => [
                     'opSimpNac' => 1,
-                    'regApTribSN' => 0,
+                    'regApTribSN' => null,
                     'regEspTrib' => 0,
                 ],
             ],

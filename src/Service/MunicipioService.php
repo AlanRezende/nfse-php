@@ -2,6 +2,7 @@
 
 namespace Nfse\Service;
 
+use Nfse\Enums\TipoNsu;
 use Nfse\Http\Client\AdnClient;
 use Nfse\Http\Client\CncClient;
 use Nfse\Http\NfseContext;
@@ -21,7 +22,7 @@ class MunicipioService
     /**
      * ADN Município - Baixa arrecadação e notas do município via NSU
      */
-    public function baixarDfe(int $nsu, ?string $tipoNSU = null, bool $lote = true): \Nfse\Dto\Http\DistribuicaoDfeResponse
+    public function baixarDfe(int $nsu, ?TipoNsu $tipoNSU = null, bool $lote = true): \Nfse\Dto\Http\DistribuicaoDfeResponse
     {
         return $this->adnClient->baixarDfeMunicipio($nsu, $tipoNSU, $lote);
     }

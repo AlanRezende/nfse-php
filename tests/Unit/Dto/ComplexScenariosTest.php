@@ -63,5 +63,5 @@ it('can instantiate DPS with ISS Retained at Source', function () {
         ],
     ]);
 
-    expect($valores->tributacao->tipoRetencaoIssqn)->toBe(2);
+    expect($valores->tributacao->tipoRetencaoIssqn)->toBe(\Nfse\Enums\TipoRetencaoIssqn::RetidoTomador);
 });

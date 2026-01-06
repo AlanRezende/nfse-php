@@ -25,7 +25,7 @@ Permite ao município baixar todos os documentos fiscais emitidos ou tomados em 
 // Parâmetros opcionais: $tipoNSU (RECEPCAO, DISTRIBUICAO, GERAL, MEI) e $lote
 $dfe = $service->baixarDfe(
     nsu: 12345,
-    tipoNSU: 'GERAL', // Opcional
+    tipoNSU: \Nfse\Enums\TipoNsu::Geral, // Opcional
     lote: true // Opcional (default true)
 );
 ```

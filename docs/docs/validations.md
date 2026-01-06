@@ -1,47 +1,41 @@
-# Validações de DTOs
+# Validações de DFE
 
-A biblioteca utiliza o pacote `spatie/laravel-data` para gerenciar DTOs e suas validações. As validações são aplicadas diretamente nas propriedades do construtor dos DTOs usando atributos PHP.
+A biblioteca utiliza uma abordagem de validação programática através da classe `DpsValidator`. Isso permite validar regras complexas do manual da NFS-e Nacional que não seriam possíveis apenas com tipos simples.
 
 ## Como funciona
 
-Cada DTO define suas regras de validação através de atributos como `#[Required]`, `#[Max]`, `#[Size]`, etc.
+A classe `DpsValidator` analisa um objeto `DpsData` e verifica se ele está em conformidade com as regras de negócio e do schema.
 
-Exemplo no `InfDpsData`:
-
-```php
-public function __construct(
-    #[Required, Size(1, 46)]
-    public ?string $id,
-
-    #[Required, Max(1)]
-    public ?int $tipoAmbiente,
-    // ...
-)
-```
-
-## Validando Dados
-
-Para validar dados manualmente, você pode usar o método `validate`:
+### Exemplo de Uso
 
 ```php
-use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Dto\Nfse\DpsData;
+use Nfse\Validator\DpsValidator;
 
-try {
-    InfDpsData::validate($dados);
-} catch (\Illuminate\Validation\ValidationException $e) {
-    // Tratar erros de validação
-    $errors = $e->errors();
+$dps = new DpsData([...]);
+$validator = new DpsValidator();
+
+$result = $validator->validate($dps);
+
+if ($result->fails()) {
+    // Tratar erros
+    $errors = $result->getErrors();
+    foreach ($errors as $error) {
+        echo "Erro: $error\n";
+    }
 }
 ```
 
-Ou validar e criar a instância ao mesmo tempo:
+## Regras Implementadas
 
-```php
-$infDps = InfDpsData::validateAndCreate($dados);
-```
+Atualmente, o validador verifica regras essenciais como:
+
+1.  **Prestador**: Obrigatório em todos os documentos.
+2.  **Endereço do Prestador**: Obrigatório quando o prestador não for o próprio emitente da nota (Regra E0129).
+3.  **Tomador Identificado**: Se o tomador for identificado (CPF/CNPJ/NIF), o endereço torna-se obrigatório.
+4.  **Estrangeiros**: Se o tomador for identificado por NIF, o endereço no exterior (`enderecoExterior`) é obrigatório.
+5.  **Endereço Nacional**: Para tomadores nacionais, o código do município IBGE é obrigatório.
 
 ## Ambiente de Testes
 
-Para garantir que as validações funcionem corretamente em um ambiente standalone (fora do Laravel), a biblioteca configura um mock do container do Laravel no arquivo `tests/Pest.php`.
-
-Isso permite que as regras de validação do Laravel sejam resolvidas e aplicadas corretamente durante os testes unitários.
+As validações são testadas exaustivamente em `tests/Unit/Validator/DpsValidatorTest.php` para garantir que os documentos gerados sejam aceitos pela API da SEFIN Nacional.

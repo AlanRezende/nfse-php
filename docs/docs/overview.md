@@ -11,29 +11,27 @@ O `nfse-php` é uma biblioteca agnóstica de framework que fornece os blocos de 
 
 ## Tecnologia de DTOs
 
-Utilizamos a biblioteca `spatie/laravel-data` para definição de DTOs. Isso nos permite mapear os nomes complexos do layout nacional (ex: `endNac.cMun`) para propriedades PHP legíveis e tipadas.
+Utilizamos a biblioteca `spatie/data-transfer-object` para definição de DTOs. Isso nos permite mapear os nomes complexos do layout nacional (ex: `endNac.cMun`) para propriedades PHP legíveis e tipadas.
 
 ### Exemplo de DTO
 
 ```php
-namespace Nfse\Dto\Nfse\Nfse;
+namespace Nfse\Dto\Nfse;
 
-use Spatie\LaravelData\Attributes\MapInputName;
-use Spatie\LaravelData\Data;
+use Spatie\DataTransferObject\Attributes\MapFrom;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class EnderecoData extends Data
+class EnderecoData extends DataTransferObject
 {
-    public function __construct(
-        #[MapInputName('endNac.cMun')]
-        public ?string $codigoMunicipio,
+    #[MapFrom('endNac.cMun')]
+    public ?string $codigoMunicipio;
 
-        #[MapInputName('endNac.CEP')]
-        public ?string $cep,
+    #[MapFrom('endNac.CEP')]
+    public ?string $cep;
 
-        #[MapInputName('xLgr')]
-        public ?string $logradouro,
-        // ...
-    ) {}
+    #[MapFrom('xLgr')]
+    public ?string $logradouro;
+    // ...
 }
 ```
 
@@ -107,7 +105,7 @@ DpsData::validate($dps->toArray());
 
 ## 🔗 Referências
 
--   **[Spatie Laravel Data](https://spatie.be/docs/laravel-data)** - Biblioteca base dos DTOs
+-   **[Spatie Data Transfer Object](https://github.com/spatie/data-transfer-object)** - Biblioteca base dos DTOs
 -   **[Manual NFSe Nacional](https://www.gov.br/nfse/)** - Documentação oficial do governo
 -   **[Schemas XSD](https://github.com/nfse-nacional/nfse-php/tree/main/references/schemas)** - Schemas oficiais da NFSe
 -   **[GitHub do Projeto](https://github.com/nfse-nacional/nfse-php)** - Código-fonte e issues

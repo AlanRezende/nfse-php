@@ -2,6 +2,9 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\MotivoSubstituicao;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -19,8 +22,8 @@ class SubstituicaoData extends DataTransferObject
      * 02 - Enquadramento de NFS-e no Simples Nacional
      * 99 - Outros
      */
-    #[MapFrom('cMotivo')]
-    public ?string $codigoMotivo = null;
+    #[MapFrom('cMotivo'), CastWith(EnumCaster::class, enumType: MotivoSubstituicao::class)]
+    public ?MotivoSubstituicao $codigoMotivo = null;
 
     /**
      * Descrição do motivo da substituição.

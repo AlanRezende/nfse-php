@@ -100,3 +100,24 @@ Estrutura simplificada de endereço para o emitente.
 | `codigoMunicipio` | `string` | `cMun`         | Código IBGE do município. |
 | `uf`              | `string` | `UF`           | Sigla da UF.              |
 | `cep`             | `string` | `CEP`          | CEP.                      |
+
+---
+
+## FornecedorData
+
+Identifica o fornecedor de um documento comprobatório de dedução ou redução.
+
+### Propriedades
+
+| Propriedade          | Tipo           | Mapeamento XML | Descrição                                  |
+| :------------------- | :------------- | :------------- | :----------------------------------------- |
+| `cnpj`               | `string`       | `CNPJ`         | CNPJ do fornecedor.                        |
+| `cpf`                | `string`       | `CPF`          | CPF do fornecedor.                         |
+| `nif`                | `string`       | `NIF`          | Número de Identificação Fiscal (Exterior). |
+| `codigoNaoNif`       | `string`       | `cNaoNIF`      | Motivo de não informar NIF.                |
+| `caepf`              | `string`       | `CAEPF`        | Cadastro de Atividade Econômica (PF).      |
+| `inscricaoMunicipal` | `string`       | `IM`           | Inscrição Municipal do fornecedor.         |
+| `nome`               | `string`       | `xNome`        | Nome do fornecedor.                        |
+| `endereco`           | `EnderecoData` | `endFornec`    | Endereço do fornecedor.                    |
+| `telefone`           | `string`       | `fone`         | Telefone de contato.                       |
+| `email`              | `string`       | `email`        | E-mail de contato.                         |

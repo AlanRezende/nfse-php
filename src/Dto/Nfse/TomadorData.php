@@ -2,6 +2,9 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Enums\MotivoNaoNif;
+use Nfse\Support\DTO\EnumCaster;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -31,8 +34,8 @@ class TomadorData extends DataTransferObject
     /**
      * Código do motivo de não informar o NIF.
      */
-    #[MapFrom('cNaoNIF')]
-    public ?string $codigoNaoNif = null;
+    #[MapFrom('cNaoNIF'), CastWith(EnumCaster::class, enumType: MotivoNaoNif::class)]
+    public ?MotivoNaoNif $codigoNaoNif = null;
 
     /**
      * Cadastro de Atividade Econômica da Pessoa Física.
