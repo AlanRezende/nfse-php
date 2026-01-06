@@ -2,12 +2,12 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class DpsData extends DataTransferObject
+class DpsData extends Dto
 {
-    #[MapFrom('@versao')]
+    #[MapFrom('@attributes.versao')]
     public ?string $versao = null;
 
     #[MapFrom('infDPS')]

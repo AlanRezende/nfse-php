@@ -7,9 +7,9 @@ use Nfse\Xml\DpsXmlBuilder;
 
 it('can build xml matching ExemploPrestadorPessoaFisica', function () {
     $dpsData = new DpsData([
-        '@versao' => '1.00',
+        '@attributes' => ['versao' => '1.00'],
         'infDPS' => [
-            '@Id' => 'DPS231400310000667299238300001000000000000046',
+            '@attributes' => ['Id' => 'DPS231400310000667299238300001000000000000046'],
             'tpAmb' => 1,
             'dhEmi' => '2025-12-15T11:11:09-03:00',
             'verAplic' => 'Sistema NFS-e',

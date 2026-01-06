@@ -9,7 +9,7 @@ use Nfse\Dto\Nfse\InfDpsData;
 
 it('can instantiate InfDpsData with valid data', function () {
     $data = [
-        '@Id' => 'DPS123',
+        '@attributes' => ['Id' => 'DPS123'],
         'tpAmb' => 1,
         'dhEmi' => '2023-10-27T10:00:00-03:00',
         'verAplic' => '1.0',
@@ -30,7 +30,7 @@ it('can instantiate InfDpsData with valid data', function () {
 it('can instantiate InfDpsData with partial data', function () {
     // spatie/data-transfer-object allows null values for nullable properties
     $data = [
-        '@Id' => 'DPS456',
+        '@attributes' => ['Id' => 'DPS456'],
         'tpAmb' => 2,
         'dhEmi' => '2023-10-27T10:00:00-03:00',
         'verAplic' => '1.0',

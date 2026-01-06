@@ -19,7 +19,7 @@ use Nfse\Dto\Nfse\DpsData;
 use Nfse\Xml\DpsXmlBuilder;
 
 // 1. Instancie seu DTO (geralmente vindo de um formulário ou banco de dados)
-$dpsData = DpsData::from($dados);
+$dpsData = new DpsData($dados);
 
 // 2. Utilize o builder para gerar o XML
 $builder = new DpsXmlBuilder();
@@ -36,7 +36,7 @@ Para documentos de NFS-e já processados ou para visualização, utilize o `Nfse
 use Nfse\Dto\Nfse\NfseData;
 use Nfse\Xml\NfseXmlBuilder;
 
-$nfseData = NfseData::from($dadosNfse);
+$nfseData = new NfseData($dadosNfse);
 
 $builder = new NfseXmlBuilder();
 $xml = $builder->build($nfseData);

@@ -78,17 +78,20 @@ A biblioteca permite criar e validar documentos de forma simples:
 ```php
 use Nfse\Dto\Nfse\DpsData;
 
-// Criando a partir de um array de dados
-$dps = DpsData::from([
-    'infDps' => [
+// Criando a partir de um array com tags XML
+$dps = new DpsData([
+    '@attributes' => ['versao' => '1.00'],
+    'infDPS' => [
+        '@attributes' => ['Id' => 'DPS...'],
         'tpAmb' => 2,
         'dhEmi' => '2023-10-27T10:00:00',
-        // ...
+        // ... demais campos usando tags XML
     ]
 ]);
 
 // Validando os dados
-DpsData::validate($dps->toArray());
+$validator = new \Nfse\Validator\DpsValidator();
+$result = $validator->validate($dps);
 ```
 
 ---

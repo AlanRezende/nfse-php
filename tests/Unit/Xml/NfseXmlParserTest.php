@@ -8,11 +8,11 @@ use Nfse\Xml\NfseXmlParser;
 
 it('can parse nfse xml to data', function () {
     $nfse = new NfseData([
-        'versao' => '1.00',
+        '@attributes' => ['versao' => '1.00'],
         'infNFSe' => [
-            'id' => 'NFS123456',
+            '@attributes' => ['Id' => 'NFS123456'],
             'nNFSe' => '100',
-            'nDFe' => '987654321',
+            'nDFSe' => '987654321',
             'cVerif' => 'ABCDEF',
             'dhProc' => '2023-01-01T12:00:00',
             'ambGer' => 2,
@@ -26,9 +26,9 @@ it('can parse nfse xml to data', function () {
             'xTribMun' => '04.06 - Enfermagem...',
             'cStat' => 100,
             'DPS' => [
-                '@versao' => '1.00',
+                '@attributes' => ['versao' => '1.00'],
                 'infDPS' => [
-                    '@Id' => 'DPS123',
+                    '@attributes' => ['Id' => 'DPS123'],
                     'tpAmb' => 2,
                     'dhEmi' => '2023-01-01',
                     'verAplic' => '1.0',

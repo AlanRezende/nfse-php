@@ -7,11 +7,11 @@ use Nfse\Xml\NfseXmlBuilder;
 
 it('serializes nfse data to xml correctly', function () {
     $nfse = new NfseData([
-        'versao' => '1.00',
+        '@attributes' => ['versao' => '1.00'],
         'infNFSe' => [
-            'id' => 'NFS123456',
+            '@attributes' => ['Id' => 'NFS123456'],
             'nNFSe' => '100',
-            'nDFe' => '987654321',
+            'nDFSe' => '987654321',
             'cVerif' => 'ABCDEF',
             'dhProc' => '2023-01-01T12:00:00',
             'ambGer' => 2,
@@ -25,9 +25,9 @@ it('serializes nfse data to xml correctly', function () {
             'xTribMun' => '04.06 - Enfermagem...',
             'cStat' => 100,
             'DPS' => [
-                '@versao' => '1.00',
+                '@attributes' => ['versao' => '1.00'],
                 'infDPS' => [
-                    '@Id' => 'DPS123',
+                    '@attributes' => ['Id' => 'DPS123'],
                     'tpAmb' => 2,
                     'dhEmi' => '2023-01-01',
                     'verAplic' => '1.0',
@@ -80,7 +80,7 @@ it('serializes nfse data to xml correctly', function () {
     $builder = new NfseXmlBuilder;
     $xml = $builder->build($nfse);
 
-    expect($xml)->toContain('<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse">')
+    expect($xml)->toContain('<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse" versao="1.00">')
         ->and($xml)->toContain('<infNFSe Id="NFS123456" versao="1.00">')
         ->and($xml)->toContain('<nNFSe>100</nNFSe>')
         ->and($xml)->toContain('<DPS')

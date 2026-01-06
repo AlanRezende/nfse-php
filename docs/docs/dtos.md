@@ -2,13 +2,17 @@
 
 A biblioteca `nfse-php` utiliza DTOs (Data Transfer Objects) para representar a estrutura complexa da NFS-e Nacional. Esses objetos facilitam a manipulação de dados, garantem a integridade através de validações e permitem a geração automática de tipos para o frontend.
 
-## 🎯 Três Maneiras de Construir DTOs
+## 🎯 Duas Maneiras de Construir DTOs
 
-O pacote oferece **flexibilidade total** na forma como você constrói seus dados. Você pode escolher a abordagem que melhor se adequa ao seu caso de uso:
+O pacote oferece **duas formas** de construir seus dados:
 
-1. **Array (Padrão Nacional)** - Usando os nomes exatos das tags XML
-2. **Array (Semântico)** - Usando nomes amigáveis em português
-3. **Objeto (Semântico)** - Usando classes e argumentos nomeados (PHP 8+)
+1. **Array (Padrão Nacional)** - Usando os nomes exatos das tags XML (recomendado)
+2. **Objeto (Explícito)** - Usando classes e argumentos nomeados (PHP 8+)
+
+:::danger IMPORTANTE
+Você **DEVE** usar os nomes das tags XML exatamente como aparecem no schema (`infDPS`, `tpAmb`, `prest`, etc.).
+Propriedades semânticas (`infDps`, `tipoAmbiente`, `prestador`) **NÃO funcionarão**.
+:::
 
 ---
 
@@ -31,9 +35,9 @@ use Nfse\Xml\DpsXmlBuilder;
 
 // Dados vindos da sua aplicação (ex: $request->all())
 $dadosDoFormulario = [
-    'versao' => '1.00',
+    '@attributes' => ['versao' => '1.00'],
     'infDPS' => [
-        '@Id' => 'DPS330455721190597100010500333000000000000006',
+        '@attributes' => ['Id' => 'DPS330455721190597100010500333000000000000006'],
         'tpAmb' => \Nfse\Enums\TipoAmbiente::Homologacao,
         'dhEmi' => '2023-10-27T10:00:00-03:00',
         'verAplic' => '1.0.0',
@@ -133,105 +137,7 @@ try {
 
 ---
 
-## 2️⃣ Array (Semântico)
-
-Use esta abordagem quando você quer **código mais legível** mas ainda prefere trabalhar com arrays.
-
-### Características
-
--   ✅ Usa **nomes amigáveis** em português (`tipoAmbiente`, `dataEmissao`, `numeroDps`, etc.)
--   ✅ **Mais legível** e autodocumentado
--   ✅ Ideal para **novos projetos**
--   ✅ Facilita **manutenção** do código
--   ✅ O pacote **mapeia automaticamente** para o padrão nacional
-
-### Exemplo Completo
-
-```php
-use Nfse\Dto\Nfse\DpsData;
-use Nfse\Xml\DpsXmlBuilder;
-
-// Você também pode usar arrays com chaves legíveis
-// O pacote entende tanto o padrão nacional quanto nomes amigáveis
-$dados = [
-    'versao' => '1.00',
-    'infDps' => [
-        'id' => 'DPS330455721190597100010500333000000000000006',
-        'tipoAmbiente' => \Nfse\Enums\TipoAmbiente::Homologacao,
-        'dataEmissao' => '2023-10-27T10:00:00-03:00',
-        'versaoAplicativo' => '1.0.0',
-        'serie' => '00001',
-        'numeroDps' => '000000000000006',
-        'dataCompetencia' => '2023-10-27',
-        'tipoEmitente' => \Nfse\Enums\EmitenteDPS::Prestador,
-        'codigoLocalEmissao' => '3304557',
-
-        // Prestador (nomes amigáveis)
-        'prestador' => [
-            'cnpj' => '21190597000105',
-            'inscricaoMunicipal' => '00333',
-            'nome' => 'EMPRESA EXEMPLO LTDA',
-            'nome' => 'Empresa Exemplo',
-            'endereco' => [
-                'logradouro' => 'RUA EXEMPLO',
-                'numero' => '123',
-                'complemento' => 'SALA 456',
-                'bairro' => 'CENTRO',
-                'codigoMunicipio' => '3304557',
-                'cep' => '20000000',
-            ],
-            'telefone' => '2112345678',
-            'email' => 'contato@exemplo.com.br',
-        ],
-
-        // Tomador (nomes amigáveis)
-        'tomador' => [
-            'cpf' => '12345678901',
-            'nome' => 'CLIENTE EXEMPLO',
-            'endereco' => [
-                'logradouro' => 'AVENIDA CLIENTE',
-                'numero' => '456',
-                'bairro' => 'BAIRRO CLIENTE',
-                'codigoMunicipio' => '3304557',
-                'cep' => '21000000',
-            ],
-            'telefone' => '2198765432',
-            'email' => 'cliente@exemplo.com',
-        ],
-
-        // Serviço (nomes amigáveis)
-        'servico' => [
-            'codigoServico' => [
-                'codigoTributacaoNacional' => '01.07',
-                'descricaoServico' => 'Desenvolvimento de software sob encomenda',
-            ],
-        ],
-
-        // Valores (nomes amigáveis)
-        'valores' => [
-            'valorServicoPrestado' => [
-                'valorServico' => 5000.00,
-            ],
-            'tributacao' => [
-                'tributacaoIssqn' => \Nfse\Enums\TributacaoIssqn::OperacaoTributavel,
-                'tipoRetencaoIssqn' => \Nfse\Enums\TipoRetencaoIssqn::NaoRetido,
-            ],
-        ],
-    ],
-];
-
-// Criar o DTO (com validação automática)
-$dps = DpsData::from($dados);
-
-// Gerar o XML
-$xml = (new DpsXmlBuilder())->build($dps);
-
-echo $xml;
-```
-
----
-
-## 3️⃣ Objeto (Semântico)
+## 2️⃣ Objeto (Explícito)
 
 Use esta abordagem para **máxima type safety** e **autocomplete** da IDE.
 
@@ -346,15 +252,15 @@ echo $xml;
 
 ## 📊 Comparação das Abordagens
 
-| Característica           | Array Nacional | Array Semântico      | Objeto Semântico      |
-| ------------------------ | -------------- | -------------------- | --------------------- |
-| **Legibilidade**         | ⭐⭐           | ⭐⭐⭐⭐             | ⭐⭐⭐⭐⭐            |
-| **Type Safety**          | ❌             | ❌                   | ✅                    |
-| **Autocomplete**         | ⚠️ Limitado    | ⚠️ Limitado          | ✅ Completo           |
-| **Migração**             | ✅ Fácil       | ⚠️ Requer mapeamento | ⚠️ Requer refatoração |
-| **Manutenção**           | ⭐⭐           | ⭐⭐⭐⭐             | ⭐⭐⭐⭐⭐            |
-| **Curva de Aprendizado** | ⭐⭐⭐⭐       | ⭐⭐⭐               | ⭐⭐                  |
-| **Ideal Para**           | Migração       | Novos projetos       | Projetos grandes      |
+| Característica           | Array (Padrão Nacional) | Objeto (Explícito)    |
+| ------------------------ | ----------------------- | --------------------- |
+| **Legibilidade**         | ⭐⭐⭐                  | ⭐⭐⭐⭐⭐            |
+| **Type Safety**          | ❌                      | ✅                    |
+| **Autocomplete**         | ⚠️ Limitado             | ✅ Completo           |
+| **Migração**             | ✅ Fácil                | ⚠️ Requer refatoração |
+| **Manutenção**           | ⭐⭐⭐                  | ⭐⭐⭐⭐⭐            |
+| **Curva de Aprendizado** | ⭐⭐⭐                  | ⭐⭐                  |
+| **Ideal Para**           | Migração/XML direto     | Projetos novos        |
 
 ---
 
@@ -365,16 +271,9 @@ echo $xml;
 -   ✅ Está migrando de outra biblioteca
 -   ✅ Já tem XMLs ou dados no formato nacional
 -   ✅ A equipe já conhece bem o padrão NFSe
--   ✅ Quer código mais compacto
+-   ✅ Quer compatibilidade direta com o XML
 
-### Use **Array (Semântico)** quando:
-
--   ✅ Está começando um novo projeto
--   ✅ Quer código mais legível
--   ✅ Prefere trabalhar com arrays
--   ✅ A equipe não conhece o padrão NFSe
-
-### Use **Objeto (Semântico)** quando:
+### Use **Objeto (Explícito)** quando:
 
 -   ✅ Quer máxima segurança de tipos
 -   ✅ Trabalha em equipe

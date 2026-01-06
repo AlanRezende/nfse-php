@@ -49,11 +49,21 @@ Exemplo básico de utilização dos DTOs:
 ```php
 use Nfse\Dto\Nfse\DpsData;
 
-// Exemplo de instanciação (ajuste conforme sua necessidade)
+// Exemplo de instanciação usando Array (Padrão Nacional)
+// Usa as tags XML exatamente como aparecem no schema
 $dps = new DpsData([
-    '@versao' => '1.00',
+    '@attributes' => [
+        'versao' => '1.00',
+    ],
     'infDPS' => [
-        // ... dados da DPS
+        '@attributes' => [
+            'Id' => 'DPS...',  // ID gerado
+        ],
+        // ... dados da DPS usando tags XML
+        'tpAmb' => 2,
+        'prest' => [
+            'CNPJ' => '12345678000199',
+        ],
     ]
 ]);
 ```
@@ -73,11 +83,15 @@ use Nfse\Support\IdGenerator;
 // Formato: DPS + Cód.Mun.(7) + Tipo Inscr.(1) + Inscr.Fed.(14) + Série(5) + Número(15)
 $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
-// 2. Instanciar o DTO (você pode usar arrays ou objetos)
+// 2. Instanciar o DTO usando Array (Padrão Nacional)
 $dps = new DpsData([
-    '@versao' => '1.00',
+    '@attributes' => [
+        'versao' => '1.00',
+    ],
     'infDPS' => [
-        '@Id' => $id,
+        '@attributes' => [
+            'Id' => $id,
+        ],
         'tpAmb' => 2, // 2 - Homologação
         'dhEmi' => date('Y-m-d\TH:i:s'),
         'verAplic' => '1.0',
@@ -109,8 +123,10 @@ $dps = new DpsData([
                 'vServ' => 1000.00,
             ],
             'trib' => [
-                'tribMun.tribISSQN' => 1, // 1 - Operação tributável
-                'tribMun.tpRetISSQN' => 1, // 1 - Não Retido
+                'tribMun' => [
+                    'tribISSQN' => 1, // 1 - Operação tributável
+                    'tpRetISSQN' => 1, // 1 - Não Retido
+                ],
             ],
         ],
     ]

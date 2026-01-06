@@ -29,9 +29,9 @@ $idDps = IdGenerator::generateDpsId(
 
 // 2. Dados vindos da sua aplicação
 $dadosDoFormulario = [
-    'versao' => '1.00',
+    '@attributes' => ['versao' => '1.00'],
     'infDPS' => [
-        '@Id' => $idDps,
+        '@attributes' => ['Id' => $idDps],
         'tpAmb' => TipoAmbiente::Homologacao,
         'dhEmi' => '2023-10-27T10:00:00',
         'verAplic' => '1.0',
@@ -120,7 +120,7 @@ try {
 
 ## O que aconteceu aqui?
 
-1.  **Mapeamento**: O array usou nomes técnicos como `tpAmb` e `dhEmi`. O DTO mapeou isso automaticamente para propriedades como `$tipoAmbiente` e `$dataEmissao`.
+1.  **Mapeamento**: O array usou nomes técnicos como `tpAmb` e a estrutura `@attributes` para atributos XML. O DTO mapeou isso automaticamente para propriedades como `$tipoAmbiente` e `$dataEmissao`.
 2.  **Validação**: Se o `vServ` fosse uma string ou estivesse ausente, uma `ValidationException` seria lançada.
 3.  **Tipagem**: Após o `validateAndCreate`, a variável `$dps` é um objeto fortemente tipado, eliminando erros de digitação de chaves de array.
 4.  **Conformidade**: O XML gerado segue rigorosamente o esquema da NFS-e Nacional, pronto para ser assinado e enviado.

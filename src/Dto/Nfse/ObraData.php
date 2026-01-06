@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ObraData extends DataTransferObject
+class ObraData extends Dto
 {
     /**
      * Inscrição imobiliária fiscal da obra.

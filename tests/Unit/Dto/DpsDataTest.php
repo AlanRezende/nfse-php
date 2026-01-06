@@ -9,9 +9,9 @@ it('can instantiate dps data with full structure', function () {
     $id = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1001');
 
     $dpsData = new DpsData([
-        '@versao' => '1.0',
+        '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
-            '@Id' => $id,
+            '@attributes' => ['Id' => $id],
             'tpAmb' => 2,
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',

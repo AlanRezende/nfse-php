@@ -61,7 +61,7 @@ const sidebars: SidebarsConfig = {
                 "utilities/cpf-cnpj-formatter",
                 "utilities/tax-calculator",
                 "utilities/id-generator",
-                "utilities/document-generator",
+                "utilities/cpf-cnpj-generator",
             ],
         },
         "typescript",

@@ -10,7 +10,7 @@ class NfseData extends DataTransferObject
     /**
      * Versão do leiaute.
      */
-    #[MapFrom('versao')]
+    #[MapFrom('@attributes.versao')]
     public ?string $versao = null;
 
     /**

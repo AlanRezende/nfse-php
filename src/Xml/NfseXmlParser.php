@@ -2,101 +2,54 @@
 
 namespace Nfse\Xml;
 
-use DOMDocument;
-use DOMNode;
 use Nfse\Dto\Nfse\NfseData;
+use Exception;
 
 class NfseXmlParser
 {
     public function parse(string $xml): NfseData
     {
-        $dom = new DOMDocument;
-        $dom->loadXML($xml);
+        // Clean up the XML string
+        $xml = trim($xml);
+        
+        // Try to detect if the XML has double UTF-8 encoding
+        // This happens when the SEFIN API returns XML that was already UTF-8 encoded
+        // and then got encoded again during transmission
+        $hasDoubleEncoding = $this->detectDoubleUtf8Encoding($xml);
+        
+        if ($hasDoubleEncoding) {
+            // Decode once to fix the double encoding
+            $xml = utf8_decode($xml);
+        }
+        
+        // Load with proper encoding options
+        $simpleXml = simplexml_load_string(
+            $xml,
+            'SimpleXMLElement',
+            LIBXML_NOCDATA | LIBXML_NOBLANKS
+        );
 
-        $data = $this->convertDomToArray($dom->documentElement);
-
-        // Map root attributes
-        if (isset($data['@versao'])) {
-            $data['versao'] = $data['@versao'];
+        if ($simpleXml === false) {
+            throw new Exception('Failed to parse XML');
         }
 
-        // Map InfNfse attributes
-        if (isset($data['infNFSe']['@Id'])) {
-            $data['infNFSe']['id'] = $data['infNFSe']['@Id'];
-        }
-        if (isset($data['infNFSe']['@versao'])) {
-            $data['infNFSe']['versao'] = $data['infNFSe']['@versao'];
-            if (! isset($data['versao'])) {
-                $data['versao'] = $data['infNFSe']['@versao'];
-            }
-        }
+        // Use JSON_UNESCAPED_UNICODE to preserve characters correctly
+        $json = json_encode($simpleXml, JSON_UNESCAPED_UNICODE);
+        $parsedDoc = json_decode($json, true);
 
-        // Map DPS attributes if present
-        if (isset($data['infNFSe']['DPS']['@versao'])) {
-            $data['infNFSe']['DPS']['versao'] = $data['infNFSe']['DPS']['@versao'];
-        }
-        if (isset($data['infNFSe']['DPS']['infDPS']['@Id'])) {
-            $data['infNFSe']['DPS']['infDPS']['id'] = $data['infNFSe']['DPS']['infDPS']['@Id'];
-        }
-
-        // Cast integers for InfNfseData
-        $intFieldsNfse = ['tpEmis', 'cStat'];
-        foreach ($intFieldsNfse as $field) {
-            if (isset($data['infNFSe'][$field])) {
-                $data['infNFSe'][$field] = (int) $data['infNFSe'][$field];
-            }
-        }
-
-        return new NfseData($data);
+        return new NfseData($parsedDoc);
     }
 
-    private function convertDomToArray(DOMNode $node): array|string
+    /**
+     * Detect if the XML has double UTF-8 encoding
+     * 
+     * This checks for the pattern where UTF-8 multi-byte characters are double-encoded
+     * For example: "ç" (0xC3 0xA7) becomes "Ã§" (0xC3 0x83 0xC2 0xA7)
+     */
+    private function detectDoubleUtf8Encoding(string $xml): bool
     {
-        $output = [];
-
-        if ($node->nodeType === XML_TEXT_NODE) {
-            return $node->nodeValue;
-        }
-
-        if ($node->hasAttributes()) {
-            foreach ($node->attributes as $attr) {
-                $output['@'.$attr->nodeName] = $attr->nodeValue;
-            }
-        }
-
-        if ($node->hasChildNodes()) {
-            foreach ($node->childNodes as $child) {
-                if ($child->nodeType === XML_TEXT_NODE) {
-                    $text = trim($child->nodeValue);
-                    if ($text !== '') {
-                        if (! empty($output)) {
-                            $output['value'] = $text;
-                        } else {
-                            return $text;
-                        }
-                    }
-
-                    continue;
-                }
-
-                if ($child->nodeType !== XML_ELEMENT_NODE) {
-                    continue;
-                }
-
-                $childValue = $this->convertDomToArray($child);
-                $childName = $child->nodeName;
-
-                if (isset($output[$childName])) {
-                    if (! is_array($output[$childName]) || ! isset($output[$childName][0])) {
-                        $output[$childName] = [$output[$childName]];
-                    }
-                    $output[$childName][] = $childValue;
-                } else {
-                    $output[$childName] = $childValue;
-                }
-            }
-        }
-
-        return $output;
+        // Look for the double-encoding pattern: 0xC3 0x83 or 0xC3 0x82
+        // This is a strong indicator of double UTF-8 encoding
+        return preg_match('/\xC3[\x82\x83]/', $xml) === 1;
     }
 }

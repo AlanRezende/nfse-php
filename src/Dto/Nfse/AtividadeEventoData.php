@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class AtividadeEventoData extends DataTransferObject
+class AtividadeEventoData extends Dto
 {
     /**
      * Nome do evento ou atividade.

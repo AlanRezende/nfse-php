@@ -171,15 +171,15 @@ $idDps = IdGenerator::generateDpsId(
 );
 
 // 2. Usar o ID gerado no DTO
-$dps = new DpsData(
-    versao: '1.00',
-    infDps: new InfDpsData(
-        id: $idDps,  // ✅ ID gerado corretamente
-        serie: $serie,
-        numeroDps: $numeroDps,
+$dps = new DpsData([
+    '@attributes' => ['versao' => '1.00'],
+    'infDPS' => [
+        '@attributes' => ['Id' => $idDps],  // ✅ ID gerado corretamente
+        'serie' => $serie,
+        'nDPS' => $numeroDps,
         // ... outros campos
-    )
-);
+    ]
+]);
 ```
 
 ### Exemplo Completo
@@ -202,22 +202,22 @@ $idDps = IdGenerator::generateDpsId(
 );
 
 // Criar DPS
-$dps = new DpsData(
-    versao: '1.01',
-    infDps: new InfDpsData(
-        id: $idDps, // DPS330455721190597100010500333000000000000006
-        tipoAmbiente: 2,
-        dataEmissao: now()->format('Y-m-d\TH:i:sP'),
-        serie: $serie,
-        numeroDps: (string)$numero,
-        codigoLocalEmissao: $codigoMunicipio,
-        prestador: new PrestadorData(
-            cnpj: $cnpjEmitente,
+$dps = new DpsData([
+    '@attributes' => ['versao' => '1.01'],
+    'infDPS' => [
+        '@attributes' => ['Id' => $idDps], // DPS330455721190597100010500333000000000000006
+        'tpAmb' => 2,
+        'dhEmi' => now()->format('Y-m-d\TH:i:sP'),
+        'serie' => $serie,
+        'nDPS' => (string)$numero,
+        'cLocEmi' => $codigoMunicipio,
+        'prest' => [
+            'CNPJ' => $cnpjEmitente,
             // ...
-        ),
+        ],
         // ...
-    )
-);
+    ]
+]);
 ```
 
 ---
@@ -291,15 +291,15 @@ class DpsService
         );
 
         // Criar DPS
-        return new DpsData(
-            versao: '1.00',
-            infDps: new InfDpsData(
-                id: $idDps,
-                serie: $dados['serie'],
-                numeroDps: (string)$proximoNumero,
+        return new DpsData([
+            '@attributes' => ['versao' => '1.00'],
+            'infDPS' => [
+                '@attributes' => ['Id' => $idDps],
+                'serie' => $dados['serie'],
+                'nDPS' => (string)$proximoNumero,
                 // ...
-            )
-        );
+            ]
+        ]);
     }
 }
 ```
@@ -348,7 +348,7 @@ function validarIdDps(string $id, DpsData $dps): bool
 ```php
 // 1. Gere o ID antes de criar o DTO
 $id = IdGenerator::generateDpsId(...);
-$dps = new DpsData(versao: '1.00', infDps: new InfDpsData(id: $id, ...));
+$dps = new DpsData(['@attributes' => ['versao' => '1.00'], 'infDPS' => ['@attributes' => ['Id' => $id], ...]]);
 
 // 2. Use os mesmos dados do prestador
 $id = IdGenerator::generateDpsId(

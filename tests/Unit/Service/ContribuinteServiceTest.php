@@ -52,9 +52,9 @@ class ContribuinteServiceTest extends TestCase
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
         $dpsData = new DpsData([
-            '@versao' => '1.00',
+            '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
-                '@Id' => $idDps,
+                '@attributes' => ['Id' => $idDps],
                 'tpAmb' => 2,
                 'dhEmi' => '2023-10-27T10:00:00',
                 'verAplic' => '1.0',
@@ -374,9 +374,9 @@ class ContribuinteServiceTest extends TestCase
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
         $dpsData = new DpsData([
-            '@versao' => '1.00',
+            '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
-                '@Id' => $idDps,
+                '@attributes' => ['Id' => $idDps],
                 'tpAmb' => 2,
                 'dhEmi' => '2023-10-27T10:00:00',
                 'verAplic' => '1.0',
@@ -409,9 +409,9 @@ class ContribuinteServiceTest extends TestCase
     {
         $idDps = IdGenerator::generateDpsId('12345678000199', '3550308', '1', '1');
         $dpsData = new DpsData([
-            '@versao' => '1.00',
+            '@attributes' => ['versao' => '1.00'],
             'infDPS' => [
-                '@Id' => $idDps,
+                '@attributes' => ['Id' => $idDps],
                 'tpAmb' => 2,
                 'dhEmi' => '2023-10-27T10:00:00',
                 'verAplic' => '1.0',

@@ -88,7 +88,7 @@ class DpsXmlBuilder
         }
 
         if ($data->valores) {
-            $this->buildValores($parent, $data->valores);
+            $this->buildValores($parent, $data->valores, $data->prestador);
         }
     }
 
@@ -227,7 +227,7 @@ class DpsXmlBuilder
         $parent->appendChild($serv);
     }
 
-    private function buildValores(DOMElement $parent, ValoresData $data): void
+    private function buildValores(DOMElement $parent, ValoresData $data, ?PrestadorData $prestador = null): void
     {
         $valores = $this->dom->createElement('valores');
 
@@ -318,14 +318,16 @@ class DpsXmlBuilder
                 $trib->appendChild($tribFed);
             }
 
+            $isSimplesNacional = false;
+            if ($prestador && $prestador->regimeTributario && $prestador->regimeTributario->opcaoSimplesNacional === 3) {
+                $isSimplesNacional = true;
+            }
+
+            $totTrib = null;
+
             if ($data->tributacao->percentualTotalTributosSN) {
                 $totTrib = $this->dom->createElement('totTrib');
                 $this->appendElement($totTrib, 'pTotTribSN', number_format($data->tributacao->percentualTotalTributosSN, 2, '.', ''));
-                $trib->appendChild($totTrib);
-            } elseif ($data->tributacao->indicadorTotalTributos !== null) {
-                $totTrib = $this->dom->createElement('totTrib');
-                $this->appendElement($totTrib, 'indTotTrib', $data->tributacao->indicadorTotalTributos);
-                $trib->appendChild($totTrib);
             } elseif ($data->tributacao->valorTotalTributosFederais !== null || $data->tributacao->valorTotalTributosEstaduais !== null || $data->tributacao->valorTotalTributosMunicipais !== null) {
                 $totTrib = $this->dom->createElement('totTrib');
                 $vTotTrib = $this->dom->createElement('vTotTrib');
@@ -333,10 +335,13 @@ class DpsXmlBuilder
                 $this->appendElement($vTotTrib, 'vTotTribEst', $data->tributacao->valorTotalTributosEstaduais !== null ? number_format($data->tributacao->valorTotalTributosEstaduais, 2, '.', '') : null);
                 $this->appendElement($vTotTrib, 'vTotTribMun', $data->tributacao->valorTotalTributosMunicipais !== null ? number_format($data->tributacao->valorTotalTributosMunicipais, 2, '.', '') : null);
                 $totTrib->appendChild($vTotTrib);
-                $trib->appendChild($totTrib);
-            } else {
+            } elseif (! $isSimplesNacional) {
                 $totTrib = $this->dom->createElement('totTrib');
-                $this->appendElement($totTrib, 'indTotTrib', '0');
+                $indTotTrib = $data->tributacao->indicadorTotalTributos ?? '0';
+                $this->appendElement($totTrib, 'indTotTrib', $indTotTrib);
+            }
+
+            if ($totTrib) {
                 $trib->appendChild($totTrib);
             }
 

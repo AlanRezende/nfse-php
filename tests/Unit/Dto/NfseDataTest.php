@@ -12,11 +12,11 @@ it('can instantiate nfse data with full structure', function () {
     $dpsId = IdGenerator::generateDpsId('12345678000199', '1234567', '1', '100');
 
     $nfse = new NfseData([
-        'versao' => '1.00',
+        '@attributes' => ['versao' => '1.00'],
         'infNFSe' => [
-            'id' => 'NFS123456',
+            '@attributes' => ['Id' => 'NFS123456'],
             'nNFSe' => '100',
-            'nDFe' => '987654321',
+            'nDFSe' => '987654321',
             'cVerif' => 'ABCDEF',
             'dhProc' => '2023-01-01T12:00:00',
             'ambGer' => 2,
@@ -33,9 +33,9 @@ it('can instantiate nfse data with full structure', function () {
             'cStat' => 100,
             'xOutInf' => 'Informações adicionais',
             'DPS' => [
-                '@versao' => '1.00',
+                '@attributes' => ['versao' => '1.00'],
                 'infDPS' => [
-                    '@Id' => $dpsId,
+                    '@attributes' => ['Id' => $dpsId],
                     'tpAmb' => 2,
                     'dhEmi' => '2023-01-01',
                     'verAplic' => '1.0',
@@ -101,9 +101,9 @@ it('verifies DpsData is a DFe', function () {
     $dpsId = IdGenerator::generateDpsId('12345678000199', '1234567', '1', '100');
 
     $dps = new DpsData([
-        '@versao' => '1.00',
+        '@attributes' => ['versao' => '1.00'],
         'infDPS' => [
-            '@Id' => $dpsId,
+            '@attributes' => ['Id' => $dpsId],
             'tpAmb' => 2,
             'dhEmi' => '2023-01-01',
             'verAplic' => '1.0',

@@ -5,10 +5,10 @@ namespace Nfse\Dto\Nfse;
 use Nfse\Enums\MotivoNaoNif;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class TomadorData extends DataTransferObject
+class TomadorData extends Dto
 {
     /**
      * CPF do tomador.

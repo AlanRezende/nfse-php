@@ -4,6 +4,7 @@ namespace Nfse\Validator;
 
 use Nfse\Dto\Nfse\DpsData;
 use Nfse\Dto\Nfse\InfDpsData;
+use Nfse\Enums\EmitenteDPS;
 
 class DpsValidator
 {
@@ -41,7 +42,7 @@ class DpsValidator
 
         // Rule: If Prestador is NOT the emitter, address is required.
         // Schema Rule E0129
-        if ($tpEmit !== 1) {
+        if ($tpEmit !== EmitenteDPS::Prestador) {
             if ($prestador->endereco === null) {
                 $errors[] = 'Endereço do prestador é obrigatório quando o prestador não for o emitente.';
             }

@@ -7,9 +7,9 @@ use Nfse\Xml\DpsXmlBuilder;
 
 it('serializes dps data to xml correctly', function () {
     $dpsData = new DpsData([
-        '@versao' => '1.0',
+        '@attributes' => ['versao' => '1.0'],
         'infDPS' => [
-            '@Id' => 'DPS123',
+            '@attributes' => ['Id' => 'DPS123'],
             'tpAmb' => 2,
             'dhEmi' => '2023-10-27T10:00:00',
             'verAplic' => '1.0',

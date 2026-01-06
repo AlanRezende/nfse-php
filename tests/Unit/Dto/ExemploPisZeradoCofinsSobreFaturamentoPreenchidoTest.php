@@ -11,11 +11,11 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
 
     // Construct the DTO based on the XML example
     $nfse = new NfseData([
-        'versao' => '1.01',
+        '@attributes' => ['versao' => '1.01'],
         'infNFSe' => [
-            'id' => 'NFS33045572211905971000105000000000014625124504258429',
+            '@attributes' => ['Id' => 'NFS33045572211905971000105000000000014625124504258429'],
             'nNFSe' => '146',
-            'nDFe' => '60631',
+            'nDFSe' => '60631',
             'dhProc' => '2025-12-30T19:01:35-03:00',
             'ambGer' => 2,
             'verAplic' => 'SefinNac_Pre_1.4.0',
@@ -30,9 +30,9 @@ it('can generate XML with all fields from ExemploPisZeradoCofinsSobreFaturamento
             'tpEmis' => 1,
             'cStat' => 100,
             'DPS' => [
-                '@versao' => '1.01',
+                '@attributes' => ['versao' => '1.01'],
                 'infDPS' => [
-                    '@Id' => $dpsId,
+                    '@attributes' => ['Id' => $dpsId],
                     'tpAmb' => 2,
                     'dhEmi' => '2025-12-30T19:00:06-03:00',
                     'verAplic' => 'MXM.RTC-1.00',

@@ -74,9 +74,9 @@ use Illuminate\\Validation\\ValidationException;
 
 // 1. Dados vindos da sua aplicação (ex: $request->all())
 $dadosDoFormulario = [
-    'versao' => '1.00',
+    '@attributes' => ['versao' => '1.00'],
     'infDPS' => [
-        '@Id' => 'DPS123456',
+        '@attributes' => ['Id' => 'DPS123456'],
         'tpAmb' => 2, // Homologação
         'dhEmi' => '2023-10-27T10:00:00',
         'verAplic' => '1.0',
@@ -226,53 +226,8 @@ if ($resultado->sucesso ?? false) {
                                     </CodeBlock>
                                 </TabItem>
                                 <TabItem
-                                    value="array-semantic"
-                                    label="Array (Semântico)"
-                                >
-                                    <CodeBlock language="php">
-                                        {`use Nfse\\Dto\\Nfse\\DpsData;
-use Nfse\\Xml\\DpsXmlBuilder;
-
-// Você também pode usar arrays com chaves legíveis
-// O pacote entende tanto o padrão nacional quanto nomes amigáveis
-$dados = [
-    'versao' => '1.00',
-    'infDps' => [
-        'id' => 'DPS123456',
-        'tipoAmbiente' => 2, // Homologação
-        'dataEmissao' => '2023-10-27T10:00:00',
-        'versaoAplicativo' => '1.0',
-        'serie' => '1',
-        'numeroDps' => '100',
-        'dataCompetencia' => '2023-10-27',
-        'tipoEmitente' => 1,
-        'codigoLocalEmissao' => '3550308',
-        'prestador' => [
-            'cnpj' => '12345678000199',
-            'inscricaoMunicipal' => '12345'
-        ],
-        'tomador' => [
-            'cpf' => '11122233344',
-            'nome' => 'Cliente Exemplo'
-        ],
-        'servico' => [
-            'codigoTributacaoNacional' => '01.01',
-            'descricao' => 'Desenvolvimento de Software'
-        ],
-        'valores' => [
-            'valorServicos' => 1000.00
-        ]
-    ]
-];
-
-$dps = DpsData::from($dados);
-$xml = (new DpsXmlBuilder())->build($dps);
-echo $xml;`}
-                                    </CodeBlock>
-                                </TabItem>
-                                <TabItem
                                     value="semantic"
-                                    label="Objeto (Semântico)"
+                                    label="Objeto (Explícito)"
                                 >
                                     <CodeBlock language="php">
                                         {`use Nfse\\Dto\\Nfse\\DpsData;

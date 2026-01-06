@@ -43,33 +43,10 @@ $dps = new DpsData(
 );
 
 $nfse = $service->emitir($dps);
-// O método atualmente retorna o XML compacto da resposta; quando o
-// parser estiver implementado, será retornado um objeto NfseData.
+// O método retorna um objeto NfseData com os dados da nota emitida
 ```
 
-### 3) Exemplo semântico (objetos DTO)
-
-```php
-use Nfse\Dto\Nfse\DpsData;
-use Nfse\Dto\Nfse\InfDpsData;
-use Nfse\Dto\Nfse\PrestadorData;
-use Nfse\Dto\Nfse\TomadorData;
-
-$dps = new DpsData(
-    versao: '1.00',
-    infDps: new InfDpsData(
-        id: 'DPS123',
-        tipoAmbiente: 2,
-        prestador: new PrestadorData(cnpj: '12345678000199'),
-        tomador: new TomadorData(cpf: '11122233344'),
-        servico: ...
-    )
-);
-
-$nfse = $service->emitir($dps);
-```
-
-### 4) Tratamento de erros
+### 3) Tratamento de erros
 
 -   Validação: o pacote pode lançar exceções de validação se campos estiverem faltando ou estiverem no formato errado.
 -   Erros do provedor: trate exceções de rede e respostas de erro retornadas pela SEFIN.

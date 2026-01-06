@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PrestadorData extends DataTransferObject
+class PrestadorData extends Dto
 {
     /**
      * CNPJ do prestador.

@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ValoresData extends DataTransferObject
+class ValoresData extends Dto
 {
     /**
      * Valor do serviço prestado.

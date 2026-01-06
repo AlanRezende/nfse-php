@@ -2,6 +2,7 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Nfse\Enums\CstPisCofins;
 use Nfse\Enums\IndicadorTotalTributos;
 use Nfse\Enums\TipoImunidade;
@@ -12,9 +13,8 @@ use Nfse\Enums\TributacaoIssqn;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class TributacaoData extends DataTransferObject
+class TributacaoData extends Dto
 {
     /**
      * Tributação do ISSQN.

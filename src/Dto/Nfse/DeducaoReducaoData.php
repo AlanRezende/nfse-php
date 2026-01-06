@@ -2,12 +2,12 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Nfse\Support\DTO\ArrayCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class DeducaoReducaoData extends DataTransferObject
+class DeducaoReducaoData extends Dto
 {
     /**
      * Percentual de dedução/redução da base de cálculo.

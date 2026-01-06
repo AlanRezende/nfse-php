@@ -6,7 +6,7 @@ use Nfse\Dto\Nfse\InfDpsData;
 
 it('can instantiate inf dps data', function () {
     $infDps = new InfDpsData([
-        '@Id' => 'DPS123',
+        '@attributes' => ['Id' => 'DPS123'],
         'tpAmb' => 2,
         'dhEmi' => '2023-10-27T10:00:00',
         'verAplic' => '1.0',

@@ -14,7 +14,7 @@ class InfNfseData extends DataTransferObject
     /**
      * Identificador da NFS-e.
      */
-    #[MapFrom('id')]
+    #[MapFrom('@attributes.Id')]
     public ?string $id = null;
 
     /**
@@ -26,7 +26,7 @@ class InfNfseData extends DataTransferObject
     /**
      * Número do DFe.
      */
-    #[MapFrom('nDFe')]
+    #[MapFrom('nDFSe')]
     public ?string $numeroDfse = null;
 
     /**

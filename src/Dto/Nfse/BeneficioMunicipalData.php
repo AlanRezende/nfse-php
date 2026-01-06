@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class BeneficioMunicipalData extends DataTransferObject
+class BeneficioMunicipalData extends Dto
 {
     /**
      * Código de identificação do Benefício Municipal.

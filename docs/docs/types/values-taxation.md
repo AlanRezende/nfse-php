@@ -42,28 +42,28 @@ Define como o serviço será tributado.
 
 ### Propriedades
 
-| Propriedade                    | Tipo                     | Mapeamento XML                     | Descrição                                                  |
-| :----------------------------- | :----------------------- | :--------------------------------- | :--------------------------------------------------------- |
-| `tributacaoIssqn`              | `TributacaoIssqn`        | `tribMun.tribISSQN`                | 1-Tributável, 2-Imunidade, 3-Exportação, 4-Não Incidência. |
-| `tipoImunidade`                | `TipoImunidade`          | `tribMun.tpImunidade`              | Tipo de imunidade (se tribISSQN = 2).                      |
-| `tipoRetencaoIssqn`            | `TipoRetencaoIssqn`      | `tribMun.tpRetISSQN`               | 1-Não Retido, 2-Retido Tomador, 3-Retido Intermediário.    |
-| `tipoSuspensao`                | `TipoSuspensao`          | `tribMun.exigSusp.tpSusp`          | 1-Judicial, 2-Administrativa.                              |
-| `numeroProcessoSuspensao`      | `string`                 | `tribMun.exigSusp.nProcesso`       | Número do processo de suspensão.                           |
-| `beneficioMunicipal`           | `BeneficioMunicipalData` | `tribMun.BM`                       | Informações de benefício municipal.                        |
-| `cstPisCofins`                 | `string`                 | `tribFed.piscofins.CST`            | Código da Situação Tributária do PIS/COFINS.               |
-| `baseCalculoPisCofins`         | `float`                  | `tribFed.piscofins.vBCPisCofins`   | Base de cálculo PIS/COFINS.                                |
-| `aliquotaPis`                  | `float`                  | `tribFed.piscofins.pAliqPis`       | Alíquota PIS (em %).                                       |
-| `aliquotaCofins`               | `float`                  | `tribFed.piscofins.pAliqCofins`    | Alíquota COFINS (em %).                                    |
-| `valorPis`                     | `float`                  | `tribFed.piscofins.vPis`           | Valor PIS.                                                 |
-| `valorCofins`                  | `float`                  | `tribFed.piscofins.vCofins`        | Valor COFINS.                                              |
-| `tipoRetencaoPisCofins`        | `TipoRetencaoPisCofins`  | `tribFed.piscofins.tpRetPisCofins` | 1-Não Retido, 2-Retido.                                    |
-| `valorRetidoIrrf`              | `float`                  | `tribFed.vRetIRRF`                 | Valor retido de IRRF.                                      |
-| `valorRetidoCsll`              | `float`                  | `tribFed.vRetCSLL`                 | Valor retido de CSLL.                                      |
-| `valorTotalTributosFederais`   | `float`                  | `totTrib.vTotTrib.vTotTribFed`     | Valor total de tributos federais.                          |
-| `valorTotalTributosEstaduais`  | `float`                  | `totTrib.vTotTrib.vTotTribEst`     | Valor total de tributos estaduais.                         |
-| `valorTotalTributosMunicipais` | `float`                  | `totTrib.vTotTrib.vTotTribMun`     | Valor total de tributos municipais.                        |
-| `percentualTotalTributosSN`    | `float`                  | `totTrib.pTotTribSN`               | Percentual total aproximado dos tributos.                  |
-| `indicadorTotalTributos`       | `IndicadorTotalTributos` | `totTrib.indTotTrib`               | Indicador de informação de valor total de tributos.        |
+| Propriedade                    | Tipo                     | Mapeamento XML                     | Descrição                                                                                                                     |
+| :----------------------------- | :----------------------- | :--------------------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+| `tributacaoIssqn`              | `TributacaoIssqn`        | `tribMun.tribISSQN`                | 1-Tributável, 2-Imunidade, 3-Exportação, 4-Não Incidência.                                                                    |
+| `tipoImunidade`                | `TipoImunidade`          | `tribMun.tpImunidade`              | Tipo de imunidade (se tribISSQN = 2).                                                                                         |
+| `tipoRetencaoIssqn`            | `TipoRetencaoIssqn`      | `tribMun.tpRetISSQN`               | 1-Não Retido, 2-Retido Tomador, 3-Retido Intermediário.                                                                       |
+| `tipoSuspensao`                | `TipoSuspensao`          | `tribMun.exigSusp.tpSusp`          | 1-Judicial, 2-Administrativa.                                                                                                 |
+| `numeroProcessoSuspensao`      | `string`                 | `tribMun.exigSusp.nProcesso`       | Número do processo de suspensão.                                                                                              |
+| `beneficioMunicipal`           | `BeneficioMunicipalData` | `tribMun.BM`                       | Informações de benefício municipal.                                                                                           |
+| `cstPisCofins`                 | `string`                 | `tribFed.piscofins.CST`            | Código da Situação Tributária do PIS/COFINS.                                                                                  |
+| `baseCalculoPisCofins`         | `float`                  | `tribFed.piscofins.vBCPisCofins`   | Base de cálculo PIS/COFINS.                                                                                                   |
+| `aliquotaPis`                  | `float`                  | `tribFed.piscofins.pAliqPis`       | Alíquota PIS (em %).                                                                                                          |
+| `aliquotaCofins`               | `float`                  | `tribFed.piscofins.pAliqCofins`    | Alíquota COFINS (em %).                                                                                                       |
+| `valorPis`                     | `float`                  | `tribFed.piscofins.vPis`           | Valor PIS.                                                                                                                    |
+| `valorCofins`                  | `float`                  | `tribFed.piscofins.vCofins`        | Valor COFINS.                                                                                                                 |
+| `tipoRetencaoPisCofins`        | `TipoRetencaoPisCofins`  | `tribFed.piscofins.tpRetPisCofins` | 1-Não Retido, 2-Retido.                                                                                                       |
+| `valorRetidoIrrf`              | `float`                  | `tribFed.vRetIRRF`                 | Valor retido de IRRF.                                                                                                         |
+| `valorRetidoCsll`              | `float`                  | `tribFed.vRetCSLL`                 | Valor retido de CSLL.                                                                                                         |
+| `valorTotalTributosFederais`   | `float`                  | `totTrib.vTotTrib.vTotTribFed`     | Valor total de tributos federais.                                                                                             |
+| `valorTotalTributosEstaduais`  | `float`                  | `totTrib.vTotTrib.vTotTribEst`     | Valor total de tributos estaduais.                                                                                            |
+| `valorTotalTributosMunicipais` | `float`                  | `totTrib.vTotTrib.vTotTribMun`     | Valor total de tributos municipais.                                                                                           |
+| `percentualTotalTributosSN`    | `float`                  | `totTrib.pTotTribSN`               | Percentual total aproximado dos tributos.                                                                                     |
+| `indicadorTotalTributos`       | `IndicadorTotalTributos` | `totTrib.indTotTrib`               | Indicador de informação de valor total de tributos. **Nota:** Não deve ser informado se `opSimpNac` for 3 (Simples Nacional). |
 
 ---
 

@@ -22,7 +22,14 @@ $service = $nfse->contribuinte();
 // Emitir uma NFS-e mínima (exemplo)
 use Nfse\Dto\Nfse\DpsData;
 
-$dps = new DpsData(['@versao' => '1.00', 'infDPS' => ['@Id' => 'DPS123', 'tpAmb' => \Nfse\Enums\TipoAmbiente::Homologacao /* ... */]]);
+$dps = new DpsData([
+    '@attributes' => ['versao' => '1.00'],
+    'infDPS' => [
+        '@attributes' => ['Id' => 'DPS123'],
+        'tpAmb' => \Nfse\Enums\TipoAmbiente::Homologacao,
+        // ... demais campos
+    ]
+]);
 $nfse = $service->emitir($dps);
 
 // Consultar

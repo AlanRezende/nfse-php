@@ -34,9 +34,13 @@ try {
     );
 
     $dps = new DpsData([
-        '@versao' => '1.01',
+        '@attributes' => [
+            'versao' => '1.00',
+        ],
         'infDPS' => [
-            '@Id' => $idDps,
+            '@attributes' => [
+                'Id' => $idDps,
+            ],
             'tpAmb' => 2, // Homologação
             'dhEmi' => date('c'),
             'verAplic' => 'SDK-PHP-1.0',
@@ -50,12 +54,14 @@ try {
                 'CNPJ' => $cnpjPrestador,
                 'xNome' => 'Empresa de Teste',
                 'end' => [
+                    'endNac' => [
+                        'cMun' => $codigoMunicipio,
+                        'CEP' => '60000000',
+                    ],
                     'xLgr' => 'Rua Teste',
                     'nro' => '123',
                     'xCpl' => 'Sala 1',
                     'xBairro' => 'Centro',
-                    'endNac.cMun' => $codigoMunicipio,
-                    'endNac.CEP' => '60000000',
                 ],
                 'fone' => '85999999999',
                 'email' => 'teste@empresa.com.br',
@@ -72,7 +78,6 @@ try {
             'serv' => [
                 'locPrest' => [
                     'cLocPrestacao' => $codigoMunicipio,
-                    'cPaisPrestacao' => 'BR',
                 ],
                 'cServ' => [
                     'cTribNac' => '010101',
@@ -84,10 +89,18 @@ try {
                     'vServ' => 100.00,
                 ],
                 'trib' => [
-                    'tribMun.tribISSQN' => 1,
-                    'tribMun.tpRetISSQN' => 1,
-                    'tribFed.piscofins.CST' => '08',
-                    'totTrib.indTotTrib' => 0,
+                    'tribMun' => [
+                        'tribISSQN' => 1,
+                        'tpRetISSQN' => 1,
+                    ],
+                    'tribFed' => [
+                        'piscofins' => [
+                            'CST' => '08',
+                        ],
+                    ],
+                    'totTrib' => [
+                        'indTotTrib' => 0,
+                    ],
                 ],
             ],
         ],

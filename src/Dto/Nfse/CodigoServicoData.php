@@ -2,10 +2,10 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class CodigoServicoData extends DataTransferObject
+class CodigoServicoData extends Dto
 {
     /**
      * Código de tributação nacional (LC 116/03).

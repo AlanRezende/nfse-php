@@ -2,21 +2,21 @@
 
 namespace Nfse\Dto\Nfse;
 
+use Nfse\Dto\Dto;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\MotivoEmissaoTomadorIntermediario;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Support\DTO\EnumCaster;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Attributes\MapFrom;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class InfDpsData extends DataTransferObject
+class InfDpsData extends Dto
 {
     /**
      * Identificador da tag a ser assinada.
      * Formado por: "DPS" + Cód.Mun.Emi. + Tipo Inscrição + Inscrição + Série + Número.
      */
-    #[MapFrom('@Id')]
+    #[MapFrom('@attributes.Id')]
     public ?string $id = null;
 
     /**

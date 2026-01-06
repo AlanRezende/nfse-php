@@ -27,6 +27,7 @@ class NfseXmlBuilder
         $this->dom->formatOutput = true;
 
         $root = $this->dom->createElementNS('http://www.sped.fazenda.gov.br/nfse', 'NFSe');
+        $root->setAttribute('versao', $nfse->versao);
         $this->dom->appendChild($root);
 
         $infNfse = $this->dom->createElement('infNFSe');
@@ -41,22 +42,31 @@ class NfseXmlBuilder
 
     private function buildInfNfse(DOMElement $parent, InfNfseData $data): void
     {
-        $this->appendElement($parent, 'nNFSe', $data->numeroNfse);
-        $this->appendElement($parent, 'nDFSe', $data->numeroDfse);
-        $this->appendElement($parent, 'cVerif', $data->codigoVerificacao);
-        $this->appendElement($parent, 'dhProc', $data->dataProcessamento);
-        $this->appendElement($parent, 'verAplic', $data->versaoAplicativo);
-        $this->appendElement($parent, 'ambGer', $data->ambienteGerador);
-        $this->appendElement($parent, 'tpEmis', $data->tipoEmissao);
-        $this->appendElement($parent, 'procEmi', $data->processoEmissao);
         $this->appendElement($parent, 'xLocEmi', $data->localEmissao);
         $this->appendElement($parent, 'xLocPrestacao', $data->localPrestacao);
+        $this->appendElement($parent, 'nNFSe', $data->numeroNfse);
         $this->appendElement($parent, 'cLocIncid', $data->codigoLocalIncidencia);
         $this->appendElement($parent, 'xLocIncid', $data->nomeLocalIncidencia);
         $this->appendElement($parent, 'xTribNac', $data->descricaoTributacaoNacional);
         $this->appendElement($parent, 'xTribMun', $data->descricaoTributacaoMunicipal);
         $this->appendElement($parent, 'xNBS', $data->descricaoNbs);
+        $this->appendElement($parent, 'verAplic', $data->versaoAplicativo);
+        $this->appendElement($parent, 'ambGer', $data->ambienteGerador);
+        $this->appendElement($parent, 'tpEmis', $data->tipoEmissao);
+        $this->appendElement($parent, 'procEmi', $data->processoEmissao);
         $this->appendElement($parent, 'cStat', $data->codigoStatus);
+        $this->appendElement($parent, 'dhProc', $data->dataProcessamento);
+        $this->appendElement($parent, 'nDFSe', $data->numeroDfse);
+        $this->appendElement($parent, 'cVerif', $data->codigoVerificacao);
+
+
+        if ($data->emitente) {
+            $this->buildEmitente($parent, $data->emitente);
+        }
+
+        if ($data->valores) {
+            $this->buildValores($parent, $data->valores);
+        }
 
         if ($data->dps) {
             // The DpsXmlBuilder creates a full XML, we need to import the 'DPS' element
@@ -68,14 +78,6 @@ class NfseXmlBuilder
                 $importedNode = $this->dom->importNode($dpsNode, true);
                 $parent->appendChild($importedNode);
             }
-        }
-
-        if ($data->emitente) {
-            $this->buildEmitente($parent, $data->emitente);
-        }
-
-        if ($data->valores) {
-            $this->buildValores($parent, $data->valores);
         }
     }
 
