@@ -41,7 +41,7 @@ function HomepageHeader() {
                     <div
                         className="alert alert--warning margin-bottom--md"
                         role="alert"
-                        style={{ textAlign: "left" }}
+                        style={{ textAlign: "left", fontSize: "0.8rem" }}
                     >
                         <div className="admonition-heading">
                             <h5>⚠️ Adequação dos Municípios</h5>
@@ -51,13 +51,20 @@ function HomepageHeader() {
                                 Os municípios ainda estão em processo de
                                 adequação. Verifique o status no{" "}
                                 <Link to="https://app.powerbi.com/view?r=eyJrIjoiNGQ4YTcxNmMtMzdhNC00Mzc5LTllM2EtMjY1MTM3NWQyZDgyIiwidCI6IjZmNDlhYTQzLTgyMmEtNGMyMC05NjcwLWRiNzcwMGJmMWViMCJ9&pageName=608609c2e0a53d7a3c6e">
-                                    PowerBI
+                                    Painel de Monitoramento de Adesão
                                 </Link>{" "}
                                 e consulte o convênio via API (veja exemplo no{" "}
                                 <Link to="https://github.com/nfse-nacional/nfse-php/blob/main/examples/contribuinte/parametros/consultar_parametros.php">
                                     GitHub
                                 </Link>
                                 ).
+                            </p>
+                            <p style={{ marginBottom: 0, marginTop: "0.5rem" }}>
+                                <strong>Nota:</strong> Alguns municípios operam
+                                com <strong>emissor próprio</strong>. Verifique
+                                se você está habilitado para consumir a API
+                                Nacional ou se deve utilizar a API específica do
+                                município.
                             </p>
                         </div>
                     </div>
