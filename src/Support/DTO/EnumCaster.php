@@ -7,7 +7,7 @@ use Spatie\DataTransferObject\Caster;
 class EnumCaster implements Caster
 {
     public function __construct(
-        private array $types,
+        array $types,
         private string $enumType,
     ) {}
 
