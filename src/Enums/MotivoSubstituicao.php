@@ -39,10 +39,6 @@ enum MotivoSubstituicao: string
      */
     case Outros = '99';
 
-    /**
-     * Erro no Preenchimento
-     */
-    case ErroPreenchimento = '05';
 
     /**
      * Get description for the enum case
@@ -52,7 +48,9 @@ enum MotivoSubstituicao: string
         return match ($this) {
             self::DesenquadramentoSimplesNacional => 'Desenquadramento de NFS-e do Simples Nacional',
             self::EnquadramentoSimplesNacional => 'Enquadramento de NFS-e no Simples Nacional',
-            self::ErroPreenchimento => 'Erro no Preenchimento',
+            self::InclusaoRetroativaImunidadeIsencao => 'Inclusão Retroativa de Imunidade/Isenção para NFS-e',
+            self::ExclusaoRetroativaImunidadeIsencao => 'Exclusão Retroativa de Imunidade/Isenção para NFS-e',
+            self::RejeicaoNfs => 'Rejeição de NFS-e pelo tomador ou pelo intermediário se responsável pelo recolhimento do tributo',
             self::Outros => 'Outros',
         };
     }
