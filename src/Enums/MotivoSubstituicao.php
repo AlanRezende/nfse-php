@@ -35,11 +35,6 @@ enum MotivoSubstituicao: string
     case RejeicaoNfs = '05';
 
     /**
-     * Substituição de NFS-e
-     */
-    case Substituicao = '03';
-
-    /**
      * Outros
      */
     case Outros = '99';
