@@ -10,6 +10,11 @@ namespace Nfse\Enums;
 enum MovimentacaoTemporariaBens: string
 {
     /**
+     * Nenhum
+     */
+    case Nenhum = '0';
+
+    /**
      * Não
      */
     case Nao = '1';

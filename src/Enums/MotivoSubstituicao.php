@@ -20,6 +20,26 @@ enum MotivoSubstituicao: string
     case EnquadramentoSimplesNacional = '02';
 
     /**
+     * Inclusão Retroativa de Imunidade/Isenção para NFS-e
+     */
+    case InclusaoRetroativaImunidadeIsencao = '03';
+
+    /**
+     * Exclusão Retroativa de Imunidade/Isenção para NFS-e
+     */
+    case ExclusaoRetroativaImunidadeIsencao = '04';
+
+    /**
+     * Rejeição de NFS-e pelo tomador ou pelo intermediário se responsável pelo recolhimento do tributo
+     */
+    case RejeicaoNfs = '05';
+
+    /**
+     * Substituição de NFS-e
+     */
+    case Substituicao = '03';
+
+    /**
      * Outros
      */
     case Outros = '99';
