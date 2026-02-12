@@ -39,7 +39,6 @@ enum MotivoSubstituicao: string
      */
     case Outros = '99';
 
-
     /**
      * Get description for the enum case
      */

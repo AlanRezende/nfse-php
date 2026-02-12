@@ -9,7 +9,7 @@ class PedRegEventoData extends Dto
 {
     #[MapFrom('@attributes.Id')]
     public ?string $id = null;
-    
+
     #[MapFrom('infPedReg')]
     public ?InfPedRegData $infPedReg = null;
 

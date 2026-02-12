@@ -29,7 +29,7 @@ if (! function_exists('app')) {
 
         if ($abstract === \Spatie\LaravelData\Support\DataConfig::class) {
             return $container[$abstract] = new \Spatie\LaravelData\Support\DataConfig(
-                ruleInferrers: array_map(fn ($class) => app($class), config('data.rule_inferrers'))
+                ruleInferrers: array_map(fn($class) => app($class), config('data.rule_inferrers'))
             );
         }
 
