@@ -26,5 +26,5 @@ it('constructs Id with zero padded nPedRegEvento and preserves large numbers', f
     $xml = (new EventosXmlBuilder)->buildPedRegEvento($pedido);
 
     expect($xml)->toContain('nPedRegEvento>123</nPedRegEvento>');
-    expect($xml)->toContain('Id="PRE'.$ch.'101101123');
+    expect($xml)->toContain('Id="PRE'.$ch.'101101"');
 });

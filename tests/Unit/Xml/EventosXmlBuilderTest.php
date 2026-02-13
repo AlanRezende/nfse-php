@@ -24,7 +24,7 @@ it('builds a pedRegEvento xml for cancelamento', function () {
     $xml = (new EventosXmlBuilder)->buildPedRegEvento($pedido);
 
     expect($xml)->toContain('<pedRegEvento');
-    expect($xml)->toContain('<infPedReg Id="PRE12345678901234567890123456789012345678901234567890101101');
+    expect($xml)->toContain('<infPedReg Id="PRE12345678901234567890123456789012345678901234567890101101"');
     expect($xml)->toContain('<e101101>');
     expect($xml)->toContain('<xMotivo>Teste</xMotivo>');
 });

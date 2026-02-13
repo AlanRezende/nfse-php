@@ -42,7 +42,7 @@ it('builds, signs and encodes an evento payload', function () {
     $signed = $signer->sign($xml, 'infPedReg');
 
     // The signed XML should contain a Signature and a Reference to the root Id
-    $id = 'PRE'.$ch.'101101'.'003';
+    $id = 'PRE'.$ch.'101101';
     expect($signed)->toContain('Signature xmlns')
         ->and($signed)->toContain('Reference URI="#'.$id.'"');
 
