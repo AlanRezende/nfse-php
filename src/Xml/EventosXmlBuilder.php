@@ -21,11 +21,11 @@ class EventosXmlBuilder
 
         $inf = $this->dom->createElement('infPedReg');
 
-        // Build Id for infPedReg: PRE + chNFSe + tipoEvento + nPedRegEvento(3 digits)
+        // Build Id for infPedReg: PRE + chNFSe + tipoEvento
+        // nPedRegEvento foi removido do Id a partir de jan/2026 (TSIdPedRegEvt: PRE[0-9]{56})
         $ch = $data->infPedReg->chaveNfse;
         $tipo = $data->infPedReg->tipoEvento;
-        $nPed = str_pad((string) $data->infPedReg->nPedRegEvento, 3, '0', STR_PAD_LEFT);
-        $id = "PRE{$ch}{$tipo}{$nPed}";
+        $id = "PRE{$ch}{$tipo}";
         $inf->setAttribute('Id', $id);
 
         $this->appendElement($inf, 'tpAmb', (string) $data->infPedReg->tipoAmbiente);

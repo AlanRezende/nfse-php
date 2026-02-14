@@ -24,7 +24,7 @@ it('includes CPFAutor when cpfAutor is provided and omits CNPJAutor', function (
     expect($xml)->toContain('nPedRegEvento>7</nPedRegEvento>');
     $ch = '12345678901234567890123456789012345678901234567890';
     $tipo = '101101';
-    expect($xml)->toContain('Id="PRE'.$ch.$tipo.'007');
+    expect($xml)->toContain('Id="PRE'.$ch.$tipo.'"');
 });
 
 it('does not include e101101 when no cancellation provided', function () {
