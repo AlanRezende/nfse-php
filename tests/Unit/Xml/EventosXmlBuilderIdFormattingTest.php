@@ -5,7 +5,7 @@ use Nfse\Dto\Nfse\InfPedRegData;
 use Nfse\Dto\Nfse\PedRegEventoData;
 use Nfse\Xml\EventosXmlBuilder;
 
-it('constructs Id with zero padded nPedRegEvento and preserves large numbers', function () {
+it('constructs Id without nPedRegEvento and preserves large numbers', function () {
     $ch = str_repeat('9', 50);
     $cancel = new CancelamentoData([
         'xDesc' => 'x',
@@ -25,6 +25,7 @@ it('constructs Id with zero padded nPedRegEvento and preserves large numbers', f
     $pedido = new PedRegEventoData(['infPedReg' => $inf]);
     $xml = (new EventosXmlBuilder)->buildPedRegEvento($pedido);
 
-    expect($xml)->toContain('nPedRegEvento>123</nPedRegEvento>');
+    // nPedRegEvento não existe no schema XSD, não deve aparecer no XML
+    expect($xml)->not()->toContain('nPedRegEvento');
     expect($xml)->toContain('Id="PRE'.$ch.'101101"');
 });

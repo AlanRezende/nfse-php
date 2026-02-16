@@ -40,9 +40,9 @@ class EventosXmlBuilder
         }
 
         $this->appendElement($inf, 'chNFSe', $data->infPedReg->chaveNfse);
-        $this->appendElement($inf, 'nPedRegEvento', (string) $data->infPedReg->nPedRegEvento);
 
-        // Only implement cancellation (e101101) for now
+        // nPedRegEvento não existe no schema XSD (nem v1.00 nem v1.01)
+        // Após chNFSe vem direto o elemento do tipo de evento (e101101, etc.)
         if ($data->infPedReg->e101101) {
             $e = $this->dom->createElement('e101101');
             $this->appendElement($e, 'xDesc', $data->infPedReg->e101101->descricao);

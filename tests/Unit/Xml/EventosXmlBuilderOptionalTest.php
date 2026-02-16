@@ -20,8 +20,8 @@ it('includes CPFAutor when cpfAutor is provided and omits CNPJAutor', function (
 
     expect($xml)->toContain('<CPFAutor>11122233344</CPFAutor>');
     expect($xml)->not()->toContain('<CNPJAutor>');
-    // Ensure nPedRegEvento is zero padded to 3 digits (007)
-    expect($xml)->toContain('nPedRegEvento>7</nPedRegEvento>');
+    // nPedRegEvento não existe no schema XSD, não deve aparecer no XML
+    expect($xml)->not()->toContain('nPedRegEvento');
     $ch = '12345678901234567890123456789012345678901234567890';
     $tipo = '101101';
     expect($xml)->toContain('Id="PRE'.$ch.$tipo.'"');
